@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('usuarios.urls')),
     path('', include('clientes.urls')),
+    path('chaining/', include('smart_selects.urls')),
 ]
