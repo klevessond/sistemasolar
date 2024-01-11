@@ -15,13 +15,20 @@ class Cidade(models.Model):
     def __str__(self):
         return f"{self.nome} - {self.estado.sigla}"
 
+class Bairro(models.Model):
+    nome = models.CharField(max_length=100)
+    cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.nome}"
+
 class Cliente(models.Model):
     nome_completo = models.CharField(max_length=100, blank=False, null=False)
     rua = models.CharField(max_length=100, blank=False, null=False)
     numero = models.IntegerField(blank=False, null=False)
     estado = models.ForeignKey(Estado, on_delete=models.SET_NULL, blank=False, null=True)
     cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, blank=False, null=True)
-    bairro = models.CharField(max_length=100, blank=False, null=False)
+    bairro =  models.ForeignKey(Bairro, on_delete=models.SET_NULL, blank=False, null=True)
 
     cep_validator = RegexValidator(
         regex=r'^\d{5}-\d{3}$',
