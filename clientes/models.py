@@ -2,10 +2,25 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, EmailValidator, MinLengthValidator
 
-class Clientes(models.Model):
+class Estado(models.Model):
+    nome = models.CharField(max_length=50, unique=True)
+    sigla = models.CharField(max_length=2, unique=True)
+
+    def __str__(self):
+        return f"{self.nome} ({self.sigla})"
+class Cidade(models.Model):
+    nome = models.CharField(max_length=100)
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.nome} - {self.estado.sigla}"
+
+class Cliente(models.Model):
     nome_completo = models.CharField(max_length=100, blank=False, null=False)
     rua = models.CharField(max_length=100, blank=False, null=False)
     numero = models.IntegerField(blank=False, null=False)
+    estado = models.ForeignKey(Estado, on_delete=models.SET_NULL, blank=False, null=True)
+    cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, blank=False, null=True)
     bairro = models.CharField(max_length=100, blank=False, null=False)
 
     cep_validator = RegexValidator(
