@@ -2,4 +2,31 @@
 {% load static %}
 {% block content %}
 
+
+
+
+<h1>Lista de Clientes</h1>
+<table id="example" class="display" style="width:100%" id="tabela_clientes">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for cliente in clientes %}
+            <tr>
+              <td>{{ cliente.nome_completo }}</td>
+              <td>{{ cliente.email }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+</table>
+<script>
+    $(document).ready( function () {
+        $('tabela_clientes').DataTable();
+    });
+</script>
+
+
 {% endblock %}

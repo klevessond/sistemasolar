@@ -27,6 +27,7 @@
     <link href="{% static '/assets/libs/flot/css/float-chart.css'%}" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="{% static '/dist/css/style.min.css'%}" rel="stylesheet" />
+    <link href="{% static 'DataTables/datatables.min.css' %}" rel="stylesheet" type="text/css" >
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -391,6 +392,7 @@
        <!-- ============================================================== -->
        <!-- Left Sidebar - style you can find in sidebar.scss  -->
        <!-- ============================================================== -->
+
        <aside class="left-sidebar" data-sidebarbg="skin5">
          <!-- Sidebar scroll-->
          <div class="scroll-sidebar">
@@ -637,9 +639,10 @@
        <!-- ============================================================== -->
        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
        <!-- ============================================================== -->
+       <div class="page-wrapper">
 
-     {% block content%}{% endblock%}
-
+          {% block content%}{% endblock%}
+       </div>
      <!-- ============================================================== -->
      <!-- End Wrapper -->
      <!-- ============================================================== -->
@@ -668,5 +671,10 @@
      <script src="{% static '/assets/libs/flot/jquery.flot.crosshair.js' %}"></script>
      <script src="{% static '/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js' %}"></script>
      <script src="{% static '/dist/js/pages/chart/chart-page-init.js' %}"></script>
+    <!-- Link para o arquivo JavaScript do DataTables -->
+
+    <script  src="{% static 'DataTables/datatables.min.js' %}" type="text/javascript" charset="utf8"></script>
+    <!-- No final do seu arquivo HTML ou em um script separado -->
+
  </body>
 </html>
