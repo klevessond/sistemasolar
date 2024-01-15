@@ -3,10 +3,9 @@
 {% block content %}
 
 
-
-
-<h1>Lista de Clientes</h1>
-<table id="example" class="display" style="width:100%" id="tabela_clientes">
+<p>
+<div>
+<table  class="display" style="width:100%" id="tabela_cliente">
         <thead>
             <tr>
                 <th>Nome</th>
@@ -22,11 +21,6 @@
           {% endfor %}
         </tbody>
 </table>
-<script>
-    $(document).ready( function () {
-        $('tabela_clientes').DataTable();
-    });
-</script>
-
+</div>
 
 {% endblock %}
