@@ -86,6 +86,7 @@ class Cliente(models.Model):
         code='invalid_cpf'
     )
     cpf = models.CharField(max_length=14, validators=[cpf_validator], unique=True, blank=True, null=True)
+    data_cadastro = models.DateTimeField(auto_now_add=True)
 
     def clean(self):
         if self.tipo_cliente == 'PJ' and not self.cnpj:

@@ -679,12 +679,20 @@
     <script  src="{% static '/DataTables/datatables.min.js' %}" type="text/javascript" charset="utf8"></script>
     <!-- No final do seu arquivo HTML ou em um script separado -->
     <script>
-      $(document).ready(function() {
-          $('#tabela_cliente').dataTable();
-
-      } );
-
+        $(document).ready(function() {
+            $('#tabela_cliente').dataTable({
+                "columnDefs": [
+                    {
+                        "targets": [5],  // Índice da coluna a ser modificada (0 é a primeira coluna)
+                        "width": "20%",   // Largura da coluna
+                        // Outras opções específicas da coluna
+                    },
+                    // Adicione mais objetos de definição de coluna conforme necessário
+                ]
+            });
+        });
     </script>
+
 
 
  </body>
