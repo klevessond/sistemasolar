@@ -1,11 +1,44 @@
 from django import forms
 from django.core.validators import RegexValidator, ValidationError, EmailValidator
-from .models import Cliente
+from .models import Cliente, Estado, Cidade, Bairro
 
 class ClienteForm(forms.ModelForm):
+    estado = forms.ModelChoiceField(queryset=Estado.objects.all(), required=True, label='Estado')
+    cidade = forms.ModelChoiceField(queryset=Cidade.objects.none(), required=True, label='Cidade')
+    bairro = forms.ModelChoiceField(queryset=Bairro.objects.none(), required=True, label='Bairro')
+
     class Meta:
         model = Cliente
-        fields = '__all__'  # Use '__all__' para incluir todos os campos do modelo no formulário
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ClienteForm, self).__init__(*args, **kwargs)
+        # Adicione classes CSS se desejar
+        self.fields['estado'].widget.attrs['class'] = 'estado-select'
+        self.fields['cidade'].widget.attrs['class'] = 'cidade-select'
+        self.fields['bairro'].widget.attrs['class'] = 'bairro-select'
+
+        # Adicione um evento onchange ao campo estado
+        self.fields['estado'].widget.attrs['onchange'] = 'update_cidades()'
+
+    def clean(self):
+        cleaned_data = super().clean()
+        estado = cleaned_data.get('estado')
+        cidade = cleaned_data.get('cidade')
+
+        # Atualize as opções do campo cidade com base no estado selecionado
+        if estado:
+            self.fields['cidade'].queryset = Cidade.objects.filter(estado=estado)
+        else:
+            self.fields['cidade'].queryset = Cidade.objects.none()
+
+        # Atualize as opções do campo bairro com base na cidade selecionada
+        if cidade:
+            self.fields['bairro'].queryset = Bairro.objects.filter(cidade=cidade)
+        else:
+            self.fields['bairro'].queryset = Bairro.objects.none()
+
+        return cleaned_data
 
     # Adicione validadores adicionais ou personalizações aqui
     cep = forms.CharField(max_length=9, validators=[RegexValidator(
