@@ -6,38 +6,4 @@
         {{ form.as_p }}
         <button type="submit">Enviar</button>
     </form>
-    <script>
-        function update_cidades() {
-            // Implemente a lógica de atualização dinâmica do campo cidade aqui
-            // Você pode usar AJAX para buscar as cidades com base no estado selecionado
-            // e, em seguida, atualizar as opções do campo cidade.
-            // Exemplo básico sem AJAX (ajuste conforme necessário):
-            var estadoSelect = document.querySelector('.estado-select');
-            var cidadeSelect = document.querySelector('.cidade-select');
-
-            // Obtenha o valor selecionado do campo estado
-            var estadoId = estadoSelect.options[estadoSelect.selectedIndex].value;
-
-            // Use o valor do estado para buscar as cidades correspondentes
-            // e atualize as opções do campo cidade
-            // Este é um exemplo simples, você precisará ajustar conforme necessário
-            cidadeSelect.innerHTML = '';  // Limpe as opções atuais
-
-            // Adicione opções de cidades com base no estado selecionado
-            // (substitua este bloco pelo código AJAX na implementação real)
-            if (estadoId === '1') {
-                // Se o estado for 1, adicione cidades correspondentes
-                var option = document.createElement('option');
-                option.value = '1';
-                option.text = 'Cidade 1';
-                cidadeSelect.add(option);
-            } else if (estadoId === '2') {
-                // Se o estado for 2, adicione cidades correspondentes
-                var option = document.createElement('option');
-                option.value = '2';
-                option.text = 'Cidade 2';
-                cidadeSelect.add(option);
-            }
-        }
-    </script>
-{% endblock %}
+  {% endblock %}

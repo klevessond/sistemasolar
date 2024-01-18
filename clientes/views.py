@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Cliente
+from .models import Cliente, Estado, Cidade, Bairro
 from .forms import ClienteForm
 
 
@@ -21,3 +21,14 @@ def novo_cliente(request):
 
 
         return render(request, 'clientes/novo_cliente.html', {'form': form})
+
+def selecao_estado(request):
+    estados = Estado.objects.all().order_by('nome')
+    cidades = []
+    bairros = []
+    return render(request, 'clientes/selecao_estado.html', {'estados': estados, 'cidades' : cidades, 'bairros' : bairros})
+
+def load_estados(request):
+    estado_id = request.GET.get('estado_id')
+    cidades = Cidade.objects.filter(estado_id=estado_id).all()
+    return render(request, 'clientes/funcao_ajax.html', {'cidades': cidades} )
