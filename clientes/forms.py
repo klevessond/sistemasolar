@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import RegexValidator, ValidationError, EmailValidator
-from .models import Cliente
+from .models import Cliente, Cidade, Bairro
 
 class ClienteForm(forms.ModelForm):
     class Meta:
@@ -51,3 +51,8 @@ class ClienteForm(forms.ModelForm):
             raise ValidationError({'cnpj': 'CNPJ é obrigatório para Pessoa Jurídica.'})
         elif tipo_cliente == 'PF' and not cleaned_data.get('cpf'):
             raise ValidationError({'cpf': 'CPF é obrigatório para Pessoa Física.'})
+
+    def __init__(self, *args, **kwargs):
+        super(ClienteForm, self).__init__(*args, **kwargs)
+        self.fields['cidade'].queryset = Cidade.objects.none()
+        self.fields['bairro'].queryset = Bairro.objects.none()

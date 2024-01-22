@@ -4,6 +4,60 @@
 <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+    <label for="id_cidade">Cidade:</label>
+    <select id="id_cidade" name="cidade"></select>
+
+    <!-- Seletor de Bairro -->
+    <label for="id_bairro">Bairro:</label>
+    <select id="id_bairro" name="bairro"></select>
+
+    <button type="submit">Salvar</button>
         <button type="submit">Enviar</button>
     </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#id_estado').change(function() {
+                var estadoId = $(this).val();
+                if (estadoId) {
+                    $.ajax({
+                        url: '/ajax/get_cidades/',
+                        data: {'estado_id': estadoId},
+                        success: function(data) {
+                          console.log('Dados recebidos:', data)
+                            $('#id_cidade').empty();
+                            $.each(data, function(index, city) {
+                                $('#id_cidade').append($('<option>', {
+                                    value: city.id,
+                                    text: city.nome
+                                }));
+                            });
+                        }
+                    });
+                }
+            });
+
+            $('#id_cidade').change(function() {
+                var cidadeId = $(this).val();
+                if (cidadeId) {
+                    $.ajax({
+                        url: '/ajax/get_bairros/',
+                        data: {'cidade_id': cidadeId},
+                        success: function(data) {
+                          console.log('Dados recebidos:', data)
+                            $('#id_bairro').empty();
+                            $.each(data, function(index, bairro) {
+                                $('#id_bairro').append($('<option>', {
+                                    value: bairro.id,
+                                    text: bairro.nome
+                                }));
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
   {% endblock %}
