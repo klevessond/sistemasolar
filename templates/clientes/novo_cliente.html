@@ -19,6 +19,8 @@
     <script>
         $(document).ready(function() {
             $('#id_estado').change(function() {
+              // Limpa o campo do bairro
+              $('#id_bairro').val('');
                 var estadoId = $(this).val();
                 if (estadoId) {
                     $.ajax({
@@ -27,6 +29,10 @@
                         success: function(data) {
                           console.log('Dados recebidos:', data)
                             $('#id_cidade').empty();
+                            // Adiciona a opção vazia
+                            $('#id_cidade').append($('<option>', {
+                            value: '',
+                            text: '---------' }));
                             $.each(data, function(index, city) {
                                 $('#id_cidade').append($('<option>', {
                                     value: city.id,
@@ -47,6 +53,10 @@
                         success: function(data) {
                           console.log('Dados recebidos:', data)
                             $('#id_bairro').empty();
+                            $('#id_bairro').append($('<option>', {
+                           value: '',
+                           text: '---------'
+                            }));
                             $.each(data, function(index, bairro) {
                                 $('#id_bairro').append($('<option>', {
                                     value: bairro.id,
