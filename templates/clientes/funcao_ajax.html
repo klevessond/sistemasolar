@@ -1,0 +1,8 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<option value="" selected> Selecione</option>
+{% for cidade in cidades %}
+  <option value="{{cidade.id}}">{{cidade.nome}}</option>
+{% endfor %}
+{% endblock %}

@@ -2,21 +2,50 @@
 {% load static %}
 {% block content %}
 
+<div class="container-fluid">
+  <!-- ============================================================== -->
+  <!-- Sales Cards  -->
+  <!-- ============================================================== -->
+  <div class="row">
+    <!-- Column -->
+    <a href="{% url 'novo_cliente' %}">
+    <div class="col-md-6 col-lg-2 col-xlg-3">
+      <div class="card card-hover">
+        <div class="box bg-cyan text-center">
+          <h1 class="font-light text-white">
+            <i class="mdi mdi-account-multiple-plus"></i>
+          </h1>
+          <h6 class="text-white">Cadastrar Cliente</h6>
+        </div>
+      </div></a>
+
+    </div>
+  </div>
 
 <p>
 <div>
-<table  class="display" style="width:100%" id="tabela_cliente">
+<table  class="table table-striped" style="width:100%" id="tabela_cliente">
         <thead>
             <tr>
+              <th>Cod.Cliente</th>
                 <th>Nome</th>
-                <th>Email</th>
+                <th>Cidade</th>
+                <th>Bairro</th>
+                <th>Celular</th>
+                <th>Tipo Cliente</th>
+                <th>Data Cadastro</th>
             </tr>
         </thead>
         <tbody>
           {% for cliente in clientes %}
             <tr>
+              <td>{{ cliente.id }}</td>
               <td>{{ cliente.nome_completo }}</td>
-              <td>{{ cliente.email }}</td>
+              <td>{{ cliente.cidade.nome }}</td>
+              <td>{{ cliente.bairro.nome }}</td>
+              <td>{{ cliente.numero_celular }}</td>
+              <td>{{ cliente.tipo_cliente }}</td>
+                <td>{{ cliente.data_cadastro }}</td>
             </tr>
           {% endfor %}
         </tbody>
