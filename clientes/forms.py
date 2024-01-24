@@ -46,6 +46,8 @@ class ClienteForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         tipo_cliente = cleaned_data.get('tipo_cliente')
+        cidade = cleaned_data.get('cidade')
+        bairro = cleaned_data.get('bairro')
 
         if tipo_cliente == 'PJ' and not cleaned_data.get('cnpj'):
             raise ValidationError({'cnpj': 'CNPJ é obrigatório para Pessoa Jurídica.'})
@@ -54,5 +56,24 @@ class ClienteForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ClienteForm, self).__init__(*args, **kwargs)
-        self.fields['cidade'].queryset = Cidade.objects.none()
-        self.fields['bairro'].queryset = Bairro.objects.none()
+        cidades = Cidade.objects.values_list('id', 'nome')
+        bairros = Bairro.objects.values_list('id', 'nome')
+
+        self.fields['cidade'].choices = [('', 'Escolha uma cidade')] + list(cidades)
+        self.fields['bairro'].choices = [('', 'Escolha um bairro')] + list(bairros)
+
+        # Adicione aqui a lógica para imprimir as opções de Cidade e Bairro
+        print('Opções de Cidade:', list(Cidade.objects.values_list('id', 'nome')))
+        print('Opções de Bairro:', list(Bairro.objects.values_list('id', 'nome')))
+
+    def clean_cidade(self):
+        cidade = self.cleaned_data['cidade']
+        if not cidade:
+            raise ValidationError('Escolha uma cidade válida.')
+        return cidade
+
+    def clean_bairro(self):
+        bairro = self.cleaned_data['bairro']
+        if not bairro:
+            raise ValidationError('Escolha um bairro válido.')
+        return bairro

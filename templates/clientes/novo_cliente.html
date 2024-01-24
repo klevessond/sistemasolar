@@ -4,16 +4,8 @@
 <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-    <label for="id_cidade">Cidade:</label>
-    <select id="id_cidade" name="cidade"></select>
-
-    <!-- Seletor de Bairro -->
-    <label for="id_bairro">Bairro:</label>
-    <select id="id_bairro" name="bairro"></select>
-
-    <button type="submit">Salvar</button>
         <button type="submit">Enviar</button>
-    </form>
+  </form>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
@@ -22,6 +14,7 @@
               // Limpa o campo do bairro
               $('#id_bairro').val('');
                 var estadoId = $(this).val();
+                console.log('Estado selecionada:', estadoId);
                 if (estadoId) {
                     $.ajax({
                         url: '/ajax/get_cidades/',
@@ -46,6 +39,7 @@
 
             $('#id_cidade').change(function() {
                 var cidadeId = $(this).val();
+                console.log('Cidade selecionada:', cidadeId);
                 if (cidadeId) {
                     $.ajax({
                         url: '/ajax/get_bairros/',
@@ -67,6 +61,10 @@
                     });
                 }
             });
+            $('#id_bairro').change(function() {
+                var bairroId = $(this).val();
+                console.log('Bairro selecionada:', bairroId);
+                });
         });
     </script>
 
