@@ -1,6 +1,32 @@
 from django import forms
 from django.core.validators import RegexValidator, ValidationError, EmailValidator
-from .models import Cliente, Cidade, Bairro
+from .models import Cliente, Estado, Cidade, Bairro
+
+
+class EstadoForm(forms.ModelForm):
+    class Meta:
+        model = Estado
+        fields = ['nome', 'sigla']
+
+class CidadeForm(forms.ModelForm):
+    class Meta:
+        model = Cidade
+        fields = ['nome', 'estado']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ordena as opções de estado por nome na ordem alfabética
+        self.fields['estado'].queryset = self.fields['estado'].queryset.order_by('nome')
+
+class BairroForm(forms.ModelForm):
+    class Meta:
+        model = Bairro
+        fields = ['nome', 'cidade']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ordena as opções de cidade por nome na ordem alfabética
+        self.fields['cidade'].queryset = self.fields['cidade'].queryset.order_by('nome')
 
 class ClienteForm(forms.ModelForm):
     class Meta:
