@@ -7,11 +7,13 @@ class EstadoForm(forms.ModelForm):
     class Meta:
         model = Estado
         fields = ['nome', 'sigla']
+        origin_page = forms.CharField(widget=forms.HiddenInput(), initial='cadastro_cliente')
 
 class CidadeForm(forms.ModelForm):
     class Meta:
         model = Cidade
         fields = ['nome', 'estado']
+        origin_page = forms.CharField(widget=forms.HiddenInput(), initial='cadastro_cliente')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -22,6 +24,7 @@ class BairroForm(forms.ModelForm):
     class Meta:
         model = Bairro
         fields = ['nome', 'cidade']
+        origin_page = forms.CharField(widget=forms.HiddenInput(), initial='cadastro_cliente')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

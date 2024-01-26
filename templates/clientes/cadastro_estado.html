@@ -4,6 +4,7 @@
 <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        <input type="hidden" name="origin_page" value="cadastro_estado">
         <button type="submit">Enviar</button>
   </form>
 
