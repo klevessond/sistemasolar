@@ -84,11 +84,12 @@ def cadastro_cliente(request):
             return render(request, 'clientes/cadastro_cliente.html', {'form': form})
 
     else:
+        cliente_form_data = request.session.get('cliente_form_data', {})
         form = ClienteForm()
         formEstados = EstadoForm()
         formCidade = CidadeForm()
         formBairro = BairroForm()
-        return render(request, 'clientes/cadastro_cliente.html', {'form': form,'formEstados':formEstados,'formCidade':formCidade, 'formBairro':formBairro })
+        return render(request, 'clientes/cadastro_cliente.html', {'cliente_form_data': cliente_form_data,'form': form,'formEstados':formEstados,'formCidade':formCidade, 'formBairro':formBairro })
 
 def get_cidades(request):
     estado_id = request.GET.get('estado_id')
