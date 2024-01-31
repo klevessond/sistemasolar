@@ -1,7 +1,7 @@
 {% extends 'shared/base.html' %}
 {% load static %}
 {% block content %}
-<form method="post">
+<form method="post" id="cadastro_cliente_form">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Enviar</button>
@@ -181,7 +181,7 @@
         var nomeCompleto = localStorage.getItem('nomeCompleto') || '';
         var rua = localStorage.getItem('rua') || '';
         var numero = localStorage.getItem('numero') || '';
-
+        
         // Preencher os campos com os valores recuperados
         $('#id_nome_completo').val(nomeCompleto);
         $('#id_rua').val(rua);
@@ -202,6 +202,14 @@
           localStorage.setItem('numero', numero);
       });
       // Adicione outros campos conforme necessário
+      //limpar localStorage depois do submit
+      $('#cadastro_cliente_form').on('submit', function () {
+            // Limpar o localStorage
+            localStorage.removeItem('nomeCompleto');
+            localStorage.removeItem('rua');
+            localStorage.removeItem('numero');
+            // Limpar outros campos conforme necessário
+        });
      });
     </script>
 
