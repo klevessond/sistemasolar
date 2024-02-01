@@ -10,10 +10,10 @@
          title="Adicionar outro estado"><img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Estado
        </a>
        <a class="related-widget-wrapper-link add-related" id="cadastro_cidade" data-popup="yes" href="cadastro_cidade/?_to_field=id&amp;_popup=1"
-        title="Adicionar outro estado"><img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Cidade
+        title="Adicionar outra cidade"><img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Cidade
       </a>
       <a class="related-widget-wrapper-link add-related" id="cadastro_bairro" data-popup="yes" href="cadastro_bairro/?_to_field=id&amp;_popup=1"
-       title="Adicionar outro estado"><img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Bairro
+       title="Adicionar outro bairro"><img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Bairro
      </a>
 
   </form>
@@ -53,7 +53,7 @@
           <div class="modal-body">
               <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
               <!-- Certifique-se de ajustar conforme necessário -->
-              <form method="post" action="cadastro_estado/">
+              <form method="post" action="cadastro_cidade/">
                   {% csrf_token %}
                   {{ formCidade.as_p }}
                   <input type="hidden" name="origin_page" value="cadastro_cliente">
@@ -76,7 +76,7 @@
           <div class="modal-body">
               <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
               <!-- Certifique-se de ajustar conforme necessário -->
-              <form method="post" action="cadastro_estado/">
+              <form method="post" action="cadastro_bairro/">
                   {% csrf_token %}
                   {{ formBairro.as_p }}
                   <input type="hidden" name="origin_page" value="cadastro_cliente">
