@@ -1,7 +1,7 @@
 {% extends 'shared/base.html' %}
 {% load static %}
 {% block content %}
-<form method="post">
+<form method="post" id="form_cadastro_cliente">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Enviar</button>
@@ -178,6 +178,28 @@
     });
 
     $(document).ready(function () {
+          // Adicionar ouvinte de evento para o envio do formulário
+          $('#form_cadastro_cliente').on('submit', function () {
+              // Limpar o localStorage
+              localStorage.removeItem('nomeCompleto');
+              localStorage.removeItem('rua');
+              localStorage.removeItem('numero');
+              localStorage.removeItem('estado');
+              localStorage.removeItem('cidade');
+              localStorage.removeItem('bairro');
+              localStorage.removeItem('cep');
+              localStorage.removeItem('ponto_referencia');
+              localStorage.removeItem('telefone_fixo');
+              localStorage.removeItem('numero_celular');
+              localStorage.removeItem('email');
+              localStorage.removeItem('tipo_cliente');
+              localStorage.removeItem('cnpj');
+              localStorage.removeItem('cpf');
+              // Limpar outros campos conforme necessário
+          });
+      });
+
+    $(document).ready(function () {
         var timeout;
         var nomeCompleto = localStorage.getItem('nomeCompleto') || '';
         var rua = localStorage.getItem('rua') || '';
@@ -190,6 +212,11 @@
         var ponto_referencia = localStorage.getItem('ponto_referencia') || '';
         var telefone_fixo = localStorage.getItem('telefone_fixo') || '';
         var numero_celular = localStorage.getItem('numero_celular') || '';
+        var email = localStorage.getItem('email') || '';
+        var tipo_cliente = localStorage.getItem('tipo_cliente') || '';
+        var cnpj = localStorage.getItem('cnpj') || '';
+        var cpf = localStorage.getItem('cpf') || '';
+
 
 
         // Preencher os campos com os valores recuperados
@@ -218,6 +245,11 @@
       $('#id_ponto_referencia').val(ponto_referencia);
       $('#id_telefone_fixo').val(telefone_fixo);
       $('#id_numero_celular').val(numero_celular);
+      $('#id_email').val(email);
+      $('#id_tipo_cliente').val(tipo_cliente);
+      $('#id_cnpj').val(cnpj);
+      $('#id_cpf').val(cpf);
+
     //captura campos
       $('#id_nome_completo').on('input', function () {
           nomeCompleto = $(this).val();
@@ -265,6 +297,22 @@
       $('#id_numero_celular').on('input', function () {
           numero_celular = $(this).val();
           localStorage.setItem('numero_celular', numero_celular);
+      });
+      $('#id_email').on('input', function () {
+          email = $(this).val();
+          localStorage.setItem('email', email);
+      });
+      $('#id_tipo_cliente').on('input', function () {
+          tipo_cliente = $(this).val();
+          localStorage.setItem('tipo_cliente', tipo_cliente);
+      });
+      $('#id_cnpj').on('input', function () {
+          cnpj = $(this).val();
+          localStorage.setItem('cnpj', cnpj);
+      });
+      $('#id_cpf').on('input', function () {
+          cpf = $(this).val();
+          localStorage.setItem('cpf', cpf);
       });
       // Adicione outros campos conforme necessário
      });
