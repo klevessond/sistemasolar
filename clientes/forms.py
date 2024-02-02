@@ -9,6 +9,7 @@ class EstadoForm(forms.ModelForm):
         fields = ['nome', 'sigla']
         origin_page = forms.CharField(widget=forms.HiddenInput(), initial='cadastro_cliente')
 
+
 class CidadeForm(forms.ModelForm):
     class Meta:
         model = Cidade
@@ -90,6 +91,7 @@ class ClienteForm(forms.ModelForm):
 
         self.fields['cidade'].choices = [('', 'Escolha uma cidade')] + list(cidades)
         self.fields['bairro'].choices = [('', 'Escolha um bairro')] + list(bairros)
+        self.fields['estado'].queryset = self.fields['estado'].queryset.order_by('nome')
 
         # Adicione aqui a lógica para imprimir as opções de Cidade e Bairro
         print('Opções de Cidade:', list(Cidade.objects.values_list('id', 'nome')))

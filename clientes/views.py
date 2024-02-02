@@ -93,12 +93,12 @@ def cadastro_cliente(request):
 
 def get_cidades(request):
     estado_id = request.GET.get('estado_id')
-    cidades = Cidade.objects.filter(estado_id=estado_id)
+    cidades = Cidade.objects.filter(estado_id=estado_id).order_by('nome')  # Ordena por nome
     data = [{'id': cidade.id, 'nome': cidade.nome} for cidade in cidades]
     return JsonResponse(data, safe=False)
 
 def get_bairros(request):
     cidade_id = request.GET.get('cidade_id')
-    bairros = Bairro.objects.filter(cidade_id=cidade_id)
+    bairros = Bairro.objects.filter(cidade_id=cidade_id).order_by('nome')  # Ordena por nome
     data = [{'id': bairro.id, 'nome': bairro.nome} for bairro in bairros]
     return JsonResponse(data, safe=False)

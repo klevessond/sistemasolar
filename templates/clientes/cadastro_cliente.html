@@ -178,15 +178,47 @@
     });
 
     $(document).ready(function () {
+        var timeout;
         var nomeCompleto = localStorage.getItem('nomeCompleto') || '';
         var rua = localStorage.getItem('rua') || '';
         var numero = localStorage.getItem('numero') || '';
+        var estado = localStorage.getItem('estado') || '';
+        var cidade = localStorage.getItem('cidade') || '';
+        var cidade = localStorage.getItem('cidade') || '';
+        var bairro = localStorage.getItem('bairro') || '';
+        var cep = localStorage.getItem('cep') || '';
+        var ponto_referencia = localStorage.getItem('ponto_referencia') || '';
+        var telefone_fixo = localStorage.getItem('telefone_fixo') || '';
+        var numero_celular = localStorage.getItem('numero_celular') || '';
+
 
         // Preencher os campos com os valores recuperados
         $('#id_nome_completo').val(nomeCompleto);
         $('#id_rua').val(rua);
         $('#id_numero').val(numero);
-        // Adicionar ouvintes de eventos
+        if (estado) {
+        // Define o valor do campo 'id_estado' com base no localStorage
+        $('#id_estado').val(estado).change();
+        }
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+        if (cidade) {
+        // Define o valor do campo 'id_estado' com base no localStorage
+        $('#id_cidade').val(cidade).change();
+        }
+      },800);
+
+      timeout = setTimeout(function() {
+      if (bairro) {
+      // Define o valor do campo 'id_estado' com base no localStorage
+      $('#id_bairro').val(bairro).change();
+      }
+      },1200);
+      $('#id_cep').val(cep);
+      $('#id_ponto_referencia').val(ponto_referencia);
+      $('#id_telefone_fixo').val(telefone_fixo);
+      $('#id_numero_celular').val(numero_celular);
+    //captura campos
       $('#id_nome_completo').on('input', function () {
           nomeCompleto = $(this).val();
           localStorage.setItem('nomeCompleto', nomeCompleto);
@@ -201,8 +233,42 @@
           numero = $(this).val();
           localStorage.setItem('numero', numero);
       });
+      $('#id_estado').on('input', function () {
+          estado = $(this).val();
+          localStorage.setItem('estado', estado);
+
+      });
+      $('#id_cidade').on('input', function () {
+          cidade = $(this).val();
+          localStorage.setItem('cidade', cidade);
+
+      });
+      $('#id_bairro').on('input', function () {
+          bairro = $(this).val();
+          localStorage.setItem('bairro', bairro);
+
+      });
+      $('#id_cep').on('input', function () {
+          cep = $(this).val();
+          localStorage.setItem('cep', cep);
+
+
+      });
+      $('#id_ponto_referencia').on('input', function () {
+          ponto_referencia = $(this).val();
+          localStorage.setItem('ponto_referencia', ponto_referencia);
+      });
+      $('#id_telefone_fixo').on('input', function () {
+          telefone_fixo = $(this).val();
+          localStorage.setItem('telefone_fixo', telefone_fixo);
+      });
+      $('#id_numero_celular').on('input', function () {
+          numero_celular = $(this).val();
+          localStorage.setItem('numero_celular', numero_celular);
+      });
       // Adicione outros campos conforme necessário
      });
+     // Limpa qualquer timeout existente
     </script>
 
   {% endblock %}
