@@ -1,0 +1,274 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enviar</button>
+
+        <a class="related-widget-wrapper-link add-related" id="cadastro_estado" data-popup="yes" href="cadastro_estado/?_to_field=id&amp;_popup=1"
+         title="Adicionar outro estado"><img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Estado
+       </a>
+       <a class="related-widget-wrapper-link add-related" id="cadastro_cidade" data-popup="yes" href="cadastro_cidade/?_to_field=id&amp;_popup=1"
+        title="Adicionar outra cidade"><img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Cidade
+      </a>
+      <a class="related-widget-wrapper-link add-related" id="cadastro_bairro" data-popup="yes" href="cadastro_bairro/?_to_field=id&amp;_popup=1"
+       title="Adicionar outro bairro"><img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Bairro
+     </a>
+
+  </form>
+
+  <div class="modal fade" id="Modal_cadastro_estado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar Estado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
+                <!-- Certifique-se de ajustar conforme necessário -->
+                <form method="post" action="cadastro_estado/">
+                    {% csrf_token %}
+                    {{ formEstados.as_p }}
+                    <input type="hidden" name="origin_page" value="cadastro_cliente">
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Modal_cadastro_cidade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Adicionar Estado</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
+              <!-- Certifique-se de ajustar conforme necessário -->
+              <form method="post" action="cadastro_cidade/">
+                  {% csrf_token %}
+                  {{ formCidade.as_p }}
+                  <input type="hidden" name="origin_page" value="cadastro_cliente">
+                  <button type="submit">Enviar</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="Modal_cadastro_bairro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Adicionar Estado</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
+              <!-- Certifique-se de ajustar conforme necessário -->
+              <form method="post" action="cadastro_bairro/">
+                  {% csrf_token %}
+                  {{ formBairro.as_p }}
+                  <input type="hidden" name="origin_page" value="cadastro_cliente">
+                  <button type="submit">Enviar</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#id_estado').change(function() {
+              // Limpa o campo do bairro
+              $('#id_bairro').val('');
+                var estadoId = $(this).val();
+                console.log('Estado selecionada:', estadoId);
+                if (estadoId) {
+                    $.ajax({
+                        url: '/ajax/get_cidades/',
+                        data: {'estado_id': estadoId},
+                        success: function(data) {
+                          console.log('Dados recebidos:', data)
+                            $('#id_cidade').empty();
+                            // Adiciona a opção vazia
+                            $('#id_cidade').append($('<option>', {
+                            value: '',
+                            text: '---------' }));
+                            $.each(data, function(index, city) {
+                                $('#id_cidade').append($('<option>', {
+                                    value: city.id,
+                                    text: city.nome
+                                }));
+                            });
+                        }
+                    });
+                }
+            });
+
+            $('#id_cidade').change(function() {
+                var cidadeId = $(this).val();
+                console.log('Cidade selecionada:', cidadeId);
+                if (cidadeId) {
+                    $.ajax({
+                        url: '/ajax/get_bairros/',
+                        data: {'cidade_id': cidadeId},
+                        success: function(data) {
+                          console.log('Dados recebidos:', data)
+                            $('#id_bairro').empty();
+                            $('#id_bairro').append($('<option>', {
+                           value: '',
+                           text: '---------'
+                            }));
+                            $.each(data, function(index, bairro) {
+                                $('#id_bairro').append($('<option>', {
+                                    value: bairro.id,
+                                    text: bairro.nome
+                                }));
+                            });
+                        }
+                    });
+                }
+            });
+            $('#id_bairro').change(function() {
+                var bairroId = $(this).val();
+                console.log('Bairro selecionada:', bairroId);
+                });
+        });
+    </script>
+    <script>
+    $(document).ready(function() {
+        // Quando o link for clicado
+        $('#cadastro_estado').click(function(e) {
+            e.preventDefault(); // Impede o comportamento padrão de abrir a nova página
+
+            // Abre o modal usando o ID do modal (certifique-se de ajustar conforme necessário)
+            $('#Modal_cadastro_estado').modal('show');
+        });
+    });
+    $(document).ready(function() {
+        // Quando o link for clicado
+        $('#cadastro_cidade').click(function(e) {
+            e.preventDefault(); // Impede o comportamento padrão de abrir a nova página
+
+            // Abre o modal usando o ID do modal (certifique-se de ajustar conforme necessário)
+            $('#Modal_cadastro_cidade').modal('show');
+        });
+    });
+    $(document).ready(function() {
+        // Quando o link for clicado
+        $('#cadastro_bairro').click(function(e) {
+            e.preventDefault(); // Impede o comportamento padrão de abrir a nova página
+
+            // Abre o modal usando o ID do modal (certifique-se de ajustar conforme necessário)
+            $('#Modal_cadastro_bairro').modal('show');
+        });
+    });
+
+    $(document).ready(function () {
+        var timeout;
+        var nomeCompleto = localStorage.getItem('nomeCompleto') || '';
+        var rua = localStorage.getItem('rua') || '';
+        var numero = localStorage.getItem('numero') || '';
+        var estado = localStorage.getItem('estado') || '';
+        var cidade = localStorage.getItem('cidade') || '';
+        var cidade = localStorage.getItem('cidade') || '';
+        var bairro = localStorage.getItem('bairro') || '';
+        var cep = localStorage.getItem('cep') || '';
+        var ponto_referencia = localStorage.getItem('ponto_referencia') || '';
+        var telefone_fixo = localStorage.getItem('telefone_fixo') || '';
+        var numero_celular = localStorage.getItem('numero_celular') || '';
+
+
+        // Preencher os campos com os valores recuperados
+        $('#id_nome_completo').val(nomeCompleto);
+        $('#id_rua').val(rua);
+        $('#id_numero').val(numero);
+        if (estado) {
+        // Define o valor do campo 'id_estado' com base no localStorage
+        $('#id_estado').val(estado).change();
+        }
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+        if (cidade) {
+        // Define o valor do campo 'id_estado' com base no localStorage
+        $('#id_cidade').val(cidade).change();
+        }
+      },800);
+
+      timeout = setTimeout(function() {
+      if (bairro) {
+      // Define o valor do campo 'id_estado' com base no localStorage
+      $('#id_bairro').val(bairro).change();
+      }
+      },1200);
+      $('#id_cep').val(cep);
+      $('#id_ponto_referencia').val(ponto_referencia);
+      $('#id_telefone_fixo').val(telefone_fixo);
+      $('#id_numero_celular').val(numero_celular);
+    //captura campos
+      $('#id_nome_completo').on('input', function () {
+          nomeCompleto = $(this).val();
+          localStorage.setItem('nomeCompleto', nomeCompleto);
+      });
+
+      $('#id_rua').on('input', function () {
+          rua = $(this).val();
+          localStorage.setItem('rua', rua);
+      });
+
+      $('#id_numero').on('input', function () {
+          numero = $(this).val();
+          localStorage.setItem('numero', numero);
+      });
+      $('#id_estado').on('input', function () {
+          estado = $(this).val();
+          localStorage.setItem('estado', estado);
+
+      });
+      $('#id_cidade').on('input', function () {
+          cidade = $(this).val();
+          localStorage.setItem('cidade', cidade);
+
+      });
+      $('#id_bairro').on('input', function () {
+          bairro = $(this).val();
+          localStorage.setItem('bairro', bairro);
+
+      });
+      $('#id_cep').on('input', function () {
+          cep = $(this).val();
+          localStorage.setItem('cep', cep);
+
+
+      });
+      $('#id_ponto_referencia').on('input', function () {
+          ponto_referencia = $(this).val();
+          localStorage.setItem('ponto_referencia', ponto_referencia);
+      });
+      $('#id_telefone_fixo').on('input', function () {
+          telefone_fixo = $(this).val();
+          localStorage.setItem('telefone_fixo', telefone_fixo);
+      });
+      $('#id_numero_celular').on('input', function () {
+          numero_celular = $(this).val();
+          localStorage.setItem('numero_celular', numero_celular);
+      });
+      // Adicione outros campos conforme necessário
+     });
+     // Limpa qualquer timeout existente
+    </script>
+
+  {% endblock %}

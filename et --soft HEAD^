@@ -1,0 +1,186 @@
+[33mcommit 66a37d3e395f2e31dbb72d499dfc5e0886fe573f[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/novo[m[33m, [m[1;32mnovo[m[33m)[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Tue Jan 30 22:27:01 2024 -0300
+
+    ajute da recuperacao de dados com limpeza
+
+[33mcommit fe9b9f2b0c10d8d69989136c4ab169070c7e0275[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Mon Jan 29 18:16:45 2024 -0300
+
+    recuperação de dados do store local depois de adicionar estado
+
+[33mcommit e3e54e040fe95db636168aaa3bffe2c6e2ccc16c[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Fri Jan 26 17:07:44 2024 -0300
+
+    botoes para adicionar estado, cidade e bairro dentro do cadastro do cliente
+
+[33mcommit 39f8fe62574f5c88da7179b02eaadb9b6cfde4ad[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Thu Jan 25 18:11:33 2024 -0300
+
+    criacao das paginas de cadastro de estado, cidade e bairro
+
+[33mcommit 126836adbaa03a859d6bc35241ad422d506609af[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Wed Jan 24 15:05:24 2024 -0300
+
+    ajustado relacao no cadastro do cliente estado cidade bairro
+
+[33mcommit 213cb677ec58ea74112d752911542fdb8b8e8055[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Mon Jan 22 17:54:25 2024 -0300
+
+    funcionando relacao estado, cidade, bairro
+
+[33mcommit 0312c770812bf77a7ecb1d68ae5b3c4388d6d5ae[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Mon Jan 22 15:20:12 2024 -0300
+
+    funcionando parcial
+
+[33mcommit 319b0702965c6f6ddd056e199c6daa25f000d78c[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Mon Jan 22 12:18:56 2024 -0300
+
+    meu teste
+
+[33mcommit ebbc51616d7ee7a371348ffce65c81fe06dc72cc[m[33m ([m[1;32mnova_branch[m[33m)[m
+Merge: 586e3e8 bba58d0
+Author: klevesson <klevessond@gmail.com>
+Date:   Mon Jan 22 12:09:20 2024 -0300
+
+    Merge branch 'nova_main' of https://github.com/klevessond/sistemasolar into nova_branch
+
+[33mcommit bba58d0790ffd6698878c677f0c2924df939938e[m[33m ([m[1;31morigin/nova_main[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: klevessond <klevessond@gmail.com>
+Date:   Sun Jan 21 22:57:14 2024 -0300
+
+    Revert "testando"
+    
+    This reverts commit 2c787da9de86c7e792672baae98c77638d56267d.
+
+[33mcommit 586e3e8e2d990c7e731f0fe86020737f8d4f2aa3[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Sun Jan 21 22:45:28 2024 -0300
+
+    Mensagem do commit vazio
+
+[33mcommit 57406f5f3196ad8fa09f262b667ec31954558f3f[m[33m ([m[1;32mnovo_main[m[33m)[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Sun Jan 21 22:36:10 2024 -0300
+
+    Commit vazio para mover todos os arquivos
+
+[33mcommit ff9bcc81473d95fa46a3d256d0f2e3df5709b3bb[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Sun Jan 21 22:20:12 2024 -0300
+
+    recuperacao
+
+[33mcommit 2c787da9de86c7e792672baae98c77638d56267d[m
+Author: klevessond <klevessond@gmail.com>
+Date:   Sun Jan 21 16:55:47 2024 -0300
+
+    testando
+
+[33mcommit d153666b255471deded21c91322f1b70993ca025[m
+Author: klevessond <klevessond@gmail.com>
+Date:   Thu Jan 18 00:37:54 2024 -0300
+
+    criacao de pagina de selecao de estado
+
+[33mcommit 9ab2709011f961fbfac80b96e7e000cf94516b8f[m[33m ([m[1;32mnovo_branch[m[33m, [m[1;32majuste[m[33m)[m
+Author: klevessond <klevessond@gmail.com>
+Date:   Wed Jan 17 00:51:16 2024 -0300
+
+    tentativa de ajustar os campos relacionado de estado cidade e bairro
+
+[33mcommit 191a3acb57089db3630d282dfc7c919515ff9cf3[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Mon Jan 15 17:44:19 2024 -0300
+
+    ajuste do html com a tela cadastro de clientes
+
+[33mcommit 93cb74ce8e42216eb198646f1645fb021a140e95[m
+Author: klevessond <klevessond@gmail.com>
+Date:   Sun Jan 14 22:58:24 2024 -0300
+
+    AJUSTADO A TABELA DE CLIENTE
+
+[33mcommit ce57b3185463fbff35efc60953f992bc5b5fb195[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Fri Jan 12 21:57:22 2024 -0300
+
+    com ajuste da listagem de cliente em tabela
+
+[33mcommit 6a3d53d999f232d9b3b047193c58454d6f5541e8[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Thu Jan 11 17:05:20 2024 -0300
+
+    ajuste de relacao estado, cidade e bairro 2
+
+[33mcommit 57d36d24a2102fa624c4dbe431368de1afb962f6[m
+Author: klevessond <klevessond@gmail.com>
+Date:   Wed Jan 10 23:30:41 2024 -0300
+
+    adicao de bairro
+
+[33mcommit 3c412b16833eedfb85e987c7004b0bccd7efeadd[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Wed Jan 10 22:43:10 2024 -0300
+
+    ciacao do estado e cidade
+
+[33mcommit b0d05f599f88dbc69346b7cb7ed3f0f9828a8976[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Mon Jan 8 22:26:04 2024 -0300
+
+    ciado a tabela de clientes
+
+[33mcommit 8f82e7ff36c57b707e7b3d7e83f63d26c9458edd[m
+Author: klevessond <klevessond@gmail.com>
+Date:   Wed Jan 3 23:37:08 2024 -0300
+
+    ajustado o arquivo base.html
+
+[33mcommit 724361feaacb6e3bb22c419bf99b2118f6238239[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Wed Jan 3 18:23:22 2024 -0300
+
+    ajustado as paginas de cliente com o nome template, criado o novo botão de clientes e criado a pasta shared
+
+[33mcommit 4a10f307011823c2228b824a22a79350221481ef[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Wed Jan 3 12:27:46 2024 -0300
+
+    Remove a pasta antiga template
+
+[33mcommit 24b2e790315b32021734036a9c674e1b311f9324[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Wed Jan 3 12:24:42 2024 -0300
+
+    trocando o template
+
+[33mcommit a5aa3695756262f0feeacdd3faba14f83c8bd89d[m
+Author: klevessond <klevessond@gmail.com>
+Date:   Tue Jan 2 23:56:01 2024 -0300
+
+    com templates e duas paginas
+    
+    criei dois app e peguei um html para usar
+
+[33mcommit 513cc0a8e923e2b848fca7906324b01686ad7902[m
+Author: klevessond <klevessond@gmail.com>
+Date:   Tue Jan 2 22:44:36 2024 -0300
+
+    ajustes 1
+    
+    ajuste da chave privada do projeto
+
+[33mcommit e7d9ac4cff9a002cdcce99f4219dc448ca66445d[m
+Author: klevesson <klevessond@gmail.com>
+Date:   Tue Jan 2 17:03:38 2024 -0300
+
+    inicial
