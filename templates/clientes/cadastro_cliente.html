@@ -176,29 +176,48 @@
             $('#Modal_cadastro_bairro').modal('show');
         });
     });
-
+</script>
+<script>
     $(document).ready(function () {
           // Adicionar ouvinte de evento para o envio do formulário
           $('#form_cadastro_cliente').on('submit', function () {
-              // Limpar o localStorage
-              localStorage.removeItem('nomeCompleto');
-              localStorage.removeItem('rua');
-              localStorage.removeItem('numero');
-              localStorage.removeItem('estado');
-              localStorage.removeItem('cidade');
-              localStorage.removeItem('bairro');
-              localStorage.removeItem('cep');
-              localStorage.removeItem('ponto_referencia');
-              localStorage.removeItem('telefone_fixo');
-              localStorage.removeItem('numero_celular');
-              localStorage.removeItem('email');
-              localStorage.removeItem('tipo_cliente');
-              localStorage.removeItem('cnpj');
-              localStorage.removeItem('cpf');
-              // Limpar outros campos conforme necessário
+            $.ajax({
+               url: $(this).attr('action'),
+               type: 'POST',
+               data: $(this).serialize(),
+               success: function (data) {
+                // Verificar se a resposta contém erros
+                if (data.hasOwnProperty('errors') && Object.keys(data.errors).length > 0) {
+                    // O formulário tem erros, restaurar os dados do localStorage e não limpar
+                    console.log('O formulário contém erros:', data.errors);
+                    restaurarDadosLocalStorage();
+                }
+                else {
+                        // O formulário foi enviado com sucesso, limpar o localStorage
+                        console.log('O formulário foi enviado com sucesso!');
+                        localStorage.removeItem('nomeCompleto');
+                        localStorage.removeItem('rua');
+                        localStorage.removeItem('numero');
+                        localStorage.removeItem('estado');
+                        localStorage.removeItem('cidade');
+                        localStorage.removeItem('bairro');
+                        localStorage.removeItem('cep');
+                        localStorage.removeItem('ponto_referencia');
+                        localStorage.removeItem('telefone_fixo');
+                        localStorage.removeItem('numero_celular');
+                        localStorage.removeItem('email');
+                        localStorage.removeItem('tipo_cliente');
+                        localStorage.removeItem('cnpj');
+                        localStorage.removeItem('cpf');
+                        // Limpar outros campos conforme necessário
+                        // Adicional: Redirecionar ou realizar outras ações após o envio bem-sucedido
+                        // window.location.href = '/sucesso/';
+                    }
+                  }            // Limpar o localStorage
+
           });
       });
-
+});
     $(document).ready(function () {
         var timeout;
         var nomeCompleto = localStorage.getItem('nomeCompleto') || '';
