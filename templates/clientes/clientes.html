@@ -1,7 +1,16 @@
 {% extends 'shared/base.html' %}
 {% load static %}
 {% block content %}
-
+{{ limpar_store }}
+{% if limpar_store == '1' %}
+  <script type="text/javascript">
+    console.log('limpar store',)
+  </script>
+{% else %}
+  <script type="text/javascript">
+    console.log('nada')
+  </script>
+{% endif %}
 <div class="container-fluid">
   <!-- ============================================================== -->
   <!-- Sales Cards  -->

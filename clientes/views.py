@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse,JsonResponse
 from .models import Cliente, Estado, Cidade, Bairro
 from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm
+from django.urls import reverse
 
 
 def cadastro_estado(request):
@@ -65,8 +66,14 @@ def cadastro_bairro(request):
 
 # Create your views here.
 def clientes(request):
-        clientes = Cliente.objects.select_related('cidade', 'bairro', 'estado').all()
-        return render(request, 'clientes/clientes.html',{'clientes': clientes})
+    limpar_store = request.GET.get('limpar_store')  # Captura o parâmetro limpar_store da URL
+    if limpar_store:
+        # Lógica para limpar a store local, se necessário
+        # Aqui você pode fazer o que for necessário com o parâmetro limpar_store
+        print('Limpar store:', limpar_store)
+    clientes = Cliente.objects.select_related('cidade', 'bairro', 'estado').all()
+    print('limpar',limpar_store)
+    return render(request, 'clientes/clientes.html', {'clientes': clientes, 'limpar_store': limpar_store})
 
 def cadastro_cliente(request):
     if request.method == 'POST':
@@ -76,7 +83,8 @@ def cadastro_cliente(request):
         if form.is_valid():
             # Salve os dados do formulário no banco de dados
             form.save()
-            return redirect('clientes')  # Redirecione para a página de sucesso após o envio
+            return redirect(reverse('clientes') + '?limpar_store=1')
+
         else:
             # Se o formulário não for válido, imprima mensagens de erro específicas para cada campo
             for field, errors in form.errors.items():
