@@ -1,15 +1,24 @@
 {% extends 'shared/base.html' %}
 {% load static %}
 {% block content %}
-{{ limpar_store }}
 {% if limpar_store == '1' %}
-  <script type="text/javascript">
-    console.log('limpar store',)
-  </script>
-{% else %}
-  <script type="text/javascript">
-    console.log('nada')
-  </script>
+<script type="text/javascript">
+  localStorage.removeItem('nomeCompleto');
+  localStorage.removeItem('rua');
+  localStorage.removeItem('numero');
+  localStorage.removeItem('estado');
+  localStorage.removeItem('cidade');
+  localStorage.removeItem('bairro');
+  localStorage.removeItem('cep');
+  localStorage.removeItem('ponto_referencia');
+  localStorage.removeItem('telefone_fixo');
+  localStorage.removeItem('numero_celular');
+  localStorage.removeItem('email');
+  localStorage.removeItem('tipo_cliente');
+  localStorage.removeItem('cnpj');
+  localStorage.removeItem('cpf');
+
+</script>
 {% endif %}
 <div class="container-fluid">
   <!-- ============================================================== -->
