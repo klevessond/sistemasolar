@@ -108,3 +108,33 @@ class ClienteForm(forms.ModelForm):
         if not bairro:
             raise ValidationError('Escolha um bairro válido.')
         return bairro
+
+    def clean_cnpj(self):
+        cnpj = self.cleaned_data['cnpj']
+        if cnpj.strip() == '':
+            return None  # Permitir CNPJ vazio
+        return cnpj
+
+    def savecnpj(self, commit=True):
+        instance = super().save(commit=False)
+        cnpj = self.cleaned_data['cnpj']
+        if cnpj == '':
+            instance.cnpj = None  # Definir como None se o campo for vazio
+        if commit:
+            instance.save()
+        return instance
+
+    def clean_cpf(self):
+        cpf = self.cleaned_data['cpf']
+        if cpf.strip() == '':
+            return None  # Permitir CNPJ vazio
+        return cpf
+
+    def savecpf(self, commit=True):
+        instance = super().save(commit=False)
+        cpf = self.cleaned_data['cpf']
+        if cpf == '':
+            instance.cpf = None  # Definir como None se o campo for vazio
+        if commit:
+            instance.save()
+        return instance

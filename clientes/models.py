@@ -78,22 +78,17 @@ class Cliente(models.Model):
         message='CNPJ deve seguir o formato 12.345.678/9012-34.',
         code='invalid_cnpj'
     )
-    cnpj = models.CharField(max_length=18, validators=[cnpj_validator], unique=True, blank=True, null=True)
+    cnpj = models.CharField(max_length=18, validators=[cnpj_validator], unique=True, blank=True, null=True,default=None)
 
     cpf_validator = RegexValidator(
         regex=r'^\d{3}\.\d{3}\.\d{3}-\d{2}$',
         message='CPF deve seguir o formato 123.456.789-01.',
         code='invalid_cpf'
     )
-    cpf = models.CharField(max_length=14, validators=[cpf_validator], unique=True, blank=True, null=True)
+    cpf = models.CharField(max_length=14, validators=[cpf_validator], unique=True, blank=True, null=True,default=None)
     data_cadastro = models.DateTimeField(auto_now_add=True)
 
-    def clean(self):
-        if self.tipo_cliente == 'PJ' and not self.cnpj:
-            raise ValidationError({'cnpj': 'CNPJ é obrigatório para Pessoa Jurídica.'})
-        elif self.tipo_cliente == 'PF' and not self.cpf:
-            raise ValidationError({'cpf': 'CPF é obrigatório para Pessoa Física.'})
-
+    
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
