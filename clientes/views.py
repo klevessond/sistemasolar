@@ -3,7 +3,7 @@ from django.http import HttpResponse,JsonResponse
 from .models import Cliente, Estado, Cidade, Bairro
 from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm
 from django.urls import reverse
-
+from django.db.models import Max
 
 def cadastro_estado(request):
     if request.method == 'POST':
@@ -17,7 +17,10 @@ def cadastro_estado(request):
             if origin_page == 'cadastro_cliente':
                 # Salvar o estado no banco de dados
                 form.save()
-                return redirect('cadastro_cliente')
+                max_id = Estado.objects.all().aggregate(Max('id'))['id__max']  # Obtém o maior ID dos estados
+                return redirect(reverse('cadastro_cliente') + f'?max_id={max_id}')
+
+
             else:
                     return redirect('lista_estado')
     else:
@@ -76,6 +79,7 @@ def clientes(request):
     return render(request, 'clientes/clientes.html', {'clientes': clientes, 'limpar_store': limpar_store})
 
 def cadastro_cliente(request):
+    max_id = request.GET.get('max_id')  # Captura o parâmetro limpar_store da URL
     if request.method == 'POST':
         form = ClienteForm(request.POST or None)
         print(form)
@@ -97,7 +101,10 @@ def cadastro_cliente(request):
         formEstados = EstadoForm()
         formCidade = CidadeForm()
         formBairro = BairroForm()
-        return render(request, 'clientes/cadastro_cliente.html', {'cliente_form_data': cliente_form_data,'form': form,'formEstados':formEstados,'formCidade':formCidade, 'formBairro':formBairro })
+        #max_id = None
+        return render(request, 'clientes/cadastro_cliente.html',
+         {'cliente_form_data': cliente_form_data,'form': form,'formEstados':formEstados,'formCidade':formCidade,
+          'formBairro':formBairro, 'max_id':max_id })
 
 def get_cidades(request):
     estado_id = request.GET.get('estado_id')
