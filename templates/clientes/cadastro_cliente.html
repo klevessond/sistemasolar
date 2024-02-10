@@ -90,10 +90,16 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-      if ("{{max_id}}" !== null && "{{max_id}}" !== undefined) {
+      if ("{{max_id}}" !== 'None') {
         // Faça algo se a variável Django não for None
         console.log("O valor da variável Django é: " + "{{max_id}}");
-        $('#id_estado').val(34).change();
+        var max_id_estado = "{{max_id}}";
+        console.log('valor da varial html: ',max_id_estado);
+        $('#id_estado').val(max_id_estado).change();
+        estado = max_id_estado;
+        console.log('valor da variavel estado: ',estado);
+        localStorage.setItem('estado', estado);
+
     } else {
         // Faça algo se a variável Django for None
         console.log("A variável Django é None.");
@@ -103,6 +109,8 @@
               // Limpa o campo do bairro
               $('#id_bairro').val('');
               var estadoId = $(this).val();
+                  max_id_estado=null;
+                  estado=estadoId;
               console.log('Estado selecionada:', estadoId);
                 if (estadoId) {
                     $.ajax({
@@ -155,8 +163,7 @@
                 console.log('Bairro selecionada:', bairroId);
                 });
         });
-    </script>
-    <script>
+
     $(document).ready(function() {
         // Quando o link for clicado
         $('#cadastro_estado').click(function(e) {
@@ -184,8 +191,7 @@
             $('#Modal_cadastro_bairro').modal('show');
         });
     });
-</script>
-<script>
+
 
     $(document).ready(function () {
         var timeout;
@@ -211,7 +217,7 @@
         $('#id_nome_completo').val(nomeCompleto);
         $('#id_rua').val(rua);
         $('#id_numero').val(numero);
-        if (estado) {
+        if (estado && max_id_estado == null) {
         // Define o valor do campo 'id_estado' com base no localStorage
         $('#id_estado').val(estado).change();
         }
