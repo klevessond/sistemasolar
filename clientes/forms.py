@@ -1,6 +1,35 @@
 from django import forms
 from django.core.validators import RegexValidator, ValidationError, EmailValidator
-from .models import Cliente
+from .models import Cliente, Estado, Cidade, Bairro
+
+
+class EstadoForm(forms.ModelForm):
+    class Meta:
+        model = Estado
+        fields = ['nome', 'sigla']
+        origin_page = forms.CharField(widget=forms.HiddenInput(), initial='cadastro_cliente')
+
+class CidadeForm(forms.ModelForm):
+    class Meta:
+        model = Cidade
+        fields = ['nome', 'estado']
+        origin_page = forms.CharField(widget=forms.HiddenInput(), initial='cadastro_cliente')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ordena as opções de estado por nome na ordem alfabética
+        self.fields['estado'].queryset = self.fields['estado'].queryset.order_by('nome')
+
+class BairroForm(forms.ModelForm):
+    class Meta:
+        model = Bairro
+        fields = ['nome', 'cidade']
+        origin_page = forms.CharField(widget=forms.HiddenInput(), initial='cadastro_cliente')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ordena as opções de cidade por nome na ordem alfabética
+        self.fields['cidade'].queryset = self.fields['cidade'].queryset.order_by('nome')
 
 class ClienteForm(forms.ModelForm):
     class Meta:
@@ -46,8 +75,34 @@ class ClienteForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         tipo_cliente = cleaned_data.get('tipo_cliente')
+        cidade = cleaned_data.get('cidade')
+        bairro = cleaned_data.get('bairro')
 
         if tipo_cliente == 'PJ' and not cleaned_data.get('cnpj'):
             raise ValidationError({'cnpj': 'CNPJ é obrigatório para Pessoa Jurídica.'})
         elif tipo_cliente == 'PF' and not cleaned_data.get('cpf'):
             raise ValidationError({'cpf': 'CPF é obrigatório para Pessoa Física.'})
+
+    def __init__(self, *args, **kwargs):
+        super(ClienteForm, self).__init__(*args, **kwargs)
+        cidades = Cidade.objects.values_list('id', 'nome')
+        bairros = Bairro.objects.values_list('id', 'nome')
+
+        self.fields['cidade'].choices = [('', 'Escolha uma cidade')] + list(cidades)
+        self.fields['bairro'].choices = [('', 'Escolha um bairro')] + list(bairros)
+
+        # Adicione aqui a lógica para imprimir as opções de Cidade e Bairro
+        print('Opções de Cidade:', list(Cidade.objects.values_list('id', 'nome')))
+        print('Opções de Bairro:', list(Bairro.objects.values_list('id', 'nome')))
+
+    def clean_cidade(self):
+        cidade = self.cleaned_data['cidade']
+        if not cidade:
+            raise ValidationError('Escolha uma cidade válida.')
+        return cidade
+
+    def clean_bairro(self):
+        bairro = self.cleaned_data['bairro']
+        if not bairro:
+            raise ValidationError('Escolha um bairro válido.')
+        return bairro
