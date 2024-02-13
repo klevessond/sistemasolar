@@ -17,8 +17,8 @@ def cadastro_estado(request):
             if origin_page == 'cadastro_cliente':
                 # Salvar o estado no banco de dados
                 form.save()
-                max_id = Estado.objects.all().aggregate(Max('id'))['id__max']  # Obtém o maior ID dos estados
-                return redirect(reverse('cadastro_cliente') + f'?max_id={max_id}')
+                max_id_estado = Estado.objects.all().aggregate(Max('id'))['id__max']  # Obtém o maior ID dos estados
+                return redirect(reverse('cadastro_cliente') + f'?max_id_estado={max_id_estado}')
 
 
             else:
@@ -40,7 +40,8 @@ def cadastro_cidade(request):
             if origin_page == 'cadastro_cliente':
                 # Salvar o estado no banco de dados
                 form.save()
-                return redirect('cadastro_cliente')
+                max_id_cidade = Cidade.objects.all().aggregate(Max('id'))['id__max']  # Obtém o maior ID dos estados
+                return redirect(reverse('cadastro_cliente') + f'?max_id_cidade={max_id_cidade}')
             else:
                 return redirect('lista_cidade')
     else:
@@ -59,7 +60,8 @@ def cadastro_bairro(request):
             if origin_page == 'cadastro_cliente':
                 # Salvar o estado no banco de dados
                 form.save()
-                return redirect('cadastro_cliente')
+                max_id_bairro = Bairro.objects.all().aggregate(Max('id'))['id__max']  # Obtém o maior ID dos estados
+                return redirect(reverse('cadastro_cliente') + f'?max_id_bairro={max_id_bairro}')
             else:
                 return redirect('lista_bairro')
     else:
@@ -79,7 +81,9 @@ def clientes(request):
     return render(request, 'clientes/clientes.html', {'clientes': clientes, 'limpar_store': limpar_store})
 
 def cadastro_cliente(request):
-    max_id = request.GET.get('max_id')  # Captura o parâmetro limpar_store da URL
+    max_id_estado = request.GET.get('max_id_estado')  # Captura o parâmetro
+    max_id_cidade = request.GET.get('max_id_cidade')  # Captura o parâmetro
+    max_id_bairro = request.GET.get('max_id_bairro')  # Captura o parâmetro
     if request.method == 'POST':
         form = ClienteForm(request.POST or None)
         print(form)
@@ -104,7 +108,7 @@ def cadastro_cliente(request):
         #max_id = None
         return render(request, 'clientes/cadastro_cliente.html',
          {'cliente_form_data': cliente_form_data,'form': form,'formEstados':formEstados,'formCidade':formCidade,
-          'formBairro':formBairro, 'max_id':max_id })
+          'formBairro':formBairro, 'max_id_estado':max_id_estado,'max_id_cidade':max_id_cidade, 'max_id_bairro':max_id_bairro })
 
 def get_cidades(request):
     estado_id = request.GET.get('estado_id')

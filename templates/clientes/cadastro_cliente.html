@@ -1,7 +1,6 @@
 {% extends 'shared/base.html' %}
 {% load static %}
 {% block content %}
-{{max_id}}
 <form method="post" id="form_cadastro_cliente">
         {% csrf_token %}
         {{ form.as_p }}
@@ -17,7 +16,6 @@
      </a>
 
   </form>
-
   <div class="modal fade" id="Modal_cadastro_estado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -90,20 +88,39 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-      if ("{{max_id}}" !== 'None') {
+      if ("{{max_id_estado}}" !== 'None') {
         // Faça algo se a variável Django não for None
-        console.log("O valor da variável Django é: " + "{{max_id}}");
-        var max_id_estado = "{{max_id}}";
+        console.log("O valor da variável Django é: " + "{{max_id_estado}}");
+        var max_id_estado = "{{max_id_estado}}";
         console.log('valor da varial html: ',max_id_estado);
         $('#id_estado').val(max_id_estado).change();
         estado = max_id_estado;
         console.log('valor da variavel estado: ',estado);
         localStorage.setItem('estado', estado);
 
-    } else {
-        // Faça algo se a variável Django for None
-        console.log("A variável Django é None.");
     }
+    if ("{{max_id_cidade}}" !== 'None') {
+      // Faça algo se a variável Django não for None
+      console.log("O valor da variável Django é: " + "{{max_id_cidade}}");
+      var max_id_cidade = "{{max_id_cidade}}";
+      console.log('valor da varial html: ',max_id_cidade);
+      $('#id_cidade').val(max_id_cidade).change();
+      cidade = max_id_cidade;
+      console.log('valor da variavel cidade: ',cidade);
+      localStorage.setItem('cidade', cidade);
+
+  }
+  if ("{{max_id_bairro}}" !== 'None') {
+    // Faça algo se a variável Django não for None
+    console.log("O valor da variável Django é: " + "{{max_id_bairro}}");
+    var max_id_bairro = "{{max_id_bairro}}";
+    console.log('valor da varial html: ',max_id_bairro);
+    $('#id_bairro').val(max_id_bairro).change();
+    bairro = max_id_bairro;
+    console.log('valor da variavel cidade: ',bairro);
+    localStorage.setItem('bairro', bairro);
+
+} 
         $(document).ready(function() {
             $('#id_estado').change(function() {
               // Limpa o campo do bairro
@@ -136,6 +153,8 @@
 
             $('#id_cidade').change(function() {
                 var cidadeId = $(this).val();
+                max_id_cidade=null;
+                cidade=cidadeId;
                 console.log('Cidade selecionada:', cidadeId);
                 if (cidadeId) {
                     $.ajax({
@@ -160,6 +179,8 @@
             });
             $('#id_bairro').change(function() {
                 var bairroId = $(this).val();
+                max_id_bairro=null;
+                bairro=bairroId;
                 console.log('Bairro selecionada:', bairroId);
                 });
         });
