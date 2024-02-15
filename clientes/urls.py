@@ -1,5 +1,5 @@
 from django.urls import path
-from clientes.views import clientes, cadastro_cliente, get_cidades, get_bairros, cadastro_estado, cadastro_cidade, cadastro_bairro
+from clientes.views import clientes, cadastro_cliente, get_cidades, get_bairros, cadastro_estado,cadastro_cidade, cadastro_bairro, editar_cliente
 from . import views
 
 urlpatterns = [
@@ -10,5 +10,7 @@ urlpatterns = [
         path('cadastro_estado/', cadastro_estado, name='cadastro_estado'),
         path('cadastro_cidade/', cadastro_cidade, name='cadastro_cidade'),
         path('cadastro_bairro/', cadastro_bairro, name='cadastro_bairro'),
+        path('editar_cliente/<int:cliente_id>', editar_cliente, name='editar_cliente'),
+
 
 ]

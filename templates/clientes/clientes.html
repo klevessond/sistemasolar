@@ -35,11 +35,32 @@
           </h1>
           <h6 class="text-white">Cadastrar Cliente</h6>
         </div>
-      </div></a>
-
-    </div>
-  </div>
-
+      </div>
+    </div></a>
+  <!-- Column -->
+  <a href="{% url 'cadastro_cliente' %}">
+    <div class="col-md-6 col-lg-2 col-xlg-3">
+      <div class="card card-hover">
+        <div class="box bg-cyan text-center">
+          <h1 class="font-light text-white">
+            <i class="mdi   mdi-crosshairs-gps"></i>
+          </h1>
+          <h6 class="text-white">Cadastrar Cliente</h6>
+        </div>
+      </div>
+   </div></a>
+   <!-- Column -->
+   <a href="{% url 'cadastro_cliente' %}">
+     <div class="col-md-6 col-lg-2 col-xlg-3">
+       <div class="card card-hover">
+         <div class="box bg-cyan text-center">
+           <h1 class="font-light text-white">
+             <i class="mdi   mdi-crosshairs-gps"></i>
+           </h1>
+           <h6 class="text-white">Cadastrar Cliente</h6>
+         </div>
+       </div>
+     </div></a>
 <p>
 <div>
 <table  class="table table-striped" style="width:100%" id="tabela_cliente">
@@ -52,6 +73,7 @@
                 <th>Celular</th>
                 <th>Tipo Cliente</th>
                 <th>Data Cadastro</th>
+                <th>Ediar</th>
             </tr>
         </thead>
         <tbody>
@@ -63,7 +85,8 @@
               <td>{{ cliente.bairro.nome }}</td>
               <td>{{ cliente.numero_celular }}</td>
               <td>{{ cliente.tipo_cliente }}</td>
-                <td>{{ cliente.data_cadastro }}</td>
+              <td>{{ cliente.data_cadastro }}</td>
+              <td><a href="{% url 'editar_cliente' cliente.id %}">Editar</a></td> <!-- Link de edição -->
             </tr>
           {% endfor %}
         </tbody>

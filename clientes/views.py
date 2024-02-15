@@ -110,6 +110,19 @@ def cadastro_cliente(request):
          {'cliente_form_data': cliente_form_data,'form': form,'formEstados':formEstados,'formCidade':formCidade,
           'formBairro':formBairro, 'max_id_estado':max_id_estado,'max_id_cidade':max_id_cidade, 'max_id_bairro':max_id_bairro })
 
+def editar_cliente(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
+    if request.method == 'POST':
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect('clientes')  # Redireciona para a página de clientes após a edição
+    else:
+        form = ClienteForm(instance=cliente)
+    return render(request, 'clientes/editar_cliente.html', {'form': form, 'cliente': cliente})
+
+
+
 def get_cidades(request):
     estado_id = request.GET.get('estado_id')
     cidades = Cidade.objects.filter(estado_id=estado_id).order_by('nome')  # Ordena por nome
