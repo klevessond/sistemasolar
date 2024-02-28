@@ -1,12 +1,17 @@
 from django import forms
 from django.core.validators import RegexValidator, ValidationError, EmailValidator
-from .models import Cliente, Estado, Cidade, Bairro
+from .models import Cliente, Estado, Cidade, Bairro, Propriedade
 
 
 class EstadoForm(forms.ModelForm):
     class Meta:
         model = Estado
         fields = ['nome', 'sigla']
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control'}),
+            'sigla': forms.TextInput(attrs={'class': 'form-control'}),
+            'origin_page': forms.HiddenInput()  # Mantendo o campo oculto como está
+        }
         origin_page = forms.CharField(widget=forms.HiddenInput(), initial='cadastro_cliente')
 
 
@@ -14,6 +19,11 @@ class CidadeForm(forms.ModelForm):
     class Meta:
         model = Cidade
         fields = ['nome', 'estado']
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control'}),
+            'estado': forms.Select(attrs={'class': 'form-control'}),
+            'origin_page': forms.HiddenInput()
+        }
         origin_page = forms.CharField(widget=forms.HiddenInput(), initial='cadastro_cliente')
 
     def __init__(self, *args, **kwargs):
@@ -25,6 +35,11 @@ class BairroForm(forms.ModelForm):
     class Meta:
         model = Bairro
         fields = ['nome', 'cidade']
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control'}),
+            'cidade': forms.Select(attrs={'class': 'form-control'}),
+            'origin_page': forms.HiddenInput()
+        }
         origin_page = forms.CharField(widget=forms.HiddenInput(), initial='cadastro_cliente')
 
     def __init__(self, *args, **kwargs):
@@ -36,42 +51,65 @@ class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = '__all__'  # Use '__all__' para incluir todos os campos do modelo no formulário
+        widgets = {
+            'nome_completo': forms.TextInput(attrs={'class': 'form-control'}),
+            'rua': forms.TextInput(attrs={'class': 'form-control'}),
+            'numero': forms.NumberInput(attrs={'class': 'form-control'}),
+            'estado': forms.Select(attrs={'class': 'form-control'}),
+            'cidade': forms.Select(attrs={'class': 'form-control'}),
+            'bairro': forms.Select(attrs={'class': 'form-control'}),
+            'ponto_referencia': forms.TextInput(attrs={'class': 'form-control'}),
+            'tipo_cliente': forms.Select(attrs={'class': 'form-control'}),
+        }
 
-    # Adicione validadores adicionais ou personalizações aqui
-    cep = forms.CharField(max_length=9, validators=[RegexValidator(
-        regex=r'^\d{5}-\d{3}$',
-        message='CEP deve seguir o formato 12345-678.',
-        code='invalid_cep'
-    )])
+    def __init__(self, *args, **kwargs):
+        super(ClienteForm, self).__init__(*args, **kwargs)
+        self.fields['cep'] = forms.CharField(
+            max_length=9, 
+            validators=[RegexValidator(regex=r'^\d{5}-\d{3}$', message='CEP deve seguir o formato 12345-678.')],
+            widget=forms.TextInput(attrs={'class': 'form-control'})
+        )
+        self.fields['telefone_fixo'] = forms.CharField(
+            required=False, 
+            validators=[RegexValidator(regex=r'^\(\d{2}\) \d{4,5}-\d{4}$',message='Telefone fixo deve seguir o formato (xx) xxxx-xxxx ou (xx) xxxxx-xxxx.')],
+            widget=forms.TextInput(attrs={'class': 'form-control'})
+        )
 
-    telefone_fixo = forms.CharField(max_length=15, required=False, validators=[RegexValidator(
-        regex=r'^\(\d{2}\) \d{4,5}-\d{4}$',
-        message='Telefone fixo deve seguir o formato (xx) xxxx-xxxx ou (xx) xxxxx-xxxx.',
-        code='invalid_telefone_fixo'
-    )])
+        self.fields['numero_celular'] = forms.CharField(
+            required=False, 
+            validators=[RegexValidator(regex=r'^\(\d{2}\) \d{5}-\d{4}$',message='Número de celular deve seguir o formato (xx) xxxxx-xxxx.')],
+            widget=forms.TextInput(attrs={'class': 'form-control'})
+        )
 
-    numero_celular = forms.CharField(max_length=15, required=False, validators=[RegexValidator(
-        regex=r'^\(\d{2}\) \d{5}-\d{4}$',
-        message='Número de celular deve seguir o formato (xx) xxxxx-xxxx.',
-        code='invalid_celular'
-    )])
+        self.fields['email'] = forms.CharField(
+            required=False, 
+            validators=[EmailValidator(message='E-mail deve ser válido.')],
+            widget=forms.EmailInput(attrs={'class': 'form-control'})
+        )
 
-    email = forms.CharField(max_length=100, required=False, validators=[EmailValidator(
-        message='E-mail deve ser válido.',
-        code='invalid_email'
-    )])
+        self.fields['cnpj'] = forms.CharField(
+            required=False, 
+            validators=[RegexValidator(regex=r'^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$', message='CNPJ deve seguir o formato 12.345.678/9012-34.') ],
+            widget=forms.TextInput(attrs={'class': 'form-control'}),
+            initial=None  # Se você quiser definir um valor inicial
+        )
 
-    cnpj = forms.CharField(max_length=18, required=False, validators=[RegexValidator(
-        regex=r'^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$',
-        message='CNPJ deve seguir o formato 12.345.678/9012-34.',
-        code='invalid_cnpj'
-    )])
+        self.fields['cpf'] = forms.CharField(
+            required=False, 
+            validators=[RegexValidator(regex=r'^\d{3}\.\d{3}\.\d{3}-\d{2}$',message='CPF deve seguir o formato 123.456.789-01.')],
+            widget=forms.TextInput(attrs={'class': 'form-control'}),
+            initial=None
+        )
+        cidades = Cidade.objects.values_list('id', 'nome')
+        bairros = Bairro.objects.values_list('id', 'nome')
 
-    cpf = forms.CharField(max_length=14, required=False, validators=[RegexValidator(
-        regex=r'^\d{3}\.\d{3}\.\d{3}-\d{2}$',
-        message='CPF deve seguir o formato 123.456.789-01.',
-        code='invalid_cpf'
-    )])
+        self.fields['cidade'].choices = [('', 'Escolha uma cidade')] + list(cidades)
+        self.fields['bairro'].choices = [('', 'Escolha um bairro')] + list(bairros)
+        self.fields['estado'].queryset = self.fields['estado'].queryset.order_by('nome')
+
+        # Adicione aqui a lógica para imprimir as opções de Cidade e Bairro
+        print('Opções de Cidade:', list(Cidade.objects.values_list('id', 'nome')))
+        print('Opções de Bairro:', list(Bairro.objects.values_list('id', 'nome')))
 
     def clean(self):
         cleaned_data = super().clean()
@@ -84,18 +122,6 @@ class ClienteForm(forms.ModelForm):
         elif tipo_cliente == 'PF' and not cleaned_data.get('cpf'):
             raise ValidationError({'cpf': 'CPF é obrigatório para Pessoa Física.'})
 
-    def __init__(self, *args, **kwargs):
-        super(ClienteForm, self).__init__(*args, **kwargs)
-        cidades = Cidade.objects.values_list('id', 'nome')
-        bairros = Bairro.objects.values_list('id', 'nome')
-
-        self.fields['cidade'].choices = [('', 'Escolha uma cidade')] + list(cidades)
-        self.fields['bairro'].choices = [('', 'Escolha um bairro')] + list(bairros)
-        self.fields['estado'].queryset = self.fields['estado'].queryset.order_by('nome')
-
-        # Adicione aqui a lógica para imprimir as opções de Cidade e Bairro
-        print('Opções de Cidade:', list(Cidade.objects.values_list('id', 'nome')))
-        print('Opções de Bairro:', list(Bairro.objects.values_list('id', 'nome')))
 
     def clean_cidade(self):
         cidade = self.cleaned_data['cidade']
@@ -138,3 +164,17 @@ class ClienteForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+class PropriedadeForm(forms.ModelForm):
+    class Meta:
+        model = Propriedade
+        fields = ['cliente', 'propriedade', 'area_instalacao', 'consumo', 'tipo_telhado', 'latitude', 'longitude']
+        widgets = {
+            'cliente': forms.Select(attrs={'class': 'form-control'}),
+            'propriedade': forms.Select(attrs={'class': 'form-control'}),
+            'area_instalacao': forms.NumberInput(attrs={'class': 'form-control'}),
+            'consumo': forms.NumberInput(attrs={'class': 'form-control'}),
+            'tipo_telhado': forms.Select(attrs={'class': 'form-control'}),
+            'latitude': forms.NumberInput(attrs={'class': 'form-control'}),
+            'longitude': forms.NumberInput(attrs={'class': 'form-control'}),
+        }

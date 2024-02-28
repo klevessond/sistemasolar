@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse,JsonResponse
 from .models import Cliente, Estado, Cidade, Bairro
-from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm
+from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm, PropriedadeForm
 from django.urls import reverse
 from django.db.models import Max
 
@@ -134,3 +134,13 @@ def get_bairros(request):
     bairros = Bairro.objects.filter(cidade_id=cidade_id).order_by('nome')  # Ordena por nome
     data = [{'id': bairro.id, 'nome': bairro.nome} for bairro in bairros]
     return JsonResponse(data, safe=False)
+
+def cadastro_propriedade(request):
+    if request.method == 'POST':
+        form = PropriedadeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('propriedades_listar')  # Supondo que você tenha uma URL para listar propriedades
+    else:
+        form = PropriedadeForm()
+    return render(request, 'clientes/cadastro_propriedade.html', {'form': form})

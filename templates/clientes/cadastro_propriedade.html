@@ -1,0 +1,12 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <h2>Cadastrar Propriedade</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+</div>
+{% endblock %}

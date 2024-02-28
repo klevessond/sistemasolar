@@ -95,3 +95,33 @@ class Cliente(models.Model):
 
     def __str__(self):
         return self.nome_completo
+
+class Propriedade(models.Model):
+    # Definindo as escolhas para o campo 'propriedade'
+    PROPRIEDADE_CHOICES = [
+        ('residencial', 'Residencial'),
+        ('comercial', 'Comercial'),
+        ('industrial', 'Industrial'),
+    ]
+
+    # Definindo as escolhas para o campo 'tipo_telhado'
+    TIPO_TELHADO_CHOICES = [
+        ('inclinado', 'Telhado Inclinado'),
+        ('plano', 'Telhado Plano'),
+        ('metal', 'Telhado de Metal'),
+    ]
+
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name='Cliente')
+    propriedade = models.CharField(max_length=50, choices=PROPRIEDADE_CHOICES, verbose_name='Tipo de Propriedade')
+    area_instalacao = models.IntegerField(verbose_name='Área de Instalação')
+    consumo = models.IntegerField(verbose_name='Consumo Mensal')
+    tipo_telhado = models.CharField(max_length=50, choices=TIPO_TELHADO_CHOICES, verbose_name='Tipo de Telhado')
+    latitude = models.FloatField(null=True, blank=True, verbose_name='Latitude')
+    longitude = models.FloatField(null=True, blank=True, verbose_name='Longitude')
+
+    def __str__(self):
+        return f"{self.get_propriedade_display()} - {self.cliente.nome_completo}"
+
+    class Meta:
+        verbose_name = 'Propriedade'
+        verbose_name_plural = 'Propriedades'
