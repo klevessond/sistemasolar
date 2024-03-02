@@ -3,95 +3,127 @@
 {% block content %}
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-8 offset-md-2">
+        <div class="col-md-9 offset-md-1">
             <div class="card">
                 <div class="card-header">
                     Cadastro de Cliente
                 </div>
                 <div class="card-body">
-                    <form method="post" id="form_cadastro_cliente">
+                    <form method="post" id="form_cadastro_cliente" class="form-horizontal">
                         {% csrf_token %}
-                        <div class="form-group">
-                            <label for="id_nome_completo">Nome Completo:</label>
-                            {{ form.nome_completo }}
+                        <div class="row">
+                      <!-- Primeira Coluna: NOME até CEP -->
+                            <div class="col-md-6">
+                              <div class="form-group row">
+                                  <label for="id_nome_completo" class="col-sm-3 text-end control-label col-form-label">Nome Completo:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.nome_completo }}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label for="id_rua" class="col-sm-3 text-end control-label col-form-label">Rua:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.rua }}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label for="id_numero" class="col-sm-3 text-end control-label col-form-label">Número:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.numero }}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label for="id_estado" class="col-sm-3 text-end control-label col-form-label">Estado:</label>
+                                  <div class="col-sm-9">
+                                      <div class="input-group">
+                                          {{ form.estado }}
+                                          <div class="input-group-append">
+                                              <a class="btn btn-outline-secondary" id="cadastro_estado" data-popup="yes" href="cadastro_estado/?_to_field=id&amp;_popup=1" title="Adicionar outro estado">
+                                                  <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Estado
+                                              </a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label for="id_cidade" class="col-sm-3 text-end control-label col-form-label">Cidade:</label>
+                                  <div class="col-sm-9">
+                                      <div class="input-group">
+                                          {{ form.cidade }}
+                                          <div class="input-group-append">
+                                              <a class="btn btn-outline-secondary" id="cadastro_cidade" data-popup="yes" href="cadastro_cidade/?_to_field=id&amp;_popup=1" title="Adicionar outra cidade">
+                                                  <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Cidade
+                                              </a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label for="id_bairro" class="col-sm-3 text-end control-label col-form-label">Bairro:</label>
+                                  <div class="col-sm-9">
+                                      <div class="input-group">
+                                          {{ form.bairro }}
+                                          <div class="input-group-append">
+                                              <a class="btn btn-outline-secondary" id="cadastro_bairro" data-popup="yes" href="cadastro_bairro/?_to_field=id&amp;_popup=1" title="Adicionar outro bairro">
+                                                  <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Bairro
+                                              </a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label for="id_cep" class="col-sm-3 text-end control-label col-form-label">CEP:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.cep }}
+                                  </div>
+                              </div>
+                        <div class="form-group row">
+                            <label for="id_ponto_referencia" class="col-sm-3 text-end control-label col-form-label">Ponto de Referência:</label>
+                            <div class="col-sm-9">
+                                {{ form.ponto_referencia }}
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="id_rua">Rua:</label>
-                            {{ form.rua }}
+                      </div>
+                      <!-- Segunda Coluna: PONTO DE REFERÊNCIA até CPF -->
+                        <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="id_telefone_fixo" class="col-sm-3 text-end control-label col-form-label">Telefone Fixo:</label>
+                            <div class="col-sm-9">
+                                {{ form.telefone_fixo }}
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="id_numero">Número:</label>
-                            {{ form.numero }}
+                        <div class="form-group row">
+                            <label for="id_numero_celular" class="col-sm-3 text-end control-label col-form-label">Celular:</label>
+                            <div class="col-sm-9">
+                                {{ form.numero_celular }}
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="id_estado">Estado:</label>
-                            <div class="input-group">
-                            {{ form.estado }}
-                            <!-- Botão de adicionar estado -->
-                            <div class="input-group-append">
-                            <a class="btn btn-outline-secondary" id="cadastro_estado" data-popup="yes" href="cadastro_estado/?_to_field=id&amp;_popup=1"
-                             title="Adicionar outro estado"><img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Estado
-                           </a>
-                           </div>
-                           </div>
+                        <div class="form-group row">
+                            <label for="id_email" class="col-sm-3 text-end control-label col-form-label">Email:</label>
+                            <div class="col-sm-9">
+                                {{ form.email }}
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="id_cidade">Cidade:</label>
-                            <div class="input-group">
-                            {{ form.cidade }}
-                            <!-- Botão de adicionar cidade -->
-                            <div class="input-group-append">
-                            <a class="btn btn-outline-secondary" id="cadastro_cidade" data-popup="yes" href="cadastro_cidade/?_to_field=id&amp;_popup=1"
-                             title="Adicionar outra cidade"><img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Cidade
-                           </a>
-                          </div>
-                         </div>
+                        <div class="form-group row">
+                            <label for="id_tipo_cliente" class="col-sm-3 text-end control-label col-form-label">Tipo de Cliente:</label>
+                            <div class="col-sm-9">
+                                {{ form.tipo_cliente }}
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="id_bairro">Bairro:</label>
-                            <div class="input-group">
-                            {{ form.bairro }}
-                            <!-- Botão de adicionar bairro -->
-                            <div class="input-group-append">
-                            <a class="btn btn-outline-secondary" id="cadastro_bairro" data-popup="yes" href="cadastro_bairro/?_to_field=id&amp;_popup=1"
-                             title="Adicionar  outro bairro"><img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Bairro
-                           </a>
-                         </div>
+                        <div class="form-group row">
+                            <label for="id_cnpj" class="col-sm-3 text-end control-label col-form-label">CNPJ:</label>
+                            <div class="col-sm-9">
+                                {{ form.cnpj }}
+                            </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="id_cpf" class="col-sm-3 text-end control-label col-form-label">CPF:</label>
+                            <div class="col-sm-9">
+                                {{ form.cpf }}
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="id_cep">CEP:</label>
-                            {{ form.cep }}
-                        </div>
-                        <div class="form-group">
-                            <label for="id_ponto_referencia">Ponto de Referência:</label>
-                            {{ form.ponto_referencia }}
-                        </div>
-                        <div class="form-group">
-                            <label for="id_telefone_fixo">Telefone Fixo:</label>
-                            {{ form.telefone_fixo }}
-                        </div>
-                        <div class="form-group">
-                            <label for="id_numero_celular">Celular:</label>
-                            {{ form.numero_celular }}
-                        </div>
-                        <div class="form-group">
-                            <label for="id_email">Email:</label>
-                            {{ form.email }}
-                        </div>
-                        <div class="form-group">
-                            <label for="id_tipo_cliente">Tipo de Cliente:</label>
-                            {{ form.tipo_cliente }}
-                        </div>
-                        <div class="form-group">
-                            <label for="id_cnpj">CNPJ:</label>
-                            {{ form.cnpj }}
-                        </div>
-                        <div class="form-group">
-                            <label for="id_cpf">CPF:</label>
-                            {{ form.cpf }}
-                        </div>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Enviar</button>
                     </form>
                 </div>
             </div>
