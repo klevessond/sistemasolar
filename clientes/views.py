@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse,JsonResponse
-from .models import Cliente, Estado, Cidade, Bairro
+from .models import Cliente, Estado, Cidade, Bairro, Propriedade
 from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm, PropriedadeForm
 from django.urls import reverse
 from django.db.models import Max
@@ -135,12 +135,25 @@ def get_bairros(request):
     data = [{'id': bairro.id, 'nome': bairro.nome} for bairro in bairros]
     return JsonResponse(data, safe=False)
 
-def cadastro_propriedade(request):
+def cadastro_propriedade(request,cliente_id):
+    cliente = get_object_or_404(Cliente, pk=cliente_id)  # Busca o cliente pelo ID
+    # Aqui você pode adicionar lógica para criar ou manipular uma propriedade relacionada ao cliente
+    # Por exemplo, você pode querer passar o cliente para um formulário de Propriedade como um valor inicial
+    form = PropriedadeForm(initial={'cliente': cliente})  # Assumindo que você tem um campo 'cliente' no seu form de Propriedade
+
     if request.method == 'POST':
         form = PropriedadeForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('propriedades_listar')  # Supondo que você tenha uma URL para listar propriedades
-    else:
-        form = PropriedadeForm()
-    return render(request, 'clientes/cadastro_propriedade.html', {'form': form})
+            propriedade = form.save(commit=False)
+            propriedade.cliente = cliente  # Definindo o cliente da propriedade
+            propriedade.save()
+            # Redireciona para uma nova URL, por exemplo, a página de detalhes da propriedade
+            return redirect('detalhar_cliente', cliente.id)
+
+    return render(request, 'clientes/cadastro_propriedade.html', {'form': form, 'cliente': cliente})
+
+
+def detalhar_cliente(request, cliente_id):
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    propriedades = Propriedade.objects.filter(cliente=cliente)
+    return render(request, 'clientes/detalhar_cliente.html', {'cliente': cliente, 'propriedades': propriedades})

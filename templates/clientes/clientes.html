@@ -73,7 +73,7 @@
                 <th>Celular</th>
                 <th>Tipo Cliente</th>
                 <th>Data Cadastro</th>
-                <th>Ediar</th>
+                <th>Detalhar</th>
             </tr>
         </thead>
         <tbody>
@@ -86,7 +86,7 @@
               <td>{{ cliente.numero_celular }}</td>
               <td>{{ cliente.tipo_cliente }}</td>
               <td>{{ cliente.data_cadastro }}</td>
-              <td><a href="{% url 'editar_cliente' cliente.id %}">Editar</a></td> <!-- Link de edição -->
+              <td><a href="{% url 'detalhar_cliente' cliente.id %}">Detalhar</a></td> <!-- Link de edição -->
             </tr>
           {% endfor %}
         </tbody>

@@ -1,0 +1,52 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-9 offset-md-1">
+            <div class="card">
+                <div class="card-header">
+                    Detalhes do Cliente
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Primeira Coluna: NOME até CEP -->
+                        <div class="col-md-6">
+                            <p><strong>Nome Completo:</strong> {{ cliente.nome_completo }}</p>
+                            <p><strong>Rua:</strong> {{ cliente.rua }}</p>
+                            <p><strong>Número:</strong> {{ cliente.numero }}</p>
+                            <p><strong>Estado:</strong> {{ cliente.estado.nome }}</p>
+                            <p><strong>Cidade:</strong> {{ cliente.cidade.nome }}</p>
+                            <p><strong>Bairro:</strong> {{ cliente.bairro.nome }}</p>
+                            <p><strong>CEP:</strong> {{ cliente.cep }}</p>
+                            <p><strong>Ponto de Referência:</strong> {{ cliente.ponto_referencia }}</p>
+                        </div>
+                        <!-- Segunda Coluna: TELEFONE FIXO até CPF -->
+                        <div class="col-md-6">
+                            <p><strong>Telefone Fixo:</strong> {{ cliente.telefone_fixo }}</p>
+                            <p><strong>Celular:</strong> {{ cliente.numero_celular }}</p>
+                            <p><strong>Email:</strong> {{ cliente.email }}</p>
+                            <p><strong>Tipo de Cliente:</strong> {{ cliente.get_tipo_cliente_display }}</p>
+                            <p><strong>CNPJ:</strong> {{ cliente.cnpj }}</p>
+                            <p><strong>CPF:</strong> {{ cliente.cpf }}</p>
+                        </div>
+                        {% if propriedades %}
+                          Propriedades
+                          <ul>
+                                {% for propriedade in propriedades %}
+                                    <li>{{ propriedade.get_propriedade_display }} - Área: {{ propriedade.area_instalacao }}m² - Consumo: {{ propriedade.consumo }} kWh/mês - Tipo de Telhado: {{ propriedade.get_tipo_telhado_display }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Este cliente não possui propriedades cadastradas.</p>
+                        {% endif %}
+                    </div>
+                    <a class="btn btn-primary" href="{% url 'clientes' %}">Consultar clientes</a>
+                    <a class="btn btn-primary" href="{% url 'cadastro_propriedade' cliente.id %}">Cadastrar Propriedade</a>
+                    <a class="btn btn-primary" href="{% url 'editar_cliente' cliente.id %}">Editar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
