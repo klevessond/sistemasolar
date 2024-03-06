@@ -69,16 +69,6 @@ def cadastro_bairro(request):
 
     return render(request, 'clientes/cadastro_bairro.html', {'form': form})
 
-# Create your views here.
-def clientes(request):
-    limpar_store = request.GET.get('limpar_store')  # Captura o parâmetro limpar_store da URL
-    if limpar_store:
-        # Lógica para limpar a store local, se necessário
-        # Aqui você pode fazer o que for necessário com o parâmetro limpar_store
-        print('Limpar store:', limpar_store)
-    clientes = Cliente.objects.select_related('cidade', 'bairro', 'estado').all()
-    print('limpar',limpar_store)
-    return render(request, 'clientes/clientes.html', {'clientes': clientes, 'limpar_store': limpar_store})
 
 def cadastro_cliente(request):
     max_id_estado = request.GET.get('max_id_estado')  # Captura o parâmetro
@@ -110,16 +100,75 @@ def cadastro_cliente(request):
          {'cliente_form_data': cliente_form_data,'form': form,'formEstados':formEstados,'formCidade':formCidade,
           'formBairro':formBairro, 'max_id_estado':max_id_estado,'max_id_cidade':max_id_cidade, 'max_id_bairro':max_id_bairro })
 
+# Create your views here.
+def clientes(request):
+    limpar_store = request.GET.get('limpar_store')  # Captura o parâmetro limpar_store da URL
+    if limpar_store:
+        # Lógica para limpar a store local, se necessário
+        # Aqui você pode fazer o que for necessário com o parâmetro limpar_store
+        print('Limpar store:', limpar_store)
+    clientes = Cliente.objects.select_related('cidade', 'bairro', 'estado').all()
+    print('limpar',limpar_store)
+    return render(request, 'clientes/clientes.html', {'clientes': clientes, 'limpar_store': limpar_store})
+
+# Create your views here.
+def estados(request):
+    estados = Estado.objects.all()
+    return render(request, 'clientes/estados.html', {'estados': estados})
+
+# Create your views here.
+def cidades(request):
+    cidades = Cidade.objects.all()
+    return render(request, 'clientes/cidades.html', {'cidades': cidades})
+
+# Create your views here.
+def bairros(request):
+    bairros = Bairro.objects.all()
+    return render(request, 'clientes/bairros.html', {'bairros': bairros})
+
 def editar_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, id=cliente_id)
     if request.method == 'POST':
         form = ClienteForm(request.POST, instance=cliente)
         if form.is_valid():
             form.save()
-            return redirect('clientes')  # Redireciona para a página de clientes após a edição
+            return redirect('detalhar_cliente', cliente_id)  # Redireciona para a página de clientes após a edição
     else:
         form = ClienteForm(instance=cliente)
     return render(request, 'clientes/editar_cliente.html', {'form': form, 'cliente': cliente})
+
+def editar_estado(request, estado_id):
+    estado = get_object_or_404(Estado, id=estado_id)
+    if request.method == 'POST':
+        form = EstadoForm(request.POST, instance=estado)
+        if form.is_valid():
+            form.save()
+            return redirect('detalhar_estado', estado_id)  # Redireciona para a página de clientes após a edição
+    else:
+        form = EstadoForm(instance=estado)
+    return render(request, 'clientes/editar_estado.html', {'form': form, 'estado': estado})
+
+def editar_cidade(request, cidade_id):
+    cidade = get_object_or_404(Cidade, id=cidade_id)
+    if request.method == 'POST':
+        form = CidadeForm(request.POST, instance=cidade)
+        if form.is_valid():
+            form.save()
+            return redirect('detalhar_cidade', cidade_id)  # Redireciona para a página de clientes após a edição
+    else:
+        form = CidadeForm(instance=cidade)
+    return render(request, 'clientes/editar_cidade.html', {'form': form, 'cidade': cidade})
+
+def editar_bairro(request, bairro_id):
+    bairro = get_object_or_404(Bairro, id=bairro_id)
+    if request.method == 'POST':
+        form = BairroForm(request.POST, instance=bairro)
+        if form.is_valid():
+            form.save()
+            return redirect('detalhar_bairro', bairro_id)  # Redireciona para a página de clientes após a edição
+    else:
+        form = BairroForm(instance=bairro)
+    return render(request, 'clientes/editar_bairro.html', {'form': form, 'bairro': bairro})
 
 
 
@@ -157,3 +206,15 @@ def detalhar_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     propriedades = Propriedade.objects.filter(cliente=cliente)
     return render(request, 'clientes/detalhar_cliente.html', {'cliente': cliente, 'propriedades': propriedades})
+
+def detalhar_estado(request, estado_id):
+    estado = get_object_or_404(Estado, pk=estado_id)
+    return render(request, 'clientes/detalhar_estado.html', {'estado': estado})
+
+def detalhar_cidade(request, cidade_id):
+    cidade = get_object_or_404(Cidade, pk=cidade_id)
+    return render(request, 'clientes/detalhar_cidade.html', {'cidade': cidade})
+
+def detalhar_bairro(request, bairro_id):
+    bairro = get_object_or_404(Bairro, pk=bairro_id)
+    return render(request, 'clientes/detalhar_bairro.html', {'bairro': bairro})

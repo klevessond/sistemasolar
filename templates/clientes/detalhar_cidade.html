@@ -1,0 +1,32 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-9 offset-md-1">
+            <div class="card">
+                <div class="card-header">
+                    Detalhes da Cidade
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Cidade:</strong> {{ cidade.nome }}</p>
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Estado:</strong> {{ cidade.estado }}</p>
+                            
+                        </div>
+                                              
+                    </div>
+                    <a class="btn btn-primary" href="{% url 'cidades' %}">Consultar bairros</a>
+                    <a class="btn btn-primary" href="{% url 'editar_cidade' cidade.id %}">Editar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
