@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'usuarios.apps.UsuariosConfig',
     'clientes.apps.ClientesConfig',
+    'usinas.apps.UsinasConfig',
     'smart_selects',
 ]
 

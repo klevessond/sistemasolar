@@ -1,0 +1,53 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Cadastro de Usina
+                </div>
+                <div class="card-body">
+                    <form method="post" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Cliente:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.cliente }}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Painel Solar:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.painel_solar }}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Quantidade de Painéis:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.painel_quantidade }}
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Inversor:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.inversor }}
+                                  </div>
+                              </div>
+                              <!-- Adicione outros campos específicos da Usina aqui, se houver -->
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
