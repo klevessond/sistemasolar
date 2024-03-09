@@ -31,3 +31,7 @@ def cadastro_usina(request):
     else:
         form = UsinaForm()
     return render(request, 'usinas/cadastro_usina.html', {'form': form})
+
+def usinas(request):
+    
+    return render(request, 'usinas/usinas.html')

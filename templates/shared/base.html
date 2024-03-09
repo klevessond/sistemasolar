@@ -421,10 +421,10 @@
                <li class="sidebar-item">
                  <a
                    class="sidebar-link waves-effect waves-dark sidebar-link"
-                   href="charts.html"
+                   href="{% url 'usinas' %}"
                    aria-expanded="false"
-                   ><i class="mdi mdi-chart-bar"></i
-                   ><span class="hide-menu">Charts</span></a
+                   ><i class="mdi mdi-battery-charging"></i
+                   ><span class="hide-menu">Usinas</span></a
                  >
                </li>
                <li class="sidebar-item">
@@ -694,7 +694,16 @@
         });
     </script>
 
-
+<!-- this page js -->
+<script src="{% static '/assets/extra-libs/multicheck/datatable-checkbox-init.js' %}"></script>
+<script src="{% static '/assets/extra-libs/multicheck/jquery.multicheck.js' %}"></script>
+<script src="{% static '/assets/extra-libs/DataTables/datatables.min.js' %}"></script>
+<script>
+  /****************************************
+   *       Basic Table                   *
+   ****************************************/
+  $("#zero_config").DataTable();
+</script>
 
  </body>
 </html>
