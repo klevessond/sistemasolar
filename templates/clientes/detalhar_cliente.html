@@ -30,8 +30,9 @@
                             <p><strong>CNPJ:</strong> {{ cliente.cnpj }}</p>
                             <p><strong>CPF:</strong> {{ cliente.cpf }}</p>
                         </div>
+                        <div>
                         {% if propriedades %}
-                          Propriedades
+                          Propriedade
                           <ul>
                                 {% for propriedade in propriedades %}
                                     <li>{{ propriedade.get_propriedade_display }} - Área: {{ propriedade.area_instalacao }}m² - Consumo: {{ propriedade.consumo }} kWh/mês - Tipo de Telhado: {{ propriedade.get_tipo_telhado_display }}</li>
@@ -41,9 +42,18 @@
                             <p>Este cliente não possui propriedades cadastradas.</p>
                         {% endif %}
                     </div>
+                    <div>
+                        Contrato(criar um link aqui para a tela do contrato):
+                        <ul>
+                        <li>detalhes do contato, numero, painel, quantidade do painel, inversor, quantidade de inversor, vendedor
+                        
+                        </ul>
+                    </div>
+                    <div>
                     <a class="btn btn-primary" href="{% url 'clientes' %}">Consultar clientes</a>
                     <a class="btn btn-primary" href="{% url 'cadastro_propriedade' cliente.id %}">Cadastrar Propriedade</a>
                     <a class="btn btn-primary" href="{% url 'editar_cliente' cliente.id %}">Editar</a>
+                    </div>
                 </div>
             </div>
         </div>
