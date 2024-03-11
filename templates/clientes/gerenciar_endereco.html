@@ -1,0 +1,33 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+<div>
+    Estados
+    {% for estado in estados %}
+        {{estado}}
+    
+        {%endfor%}
+    
+
+</div>
+<div>
+    Cidade
+    {% for cidade in cidades %}
+        {{cidade}}
+    
+        {%endfor%}
+    
+
+</div>
+<div>
+    Bairro
+    {% for bairro in bairros %}
+        {{bairro}}
+    
+        {%endfor%}
+    
+
+</div>
+
+{% endblock %}

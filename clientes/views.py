@@ -218,3 +218,12 @@ def detalhar_cidade(request, cidade_id):
 def detalhar_bairro(request, bairro_id):
     bairro = get_object_or_404(Bairro, pk=bairro_id)
     return render(request, 'clientes/detalhar_bairro.html', {'bairro': bairro})
+
+def gerenciar_endereco(request):
+    estados = Estado.objects.all()
+    cidades = Cidade.objects.all()
+    bairros = Bairro.objects.all()
+    
+    return render(request, 'clientes/gerenciar_endereco.html',
+         {'estados': estados, 'cidades': cidades,'bairros': bairros})
+    
