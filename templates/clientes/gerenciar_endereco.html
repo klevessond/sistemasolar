@@ -2,32 +2,212 @@
 {% load static %}
 {% block content %}
 
-<div>
-    Estados
-    {% for estado in estados %}
-        {{estado}}
-    
-        {%endfor%}
-    
+<div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+  <div class="table-responsive" style="flex: 1; max-width: 32%; padding: 0 10px;">
+    <table id="zero_config" class="table table-striped table-bordered" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin: auto;">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Estados</h4>
+            <div class="ms-auto text-end">
+            </div>
+            <div class="input-group-append">
+                <a class="btn btn-outline-secondary" id="cadastro_estado" data-popup="yes" href="cadastro_estado/?_to_field=id&amp;_popup=1" title="Adicionar outro estado">
+                    <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Estado
+                </a>
+            </div>
+          </div>
 
-</div>
-<div>
-    Cidade
-    {% for cidade in cidades %}
-        {{cidade}}
-    
-        {%endfor%}
-    
+    <thead>
+        <tr>
+          <th>Nome</th>
+            <th>Sigla</th>
+            <th>Editar</th>
+        </tr>
+    </thead>
+    <tbody>
+     {% for estado in estados %}
+        <tr>
+          <td>{{ estado.nome }}</td>
+          <td>{{ estado.sigla }}</td>
+          <td><a href="{% url 'editar_estado' estado.id %}">Detalhar</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
 
-</div>
-<div>
-    Bairro
-    {% for bairro in bairros %}
-        {{bairro}}
-    
-        {%endfor%}
-    
+  <div class="table-responsive" style="flex: 1; max-width: 32%; padding: 0 10px;">
+    <table id="cidade_table" class="table table-striped table-bordered" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin: auto;">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Cidades</h4>
+            <div class="ms-auto text-end">
+            </div>
+            <div class="input-group-append">
+                <a class="btn btn-outline-secondary" id="cadastro_cidade" data-popup="yes" href="cadastro_cidade/?_to_field=id&amp;_popup=1" title="Adicionar outra cidade">
+                    <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Cidade
+                </a>
+            </div>
+          </div>
+    <thead>
+        <tr>
+          <th>Nome</th>
+            <th>Estado</th>
+            <th>Editar</th>
+        </tr>
+    </thead>
+    <tbody>
+     {% for cidade in cidades %}
+        <tr>
+          <td>{{ cidade.nome }}</td>
+          <td>{{ cidade.estado }}</td>
+          <td><a href="{% url 'editar_cidade' cidade.id %}">Detalhar</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Nome</th>
+              <th>Sigla</th>
+              <th>Editar</th>
+          </tr>
+    </tfoot>
+  </table>
+  </div>
 
+  <div class="table-responsive" style="flex: 1; max-width: 32%; padding: 0 10px;">
+    <table id="bairro_table" class="table table-striped table-bordered" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin: auto;">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Bairros</h4>
+            <div class="ms-auto text-end">
+            </div>
+            <div class="input-group-append">
+                <a class="btn btn-outline-secondary" id="cadastro_bairro" data-popup="yes" href="cadastro_bairro/?_to_field=id&amp;_popup=1" title="Adicionar outro bairro">
+                    <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Bairro
+                </a>
+            </div>
+          </div>
+
+    <thead>
+        <tr>
+          <th>Nome</th>
+            <th>Cidade</th>
+            <th>Editar</th>
+        </tr>
+    </thead>
+    <tbody>
+     {% for bairro in bairros %}
+        <tr>
+          <td>{{ bairro.nome }}</td>
+          <td>{{ bairro.cidade }}</td>
+          <td><a href="{% url 'editar_bairro' bairro.id %}">Detalhar</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+  </div>
 </div>
+
+<div class="modal fade" id="Modal_cadastro_estado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar Estado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
+                <!-- Certifique-se de ajustar conforme necessário -->
+                <form method="post" action="cadastro_estado/">
+                    {% csrf_token %}
+                    {{ formEstados.as_p }}
+                    <input type="hidden" name="origin_page" value="cadastro_cliente">
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Modal_cadastro_cidade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar Estado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
+                <!-- Certifique-se de ajustar conforme necessário -->
+                <form method="post" action="clientes/cadastro_cidade/">
+                    {% csrf_token %}
+                    {{ formCidade.as_p }}
+                    <input type="hidden" name="origin_page" value="cadastro_cliente">
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="Modal_cadastro_bairro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar Estado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
+                <!-- Certifique-se de ajustar conforme necessário -->
+                <form method="post" action="cadastro_bairro/">
+                    {% csrf_token %}
+                    {{ formBairro.as_p }}
+                    <input type="hidden" name="origin_page" value="cadastro_cliente">
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+
+  $(document).ready(function() {
+    // Quando o link for clicado
+    $('#cadastro_estado').click(function(e) {
+        e.preventDefault(); // Impede o comportamento padrão de abrir a nova página
+
+        // Abre o modal usando o ID do modal (certifique-se de ajustar conforme necessário)
+        $('#Modal_cadastro_estado').modal('show');
+    });
+});
+$(document).ready(function() {
+    // Quando o link for clicado
+    $('#cadastro_cidade').click(function(e) {
+        e.preventDefault(); // Impede o comportamento padrão de abrir a nova página
+
+        // Abre o modal usando o ID do modal (certifique-se de ajustar conforme necessário)
+        $('#Modal_cadastro_cidade').modal('show');
+    });
+});
+$(document).ready(function() {
+    // Quando o link for clicado
+    $('#cadastro_bairro').click(function(e) {
+        e.preventDefault(); // Impede o comportamento padrão de abrir a nova página
+
+        // Abre o modal usando o ID do modal (certifique-se de ajustar conforme necessário)
+        $('#Modal_cadastro_bairro').modal('show');
+    });
+});
+
+    
+    </script>
 
 {% endblock %}
