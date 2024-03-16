@@ -10,19 +10,20 @@ def cadastro_estado(request):
         form = EstadoForm(request.POST)
         print(form)
         if form.is_valid():
+            form.save()
             # Verifique se a origem é da página cadastro_cliente
             print('Dados recebidos no POST:', request.POST)
             origin_page = request.POST.get('origin_page')
             print('origem:', origin_page)
             if origin_page == 'cadastro_cliente':
                 # Salvar o estado no banco de dados
-                form.save()
+                
                 max_id_estado = Estado.objects.all().aggregate(Max('id'))['id__max']  # Obtém o maior ID dos estados
                 return redirect(reverse('cadastro_cliente') + f'?max_id_estado={max_id_estado}')
 
 
             else:
-                    return redirect('lista_estado')
+                    return redirect('gerenciar_endereco')
     else:
         # Se o request não for POST, crie um formulário vazio
         form = EstadoForm()
@@ -33,17 +34,18 @@ def cadastro_cidade(request):
     if request.method == 'POST':
         form = CidadeForm(request.POST)
         if form.is_valid():
+            form.save()
             # Verifique se a origem é da página cadastro_cliente
             print('Dados recebidos no POST:', request.POST)
             origin_page = request.POST.get('origin_page')
             print('origem:', origin_page)
             if origin_page == 'cadastro_cliente':
                 # Salvar o estado no banco de dados
-                form.save()
+              
                 max_id_cidade = Cidade.objects.all().aggregate(Max('id'))['id__max']  # Obtém o maior ID dos estados
                 return redirect(reverse('cadastro_cliente') + f'?max_id_cidade={max_id_cidade}')
             else:
-                return redirect('lista_cidade')
+                return redirect('gerenciar_endereco')
     else:
         form = CidadeForm()
 
@@ -53,17 +55,18 @@ def cadastro_bairro(request):
     if request.method == 'POST':
         form = BairroForm(request.POST)
         if form.is_valid():
+            form.save()
             # Verifique se a origem é da página cadastro_cliente
             print('Dados recebidos no POST:', request.POST)
             origin_page = request.POST.get('origin_page')
             print('origem:', origin_page)
             if origin_page == 'cadastro_cliente':
                 # Salvar o estado no banco de dados
-                form.save()
+                
                 max_id_bairro = Bairro.objects.all().aggregate(Max('id'))['id__max']  # Obtém o maior ID dos estados
                 return redirect(reverse('cadastro_cliente') + f'?max_id_bairro={max_id_bairro}')
             else:
-                return redirect('lista_bairro')
+                return redirect('gerenciar_endereco')
     else:
         form = BairroForm()
 

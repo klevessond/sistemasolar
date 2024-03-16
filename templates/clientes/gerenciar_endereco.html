@@ -118,10 +118,10 @@
             <div class="modal-body">
                 <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
                 <!-- Certifique-se de ajustar conforme necessário -->
-                <form method="post" action="cadastro_estado/">
+                <form method="post" action="{% url 'cadastro_estado' %}">
                     {% csrf_token %}
                     {{ formEstados.as_p }}
-                    <input type="hidden" name="origin_page" value="cadastro_cliente">
+                    <input type="hidden" name="origin_page" value="gerenciar_endereco">
                     <button type="submit">Enviar</button>
                 </form>
             </div>
@@ -140,10 +140,10 @@
             <div class="modal-body">
                 <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
                 <!-- Certifique-se de ajustar conforme necessário -->
-                <form method="post" action="clientes/cadastro_cidade/">
+                <form method="post" action="{% url 'cadastro_cidade' %}">
                     {% csrf_token %}
                     {{ formCidade.as_p }}
-                    <input type="hidden" name="origin_page" value="cadastro_cliente">
+                    <input type="hidden" name="origin_page" value="gerenciar_endereco">
                     <button type="submit">Enviar</button>
                 </form>
             </div>
@@ -163,10 +163,10 @@
             <div class="modal-body">
                 <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
                 <!-- Certifique-se de ajustar conforme necessário -->
-                <form method="post" action="cadastro_bairro/">
+                <form method="post" action="{% url 'cadastro_bairro' %}">
                     {% csrf_token %}
                     {{ formBairro.as_p }}
-                    <input type="hidden" name="origin_page" value="cadastro_cliente">
+                    <input type="hidden" name="origin_page" value="gerenciar_endereco">
                     <button type="submit">Enviar</button>
                 </form>
             </div>
