@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .forms import PainelSolarForm, InversorForm, UsinaForm
+from . models import PainelSolar, Inversor
 
 # Create your views here.
 def cadastro_painelsolar(request):
@@ -33,5 +34,7 @@ def cadastro_usina(request):
     return render(request, 'usinas/cadastro_usina.html', {'form': form})
 
 def usinas(request):
+    painelsolar = PainelSolar.objects.all()
     
-    return render(request, 'usinas/usinas.html')
+    
+    return render(request, 'usinas/usinas.html',{'painelsolar':painelsolar,})

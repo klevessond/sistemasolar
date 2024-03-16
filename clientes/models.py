@@ -102,6 +102,7 @@ class Propriedade(models.Model):
         ('residencial', 'Residencial'),
         ('comercial', 'Comercial'),
         ('industrial', 'Industrial'),
+        ('fazenda', 'Fazenda'),
     ]
 
     # Definindo as escolhas para o campo 'tipo_telhado'
@@ -109,6 +110,7 @@ class Propriedade(models.Model):
         ('inclinado', 'Telhado Inclinado'),
         ('plano', 'Telhado Plano'),
         ('metal', 'Telhado de Metal'),
+        ('estrutura elevada', 'Estrutura Elevada'),
     ]
 
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name='Cliente')
