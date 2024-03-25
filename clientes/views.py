@@ -223,7 +223,13 @@ def gerenciar_endereco(request):
     estados = Estado.objects.all()
     cidades = Cidade.objects.all()
     bairros = Bairro.objects.all()
+
+    formEstados = EstadoForm()
+    formCidade = CidadeForm()
+    formBairro = BairroForm()
     
     return render(request, 'clientes/gerenciar_endereco.html',
-         {'estados': estados, 'cidades': cidades,'bairros': bairros})
+         {'estados': estados, 'cidades': cidades,'bairros': bairros,
+          'formEstados':formEstados,'formCidade':formCidade,
+          'formBairro':formBairro})
     
