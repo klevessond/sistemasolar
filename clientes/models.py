@@ -127,3 +127,12 @@ class Propriedade(models.Model):
     class Meta:
         verbose_name = 'Propriedade'
         verbose_name_plural = 'Propriedades'
+    
+class Rateio(models.Model):
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    nome = models.CharField(max_length=120)
+    endereco = models.CharField(max_length=200)
+    conta_contrato = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.nome} - {self.cliente.nome}"
