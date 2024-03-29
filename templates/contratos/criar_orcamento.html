@@ -1,0 +1,90 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Cadastro de Orçamento
+                </div>
+                <div class="card-body">
+                    <form method="post" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Cliente:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.cliente }}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Consumo:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.consumo }}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Energia Gerada:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.energia_gerada }}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Número de Painéis:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.numero_painel }}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Painel Solar:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.painel_solar }}
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Número do Inversor:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.numero_inversor }}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Inversor:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.inversor }}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Espaço Disponível:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.espaco_disponivel }}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Tempo de Garantia:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.tempo_garantia }}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-sm-3 text-end control-label col-form-label">Valor do Orçamento:</label>
+                                  <div class="col-sm-9">
+                                      {{ form.valor_orcamento }}
+                                  </div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

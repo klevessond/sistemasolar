@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'usuarios.apps.UsuariosConfig',
     'clientes.apps.ClientesConfig',
     'usinas.apps.UsinasConfig',
+    'contratos.apps.ContratosConfig',
     'smart_selects',
 ]
 
