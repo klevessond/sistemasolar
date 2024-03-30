@@ -21,15 +21,15 @@
                                   </div>
                               </div>
                               <div class="form-group row">
+                                <label class="col-sm-3 text-end control-label col-form-label">Propriedade:</label>
+                                <div class="col-sm-9">
+                                    {{ form.propriedade }}
+                                </div>
+                                </div>
+                              <div class="form-group row">
                                   <label class="col-sm-3 text-end control-label col-form-label">Consumo:</label>
                                   <div class="col-sm-9">
                                       {{ form.consumo }}
-                                  </div>
-                              </div>
-                              <div class="form-group row">
-                                  <label class="col-sm-3 text-end control-label col-form-label">Energia Gerada:</label>
-                                  <div class="col-sm-9">
-                                      {{ form.energia_gerada }}
                                   </div>
                               </div>
                               <div class="form-group row">
@@ -43,21 +43,27 @@
                                   <div class="col-sm-9">
                                       {{ form.painel_solar }}
                                   </div>
+                                  <div class="form-group row">
+                                    <label class="col-sm-3 text-end control-label col-form-label">Número de Inversor:</label>
+                                    <div class="col-sm-9">
+                                        {{ form.numero_inversor }}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 text-end control-label col-form-label">Inversor:</label>
+                                    <div class="col-sm-9">
+                                        {{ form.inversor }}
+                                    </div>
+                                </div>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="form-group row">
-                                  <label class="col-sm-3 text-end control-label col-form-label">Número do Inversor:</label>
-                                  <div class="col-sm-9">
-                                      {{ form.numero_inversor }}
-                                  </div>
-                              </div>
-                              <div class="form-group row">
-                                  <label class="col-sm-3 text-end control-label col-form-label">Inversor:</label>
-                                  <div class="col-sm-9">
-                                      {{ form.inversor }}
-                                  </div>
-                              </div>
+                                <label class="col-sm-3 text-end control-label col-form-label">Energia Gerada:</label>
+                                <div class="col-sm-9">
+                                    {{ form.energia_gerada }}
+                                </div>
+                            </div>
                               <div class="form-group row">
                                   <label class="col-sm-3 text-end control-label col-form-label">Espaço Disponível:</label>
                                   <div class="col-sm-9">

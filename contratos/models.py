@@ -4,6 +4,7 @@ from clientes.models import Cliente
 from usinas.models import PainelSolar, Inversor
 
 class Orcamento(models.Model):
+    
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     consumo = models.IntegerField()
     energia_gerada = models.IntegerField()
@@ -14,6 +15,16 @@ class Orcamento(models.Model):
     espaco_disponivel = models.DecimalField(max_digits=10, decimal_places=2)  # Até 10 dígitos no total, com 2 casas decimais
     tempo_garantia = models.IntegerField()
     valor_orcamento = models.IntegerField()
+    STATUS_CHOICES = [
+        ('aberto', 'Em Aberto'),
+        ('aprovado', 'Aprovado'),
+        ('rejeitado', 'Rejeitado'),
+    ]
+        
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='aberto')
 
     def __str__(self):
-        return f"Orçamento {self.id} - Cliente {self.cliente.nome_completo}"
+        return f"Orçamento {self.id} - {self.get_status_display()}"
+
+    #def __str__(self):
+     #   return f"Orçamento {self.id} - Cliente {self.cliente.nome_completo}"

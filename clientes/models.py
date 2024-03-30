@@ -95,6 +95,14 @@ class Cliente(models.Model):
 
     def __str__(self):
         return self.nome_completo
+    
+    def informacoes_orcamento(self):
+        orcamentos = self.orcamento_set.all()  # Assumindo que a relação reversa é orcamento_set
+        info_orcamentos = []
+        if orcamentos.exists():
+            status_orcamentos = orcamentos.values_list('status', flat=True)
+            return True, list(status_orcamentos)
+        return False, []
 
 class Propriedade(models.Model):
     # Definindo as escolhas para o campo 'propriedade'

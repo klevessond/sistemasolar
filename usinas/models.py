@@ -7,6 +7,9 @@ class PainelSolar(models.Model):
     modelo = models.CharField(max_length=120, blank=False)
     capacidade_watt = models.IntegerField(blank=False)
 
+    def __str__(self):
+        return f"{self.fabricante} {self.modelo} - {self.capacidade_watt}W"
+
 
 class Inversor(models.Model):
     TIPO_CHOICES = [
@@ -23,6 +26,9 @@ class Inversor(models.Model):
     eficiencia = models.IntegerField(blank=False)
     tipo = models.CharField(max_length=7, choices=TIPO_CHOICES, blank=False)
     compatibilidade = models.TextField(max_length=500, blank=False)
+ 
+    def __str__(self):
+        return f"{self.fabricante} {self.modelo} - {self.capacidade_watt}W"
 
 class Modelousina(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)

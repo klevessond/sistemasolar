@@ -205,7 +205,9 @@ def cadastro_propriedade(request,cliente_id):
 def detalhar_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     propriedades = Propriedade.objects.filter(cliente=cliente)
-    return render(request, 'clientes/detalhar_cliente.html', {'cliente': cliente, 'propriedades': propriedades})
+    tem_orcamento, status_orcamentos = cliente.informacoes_orcamento()
+    return render(request, 'clientes/detalhar_cliente.html', {'cliente': cliente, 'propriedades': propriedades,
+                             'tem_orcamento': tem_orcamento,'status_orcamentos': status_orcamentos})
 
 def detalhar_estado(request, estado_id):
     estado = get_object_or_404(Estado, pk=estado_id)

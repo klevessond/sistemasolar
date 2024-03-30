@@ -32,7 +32,7 @@
                         </div>
                         <div>
                         {% if propriedades %}
-                          Propriedade
+                          Local de Instalação
                           <ul>
                                 {% for propriedade in propriedades %}
                                     <li>{{ propriedade.get_propriedade_display }} - Área: {{ propriedade.area_instalacao }}m² - Consumo: {{ propriedade.consumo }} kWh/mês - Tipo de Telhado: {{ propriedade.get_tipo_telhado_display }}</li>
@@ -40,6 +40,18 @@
                             </ul>
                         {% else %}
                             <p>Este cliente não possui propriedades cadastradas.</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        {% if tem_orcamento %}
+                            <p class="text-success">Este cliente tem os seguintes status de orçamento:</p>
+                                 <ul>
+                                     {% for status in status_orcamentos %}
+                                         <li>{{ status  }}</li>
+                                    {% endfor %}
+                                </ul>
+                        {% else %}
+                                <p class="text-danger">Este cliente não tem nenhum orçamento.</p>
                         {% endif %}
                     </div>
                     <div>
@@ -52,6 +64,7 @@
                     <div>
                     <a class="btn btn-primary" href="{% url 'clientes' %}">Consultar clientes</a>
                     <a class="btn btn-primary" href="{% url 'cadastro_propriedade' cliente.id %}">Cadastrar Propriedade</a>
+                    <a class="btn btn-primary" href="{% url 'criar_orcamento_com_cliente' cliente.id %}">Cadastrar Orçamento</a>
                     <a class="btn btn-primary" href="{% url 'editar_cliente' cliente.id %}">Editar</a>
                     </div>
                 </div>
