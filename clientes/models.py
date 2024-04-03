@@ -99,10 +99,23 @@ class Cliente(models.Model):
     def informacoes_orcamento(self):
         orcamentos = self.orcamento_set.all()  # Assumindo que a relação reversa é orcamento_set
         info_orcamentos = []
-        if orcamentos.exists():
-            status_orcamentos = orcamentos.values_list('status', flat=True)
-            return True, list(status_orcamentos)
-        return False, []
+        
+        for orcamento in orcamentos:
+            info = {
+                'id':orcamento.id,
+                'status': orcamento.status,
+                'numero_painel': orcamento.numero_painel,
+                'painel_solar': str(orcamento.painel_solar),  # Converte o objeto PainelSolar para string, supondo que você tenha um método __str__ no modelo PainelSolar
+                'numero_inversor': orcamento.numero_inversor,
+                'inversor': str(orcamento.inversor),
+                # Inclua quaisquer outras informações que deseja retornar
+            }
+            info_orcamentos.append(info)
+        
+        if info_orcamentos:
+            return True, info_orcamentos
+        else:
+            return False, []
 
 class Propriedade(models.Model):
     # Definindo as escolhas para o campo 'propriedade'

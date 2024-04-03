@@ -1,0 +1,32 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+<h2>Lista de Orçamentos</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Cliente</th>
+      <th>Consumo</th>
+      <th>Energia Gerada</th>
+      <th>Número de Painéis</th>
+      <th>Status</th>
+      <!-- Adicione mais colunas conforme necessário -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for orcamento in orcamentos %}
+    <tr>
+      <td>{{ orcamento.id }}</td>
+      <td>{{ orcamento.cliente }}</td>
+      <td>{{ orcamento.consumo }}</td>
+      <td>{{ orcamento.energia_gerada }}</td>
+      <td>{{ orcamento.numero_painel }}</td>
+      <td>{{ orcamento.status }}</td>
+      <!-- Exiba mais informações do orçamento conforme necessário -->
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

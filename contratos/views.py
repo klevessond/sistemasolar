@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .forms import OrcamentoForm
+from .models import Orcamento
 from clientes.models import Cliente
 
 def criar_orcamento(request, cliente_id=None):
@@ -24,3 +25,22 @@ def criar_orcamento(request, cliente_id=None):
         'cliente_id': cliente_id
     }
     return render(request, 'contratos/criar_orcamento.html', context)
+
+
+def detalhar_orcamento(request, orcamento_id):
+    orcamento = get_object_or_404(OrcamentoForm, id=orcamento_id)
+    if request.method == 'POST':
+        form = OrcamentoForm(request.POST, instance=orcamento)
+        if form.is_valid():
+            form.save()
+            # Redirecione para a view de detalhes do orçamento, por exemplo
+            return redirect(reverse('contratos/orcamentos.html'))
+    else:
+        form = OrcamentoForm(instance=orcamento)
+
+    return render(request, 'contrato/detalhar_orcamento.html', {'form': form, 'orcamento_id': orcamento_id})
+
+
+def orcamentos(request):
+    orcamentos = Orcamento.objects.all()
+    return render(request, 'contratos/orcamentos.html', {'orcamentos': orcamentos})

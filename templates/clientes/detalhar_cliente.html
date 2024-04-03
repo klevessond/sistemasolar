@@ -47,7 +47,9 @@
                             <p class="text-success">Este cliente tem os seguintes status de orçamento:</p>
                                  <ul>
                                      {% for status in status_orcamentos %}
-                                         <li>{{ status  }}</li>
+                                         <div><a href="={% url 'detalhar_orcamento' status_id %}"><p><li>ID orçamento: {{status.id}} - Status :{{ status.status  }} - Painel Solar :{{status.painel_solar}} - Numero de Painel : {{status.numero_painel}}
+                                            Inversor : {{status.inversor}} - Numero de Inversor : {{status.numero_inversor}}
+                                         </li></p></a></div>
                                     {% endfor %}
                                 </ul>
                         {% else %}
