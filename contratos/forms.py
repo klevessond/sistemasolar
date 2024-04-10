@@ -2,6 +2,7 @@ from django import forms
 from .models import Orcamento
 from clientes.models import Propriedade
 
+
 class OrcamentoForm(forms.ModelForm):
     propriedade = forms.ModelChoiceField(queryset=Propriedade.objects.none())
 
@@ -14,3 +15,4 @@ class OrcamentoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if cliente_id:
             self.fields['propriedade'].queryset = Propriedade.objects.filter(cliente_id=cliente_id)
+

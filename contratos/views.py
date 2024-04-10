@@ -3,6 +3,8 @@ from django.urls import reverse
 from .forms import OrcamentoForm
 from .models import Orcamento
 from clientes.models import Cliente
+from clientes.models import Propriedade
+from django.http import JsonResponse
 
 def criar_orcamento(request, cliente_id=None):
     cliente = get_object_or_404(Cliente, pk=cliente_id) if cliente_id else None
@@ -44,3 +46,8 @@ def detalhar_orcamento(request, orcamento_id):
 def orcamentos(request):
     orcamentos = Orcamento.objects.all()
     return render(request, 'contratos/orcamentos.html', {'orcamentos': orcamentos})
+
+def propriedades_por_cliente(request, cliente_id):
+    propriedades = Propriedade.objects.filter(cliente_id=cliente_id)
+    print(propriedades)
+    return JsonResponse(list(propriedades.values('id', 'propriedade')), safe=False)
