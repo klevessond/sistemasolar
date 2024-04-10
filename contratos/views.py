@@ -28,7 +28,7 @@ def criar_orcamento(request, cliente_id=None):
 
 
 def detalhar_orcamento(request, orcamento_id):
-    orcamento = get_object_or_404(OrcamentoForm, id=orcamento_id)
+    orcamento = get_object_or_404(Orcamento, id=orcamento_id)
     if request.method == 'POST':
         form = OrcamentoForm(request.POST, instance=orcamento)
         if form.is_valid():
@@ -38,7 +38,7 @@ def detalhar_orcamento(request, orcamento_id):
     else:
         form = OrcamentoForm(instance=orcamento)
 
-    return render(request, 'contrato/detalhar_orcamento.html', {'form': form, 'orcamento_id': orcamento_id})
+    return render(request, 'contratos/detalhar_orcamento.html', {'form': form, 'orcamento_id': orcamento_id})
 
 
 def orcamentos(request):
