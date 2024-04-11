@@ -135,6 +135,7 @@ class Propriedade(models.Model):
     ]
 
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name='Cliente')
+    nome =models.CharField(max_length=50, verbose_name='Nome da Propriedade', blank=True, null=True,default=None)
     propriedade = models.CharField(max_length=50, choices=PROPRIEDADE_CHOICES, verbose_name='Tipo de Propriedade')
     area_instalacao = models.IntegerField(verbose_name='Área de Instalação')
     consumo = models.IntegerField(verbose_name='Consumo Mensal')

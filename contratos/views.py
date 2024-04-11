@@ -6,7 +6,7 @@ from clientes.models import Cliente
 from clientes.models import Propriedade
 from django.http import JsonResponse
 
-def criar_orcamento(request, cliente_id=None):
+def cadastrar_orcamento(request, cliente_id=None):
     cliente = get_object_or_404(Cliente, pk=cliente_id) if cliente_id else None
 
     if request.method == 'POST':
@@ -26,7 +26,7 @@ def criar_orcamento(request, cliente_id=None):
         'form': form,
         'cliente_id': cliente_id
     }
-    return render(request, 'contratos/criar_orcamento.html', context)
+    return render(request, 'contratos/cadastrar_orcamento.html', context)
 
 
 def detalhar_orcamento(request, orcamento_id):

@@ -93,6 +93,26 @@
     </div>
 </div>
 
-
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const clienteSelect = document.getElementById("id_cliente");
+        const propriedadeSelect = document.getElementById("id_propriedade");
+    
+        clienteSelect.addEventListener("change", function() {
+            const clienteId = this.value;
+            const url = `/ajax/propriedades_por_cliente/${clienteId}/`; // Certifique-se de que a URL está correta
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    propriedadeSelect.innerHTML = ''; // Limpa opções existentes
+                    data.forEach(function(propriedade) {
+                        var option = new Option(propriedade.propriedade, propriedade.id); // Ajuste para os campos retornados
+                        propriedadeSelect.add(option);
+                    });
+                })
+                .catch(error => console.error('Erro ao buscar propriedades:', error));
+        });
+    });
+    </script>
 
 {% endblock %}
