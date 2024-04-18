@@ -168,9 +168,10 @@ class ClienteForm(forms.ModelForm):
 class PropriedadeForm(forms.ModelForm):
     class Meta:
         model = Propriedade
-        fields = ['cliente', 'propriedade', 'area_instalacao', 'consumo', 'tipo_telhado', 'latitude', 'longitude']
+        fields = ['cliente','nome', 'propriedade', 'area_instalacao', 'consumo', 'tipo_telhado', 'latitude', 'longitude']
         widgets = {
             'cliente': forms.Select(attrs={'class': 'form-control'}),
+            'nome': forms.Select(attrs={'class': 'form-control'}),
             'propriedade': forms.Select(attrs={'class': 'form-control'}),
             'area_instalacao': forms.NumberInput(attrs={'class': 'form-control'}),
             'consumo': forms.NumberInput(attrs={'class': 'form-control'}),

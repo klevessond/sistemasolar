@@ -1,11 +1,12 @@
 from django.db import models
 # Importando os modelos necessários
-from clientes.models import Cliente
+from clientes.models import Cliente, Propriedade
 from usinas.models import PainelSolar, Inversor
 
 class Orcamento(models.Model):
     
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    propriedade = models.ForeignKey('clientes.Propriedade', on_delete=models.CASCADE, null=True, blank=True)
     consumo = models.IntegerField()
     energia_gerada = models.IntegerField()
     numero_painel = models.IntegerField()
@@ -22,6 +23,10 @@ class Orcamento(models.Model):
     ]
         
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='aberto')
+    valor_unitario_painel = models.IntegerField(null=True, blank=True, verbose_name='Valor Unitário do Painel')
+    valor_unitario_usina = models.IntegerField(null=True, blank=True, verbose_name='Valor Unitário da Usina')
+    info_adicionais = models.TextField(null=True, blank=True, verbose_name='Informações Adicionais')
+
 
     def __str__(self):
         return f"Orçamento {self.id} - {self.get_status_display()}"

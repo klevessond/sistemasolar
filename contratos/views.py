@@ -39,8 +39,9 @@ def detalhar_orcamento(request, orcamento_id):
             return redirect(reverse('contratos/orcamentos.html'))
     else:
         form = OrcamentoForm(instance=orcamento)
+        cliente_id = orcamento.cliente.id
 
-    return render(request, 'contratos/detalhar_orcamento.html', {'form': form, 'orcamento_id': orcamento_id})
+    return render(request, 'contratos/detalhar_orcamento.html', {'form': form, 'orcamento_id': orcamento_id, 'cliente_id':cliente_id})
 
 
 def orcamentos(request):
