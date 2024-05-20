@@ -35,7 +35,7 @@
                           Local de Instalação
                           <ul>
                                 {% for propriedade in propriedades %}
-                                    <li>{{ propriedade.get_propriedade_display }} - Área: {{ propriedade.area_instalacao }}m² - Consumo: {{ propriedade.consumo }} kWh/mês - Tipo de Telhado: {{ propriedade.get_tipo_telhado_display }}</li>
+                                    <li>{{propriedade.nome}} - {{ propriedade.get_propriedade_display }} - Área: {{ propriedade.area_instalacao }}m² - Consumo: {{ propriedade.consumo }} kWh/mês - Tipo de Telhado: {{ propriedade.get_tipo_telhado_display }}</li>
                                 {% endfor %}
                             </ul>
                         {% else %}
@@ -47,7 +47,7 @@
                             <p class="text-success">Este cliente tem os seguintes status de orçamento:</p>
                                  <ul>
                                      {% for status in status_orcamentos %}
-                                         <div><a href="{% url 'detalhar_orcamento' status.id %}"><p><li>ID orçamento: {{status.id}} - Status :{{ status.status  }} - Painel Solar :{{status.painel_solar}} - Numero de Painel : {{status.numero_painel}}
+                                         <div><a href="{% url 'detalhar_orcamento' status.id %}"><p><li>ID orçamento: {{status.id}} - Nome : {{status.nome}} Status :{{ status.status  }} - Painel Solar :{{status.painel_solar}} - Numero de Painel : {{status.numero_painel}}
                                             Inversor : {{status.inversor}} - Numero de Inversor : {{status.numero_inversor}}
                                          </li></p></a></div>
                                     {% endfor %}

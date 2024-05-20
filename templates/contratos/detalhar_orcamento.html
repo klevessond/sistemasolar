@@ -1,7 +1,19 @@
 {% extends 'shared/base.html' %}
 {% load static %}
+
 {% block content %}
 <div class="container mt-5">
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Erro!</strong> Por favor, corrija os erros abaixo:
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            {% if field.errors %}
+                <div>{{ field.label }}: {{ field.errors }}</div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -17,7 +29,7 @@
                                     <label class="col-sm-3 text-end control-label col-form-label">Cliente:</label>
                                     <div class="col-sm-9">
                                         {{ form.cliente }}
-                                        <input type="hidden" name="cliente" value="{{ form.cliente.value }}">
+                                        <!--<input type="hidden" name="cliente" value="{{ form.cliente.value }}">   -->
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -45,7 +57,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 text-end control-label col-form-label">Valor unitario:</label>
+                                    <label class="col-sm-3 text-end control-label col-form-label">Valor unitário:</label>
                                     <div class="col-sm-9">
                                         {{ form.valor_unitario_painel }}
                                     </div>
@@ -63,7 +75,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 text-end control-label col-form-label">Valor unitario:</label>
+                                    <label class="col-sm-3 text-end control-label col-form-label">Valor unitário:</label>
                                     <div class="col-sm-9">
                                         {{ form.valor_unitario_usina }}
                                     </div>
@@ -125,59 +137,49 @@
     document.addEventListener('DOMContentLoaded', function () {
         const clienteSelect = document.getElementById("id_cliente");
         const propriedadeSelect = document.getElementById("id_propriedade");
-    
-        clienteSelect.addEventListener("change", function() {
-            const clienteId = this.value;
-            const url = `/ajax/propriedades_por_cliente/${clienteId}/`; // Certifique-se de que a URL está correta
+        const propriedadeAtualId = '{{ form.propriedade.value }}';  // Pega o ID da propriedade atual do Django template
+
+        function loadPropriedades(clienteId) {
+            const url = `/ajax/propriedades_por_cliente/${clienteId}/`;
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     propriedadeSelect.innerHTML = ''; // Limpa opções existentes
+                    var option = new Option("Selecione uma Propriedade", ""); // Adiciona opção padrão
+                    propriedadeSelect.add(option);
                     data.forEach(function(propriedade) {
-                        var option = new Option(propriedade.propriedade, propriedade.id); // Ajuste para os campos retornados
+                        var option = new Option(propriedade.descricao, propriedade.id); // Ajustado para usar a nova estrutura de dados
+                        if (propriedade.id.toString() === propriedadeAtualId) {
+                            option.selected = true;  // Seleciona a opção que corresponde à propriedade atual
+                        }
                         propriedadeSelect.add(option);
                     });
                 })
                 .catch(error => console.error('Erro ao buscar propriedades:', error));
+        }
+
+        // Carregar propriedades se um cliente estiver selecionado
+        if (clienteSelect.value) {
+            loadPropriedades(clienteSelect.value);
+        }
+
+        clienteSelect.addEventListener("change", function() {
+            const clienteId = this.value;
+            if (clienteId) {
+                loadPropriedades(clienteId);
+            } else {
+                propriedadeSelect.innerHTML = ''; // Limpa opções se nenhum cliente for selecionado
+            }
         });
     });
-    </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const clienteId = document.getElementById("id_cliente").value;
-    const propriedadeSelect = document.getElementById("id_propriedade");
-    const propriedadeAtualId = '{{ form.propriedade.value }}';  // Pega o ID da propriedade atual do Django template
-
-    // Função para carregar propriedades
-    function carregarPropriedades(clienteId) {
-        const url = `/ajax/propriedades_por_cliente/${clienteId}/`;
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                propriedadeSelect.innerHTML = '';
-                data.forEach(propriedade => {
-                    let option = new Option(propriedade.propriedade, propriedade.id);
-                    if (propriedade.id.toString() === propriedadeAtualId) {
-                        option.selected = true;  // Seleciona a opção que corresponde à propriedade atual
-                    }
-                    propriedadeSelect.add(option);
-                });
-            })
-            .catch(error => console.error('Erro ao buscar propriedades:', error));
-    }
-
-    carregarPropriedades(clienteId);  // Carrega propriedades quando a página é carregada
-
-    document.getElementById("id_cliente").addEventListener("change", function() {
-        carregarPropriedades(this.value);
-    });
-});
 </script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Desabilita o campo cliente para edição, mas envia o valor original
         const clienteInput = document.getElementById("id_cliente");
-        clienteInput.disabled = true;
+        clienteInput.readOnly = true;
     });
-    </script>
+</script>
+
 {% endblock %}

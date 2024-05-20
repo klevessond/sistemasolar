@@ -3,6 +3,18 @@
 
 {% block content %}
 <div class="container mt-5">
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Erro!</strong> Por favor, corrija os erros abaixo:
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            {% if field.errors %}
+                <div>{{ field.label }}: {{ field.errors }}</div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+<div class="container mt-5">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -82,6 +94,18 @@
                                       {{ form.valor_orcamento }}
                                   </div>
                               </div>
+                              <div class="form-group row">
+                                <label class="col-sm-3 text-end control-label col-form-label">Status Orçamento:</label>
+                                <div class="col-sm-9">
+                                    {{ form.status }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-end control-label col-form-label">Informações Adicionais:</label>
+                                <div class="col-sm-9">
+                                    {{ form.info_adicionais }}
+                                </div>
+                            </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
@@ -98,23 +122,38 @@
     document.addEventListener('DOMContentLoaded', function () {
         const clienteSelect = document.getElementById("id_cliente");
         const propriedadeSelect = document.getElementById("id_propriedade");
-    
-        clienteSelect.addEventListener("change", function() {
-            const clienteId = this.value;
-            const url = `/ajax/propriedades_por_cliente/${clienteId}/`; // Certifique-se de que a URL está correta
+
+        function loadPropriedades(clienteId) {
+            const url = `/ajax/propriedades_por_cliente/${clienteId}/`;
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     propriedadeSelect.innerHTML = ''; // Limpa opções existentes
+                    var option = new Option("Selecione uma Propriedade", ""); // Adiciona opção padrão
+                    propriedadeSelect.add(option);
                     data.forEach(function(propriedade) {
-                        var option = new Option(propriedade.propriedade, propriedade.id); // Ajuste para os campos retornados
+                        var option = new Option(propriedade.descricao, propriedade.id); // Ajustado para usar a nova estrutura de dados
                         propriedadeSelect.add(option);
                     });
                 })
                 .catch(error => console.error('Erro ao buscar propriedades:', error));
+        }
+
+        // Carregar propriedades se um cliente estiver selecionado
+        if (clienteSelect.value) {
+            loadPropriedades(clienteSelect.value);
+        }
+
+        clienteSelect.addEventListener("change", function() {
+            const clienteId = this.value;
+            if (clienteId) {
+                loadPropriedades(clienteId);
+            } else {
+                propriedadeSelect.innerHTML = ''; // Limpa opções se nenhum cliente for selecionado
+            }
         });
     });
-    </script>
-    
+</script>
+
 
 {% endblock %}

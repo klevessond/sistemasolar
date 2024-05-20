@@ -171,7 +171,7 @@ class PropriedadeForm(forms.ModelForm):
         fields = ['cliente','nome', 'propriedade', 'area_instalacao', 'consumo', 'tipo_telhado', 'latitude', 'longitude']
         widgets = {
             'cliente': forms.Select(attrs={'class': 'form-control'}),
-            'nome': forms.Select(attrs={'class': 'form-control'}),
+            'nome': forms.TextInput(attrs={'class': 'form-control'}),  # Corrigido para TextInput
             'propriedade': forms.Select(attrs={'class': 'form-control'}),
             'area_instalacao': forms.NumberInput(attrs={'class': 'form-control'}),
             'consumo': forms.NumberInput(attrs={'class': 'form-control'}),

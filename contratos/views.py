@@ -11,6 +11,7 @@ def cadastrar_orcamento(request, cliente_id=None):
 
     if request.method == 'POST':
         form = OrcamentoForm(request.POST, cliente_id=cliente_id)
+        print("Dados do formulário submetido:", request.POST)  # Print dos dados submetidos
         if form.is_valid():
             novo_orcamento = form.save(commit=False)
             novo_orcamento.cliente = cliente  # Define o cliente diretamente com o objeto recuperado
@@ -33,13 +34,21 @@ def detalhar_orcamento(request, orcamento_id):
     orcamento = get_object_or_404(Orcamento, id=orcamento_id)
     if request.method == 'POST':
         form = OrcamentoForm(request.POST, instance=orcamento)
+        print("Dados do formulário submetido:", request.POST)  # Print dos dados submetidos
         if form.is_valid():
+            print("Formulário válido e salvo.")  # Confirmação de formulário válido
             form.save()
             # Redirecione para a view de detalhes do orçamento, por exemplo
-            return redirect(reverse('contratos/orcamentos.html'))
+            return redirect(reverse('detalhar_cliente', args=[orcamento.cliente.id]))
+        else:
+            print("Erros no formulário:", form.errors)  # Print dos erros no formulário
     else:
         form = OrcamentoForm(instance=orcamento)
         cliente_id = orcamento.cliente.id
+    #cliente_id = orcamento.cliente.id
+
+    propriedades = Propriedade.objects.filter(cliente=orcamento.cliente)
+    print("Propriedades disponíveis:", propriedades)  # Print das propriedades disponíveis
 
     return render(request, 'contratos/detalhar_orcamento.html', {'form': form, 'orcamento_id': orcamento_id, 'cliente_id':cliente_id})
 
@@ -50,5 +59,11 @@ def orcamentos(request):
 
 def propriedades_por_cliente(request, cliente_id):
     propriedades = Propriedade.objects.filter(cliente_id=cliente_id)
-    print(propriedades)
-    return JsonResponse(list(propriedades.values('id', 'propriedade')), safe=False)
+    propriedades_data = [
+        {
+            'id': propriedade.id,
+            'descricao': f"{propriedade.nome} - {propriedade.get_propriedade_display()} ({propriedade.cliente.nome_completo})"
+        }
+        for propriedade in propriedades
+    ]
+    return JsonResponse(propriedades_data, safe=False)
