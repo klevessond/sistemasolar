@@ -30,7 +30,7 @@ str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['64.23.167.36']
 
 
 # Application definition
@@ -139,3 +139,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 USE_DJANGO_JQUERY = True
+
+print(f"BASE_DIR: {BASE_DIR}")
+print(f"Templates directory: {os.path.join(BASE_DIR, 'templates')}")

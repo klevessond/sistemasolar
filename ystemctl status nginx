@@ -1,0 +1,20 @@
+[0;1;32m●[0m gunicorn.service - gunicorn daemon
+     Loaded: loaded (/etc/systemd/system/gunicorn.service; enabled; vendor preset: enabled)
+     Active: [0;1;32mactive (running)[0m since Wed 2024-05-22 20:33:57 UTC; 28min ago
+   Main PID: 27356 (gunicorn)
+      Tasks: 4 (limit: 512)
+     Memory: 93.6M
+        CPU: 1.652s
+     CGroup: /system.slice/gunicorn.service
+             ├─27356 /home/sistemasolar/venv/bin/python3 /home/sistemasolar/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/sistemasolar/setup.sock setup.wsgi:application
+             ├─27357 /home/sistemasolar/venv/bin/python3 /home/sistemasolar/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/sistemasolar/setup.sock setup.wsgi:application
+             ├─27358 /home/sistemasolar/venv/bin/python3 /home/sistemasolar/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/sistemasolar/setup.sock setup.wsgi:application
+             └─27359 /home/sistemasolar/venv/bin/python3 /home/sistemasolar/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/sistemasolar/setup.sock setup.wsgi:application
+
+May 22 20:33:57 Sistemas systemd[1]: Started gunicorn daemon.
+May 22 20:33:57 Sistemas gunicorn[27356]: [2024-05-22 20:33:57 +0000] [27356] [INFO] Starting gunicorn 22.0.0
+May 22 20:33:57 Sistemas gunicorn[27356]: [2024-05-22 20:33:57 +0000] [27356] [INFO] Listening at: unix:/home/sistemasolar/setup.sock (27356)
+May 22 20:33:57 Sistemas gunicorn[27356]: [2024-05-22 20:33:57 +0000] [27356] [INFO] Using worker: sync
+May 22 20:33:57 Sistemas gunicorn[27357]: [2024-05-22 20:33:57 +0000] [27357] [INFO] Booting worker with pid: 27357
+May 22 20:33:57 Sistemas gunicorn[27358]: [2024-05-22 20:33:57 +0000] [27358] [INFO] Booting worker with pid: 27358
+May 22 20:33:57 Sistemas gunicorn[27359]: [2024-05-22 20:33:57 +0000] [27359] [INFO] Booting worker with pid: 27359
