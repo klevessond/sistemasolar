@@ -198,6 +198,8 @@ def cadastro_propriedade(request,cliente_id):
             propriedade.save()
             # Redireciona para uma nova URL, por exemplo, a página de detalhes da propriedade
             return redirect('detalhar_cliente', cliente.id)
+    else:
+       form = PropriedadeForm(instance=orcamento)
 
     return render(request, 'clientes/cadastro_propriedade.html', {'form': form, 'cliente': cliente})
 
