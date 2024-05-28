@@ -21,8 +21,9 @@ def cadastrar_orcamento(request, cliente_id=None):
             return redirect(reverse('detalhar_cliente', args=[cliente_id]))
     else:
         # Pré-seleciona o cliente no formulário usando 'initial' e ajusta o queryset de propriedades
-        form = OrcamentoForm(initial={'cliente': cliente}, cliente_id=cliente_id if cliente else None)
-
+        #form = OrcamentoForm(initial={'cliente': cliente}, cliente_id=cliente_id if cliente else None)
+        initial_data = {'cliente': cliente} if cliente else {}
+        form = OrcamentoForm(initial=initial_data, cliente_id=cliente_id)    
     context = {
         'form': form,
         'cliente_id': cliente_id

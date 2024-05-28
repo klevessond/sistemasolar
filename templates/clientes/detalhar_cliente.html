@@ -45,17 +45,30 @@
                     <div>
                         {% if tem_orcamento %}
                             <p class="text-success">Este cliente tem os seguintes status de orçamento:</p>
-                                 <ul>
-                                     {% for status in status_orcamentos %}
-                                         <div><a href="{% url 'detalhar_orcamento' status.id %}"><p><li>ID orçamento: {{status.id}} - Nome : {{status.nome}} Status :{{ status.status  }} - Painel Solar :{{status.painel_solar}} - Numero de Painel : {{status.numero_painel}}
-                                            Inversor : {{status.inversor}} - Numero de Inversor : {{status.numero_inversor}}
-                                         </li></p></a></div>
-                                    {% endfor %}
-                                </ul>
+                            <ul>
+                                {% for status in status_orcamentos %}
+                                    <li>
+                                        <a href="{% url 'detalhar_orcamento' status.id %}">
+                                            ID orçamento: {{ status.id }} - Nome : {{ status.nome }} - Status :
+                                            {% if status.status == 'aberto' %}
+                                                <span class="text-info">aberto</span>
+                                            {% elif status.status == 'rejeitado' %}
+                                                <span class="text-danger">rejeitado</span>
+                                            {% elif status.status == 'aprovado' %}
+                                                <span class="text-success">aprovado</span>
+                                            {% endif %}
+                                            - Painel Solar : {{ status.painel_solar }} - Número de Painel : {{ status.numero_painel }}
+                                            - Inversor : {{ status.inversor }} - Número de Inversor : {{ status.numero_inversor }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
                         {% else %}
-                                <p class="text-danger">Este cliente não tem nenhum orçamento.</p>
+                            <p class="text-danger">Este cliente não tem nenhum orçamento.</p>
                         {% endif %}
                     </div>
+                    
+                    
                     <div>
                         Contrato(criar um link aqui para a tela do contrato):
                         <ul>
