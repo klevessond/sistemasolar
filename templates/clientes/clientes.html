@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 {% if limpar_store == '1' %}
+
 <script type="text/javascript">
   localStorage.removeItem('nomeCompleto');
   localStorage.removeItem('rua');
@@ -51,15 +52,17 @@
         </div></a>
     </div>
 
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Clientes</h5>
-    <div class="table-responsive">
-      <table
-        id="zero_config"
-        class="table table-striped table-bordered"
-      >
-      <thead>
+    <div class="content mt-3">
+      <div class="animated fadeIn">
+          <div class="row">
+
+              <div class="col-md-12">
+                  <div class="card">
+                      <div class="card-header">
+                          <strong class="card-title">Data Table</strong>
+                      </div>
+                      <div class="card-body">
+                          <table id="bootstrap-data-table-export" class="table table-striped table-bordered">      <thead>
         <tr>
           <th>Cod.Cliente</th>
             <th>Nome</th>
@@ -99,5 +102,9 @@
     </tfoot>
   </table>
 </div>
+</div>
+</div>
+
+
 
 {% endblock %}
