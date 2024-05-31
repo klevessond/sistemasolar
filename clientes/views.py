@@ -240,4 +240,14 @@ def gerenciar_endereco(request):
          {'estados': estados, 'cidades': cidades,'bairros': bairros,
           'formEstados':formEstados,'formCidade':formCidade,
           'formBairro':formBairro})
+
+def add_cidade_popup(request):
+    if request.method == 'POST':
+        form = CidadeForm(request.POST)
+        if form.is_valid():
+            cidade = form.save()
+            return render(request, 'clientes/fechar_cidade_popup.html', {'obj': cidade})
+    else:
+        form = CidadeForm()
+    return render(request, 'clientes/add_cidade_popup.html', {'form': form})
     
