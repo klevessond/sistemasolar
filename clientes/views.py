@@ -241,6 +241,16 @@ def gerenciar_endereco(request):
           'formEstados':formEstados,'formCidade':formCidade,
           'formBairro':formBairro})
 
+def add_estado_popup(request):
+    if request.method == 'POST':
+        form = EstadoForm(request.POST)
+        if form.is_valid():
+            estado = form.save()
+            return render(request, 'clientes/fechar_estado_popup.html', {'obj': estado})
+    else:
+        form = EstadoForm()
+    return render(request, 'clientes/add_estado_popup.html', {'form': form})
+
 def add_cidade_popup(request):
     if request.method == 'POST':
         form = CidadeForm(request.POST)
@@ -251,3 +261,12 @@ def add_cidade_popup(request):
         form = CidadeForm()
     return render(request, 'clientes/add_cidade_popup.html', {'form': form})
     
+def add_bairro_popup(request):
+    if request.method == 'POST':
+        form = BairroForm(request.POST)
+        if form.is_valid():
+            bairro = form.save()
+            return render(request, 'clientes/fechar_bairro_popup.html', {'obj': bairro})
+    else:
+        form = BairroForm()
+    return render(request, 'clientes/add_bairro_popup.html', {'form': form})
