@@ -7,8 +7,8 @@ def cadastro_painelsolar(request):
     if request.method == 'POST':
         form = PainelSolarForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('Usinas')
+            painel=form.save()
+            return render(request, 'Usina/fechar_popup.html', {'obj': painel})
     else:
         form = PainelSolarForm()
     return render(request, 'Usinas/cadastro_painelsolar.html', {'form': form})
