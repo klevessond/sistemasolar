@@ -7,14 +7,14 @@
     <table id="zero_config" class="table table-striped table-bordered" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin: auto;">
         <div class="col-12 d-flex no-block align-items-center">
             <h4 class="page-title">Estados</h4>
-            <div class="ms-auto text-end">
+            <div class="ms-3 text-end" style="margin-left: auto;">
+                <div class="input-group-append">
+                    <a class="btn btn-outline-secondary" id="add_id_estado" data-popup="yes" href="{% url 'add_estado_popup'%}?_to_field=id&amp;_popup=1" title="Adicionar outro estado" target="_blank">
+                        <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Estado
+                    </a>
+                </div>
             </div>
-            <div class="input-group-append">
-                <a class="btn btn-outline-secondary" id="cadastro_estado" data-popup="yes" href="cadastro_estado/?_to_field=id&amp;_popup=1" title="Adicionar outro estado">
-                    <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Estado
-                </a>
-            </div>
-          </div>
+        </div>
 
     <thead>
         <tr>
@@ -39,10 +39,10 @@
     <table id="cidade_table" class="table table-striped table-bordered" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin: auto;">
         <div class="col-12 d-flex no-block align-items-center">
             <h4 class="page-title">Cidades</h4>
-            <div class="ms-auto text-end">
+            <div class="ms-3 text-end" style="margin-left: auto;">
             </div>
             <div class="input-group-append">
-                <a class="btn btn-outline-secondary" id="cadastro_cidade" data-popup="yes" href="cadastro_cidade/?_to_field=id&amp;_popup=1" title="Adicionar outra cidade">
+                <a class="btn btn-outline-secondary" id="add_id_cidade" data-popup="yes" href="{% url 'add_cidade_popup'%}?_to_field=id&amp;_popup=1" title="Adicionar outro cidade" target="_blank">
                     <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Cidade
                 </a>
             </div>
@@ -77,10 +77,10 @@
     <table id="bairro_table" class="table table-striped table-bordered" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin: auto;">
         <div class="col-12 d-flex no-block align-items-center">
             <h4 class="page-title">Bairros</h4>
-            <div class="ms-auto text-end">
+            <div class="ms-3 text-end" style="margin-left: auto;">
             </div>
             <div class="input-group-append">
-                <a class="btn btn-outline-secondary" id="cadastro_bairro" data-popup="yes" href="cadastro_bairro/?_to_field=id&amp;_popup=1" title="Adicionar outro bairro">
+                <a class="btn btn-outline-secondary" id="add_id_bairro" data-popup="yes" href="{% url 'add_bairro_popup'%}?_to_field=id&amp;_popup=1" title="Adicionar outro bairro" target="_blank">
                     <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Bairro
                 </a>
             </div>
@@ -105,107 +105,46 @@
     </table>
   </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<div class="modal fade" id="Modal_cadastro_estado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Adicionar Estado</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
-                <!-- Certifique-se de ajustar conforme necessário -->
-                <form method="post" action="{% url 'cadastro_estado' %}">
-                    {% csrf_token %}
-                    {{ formEstados.as_p }}
-                    <input type="hidden" name="origin_page" value="gerenciar_endereco">
-                    <button type="submit">Enviar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="Modal_cadastro_cidade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Adicionar Estado</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
-                <!-- Certifique-se de ajustar conforme necessário -->
-                <form method="post" action="{% url 'cadastro_cidade' %}">
-                    {% csrf_token %}
-                    {{ formCidade.as_p }}
-                    <input type="hidden" name="origin_page" value="gerenciar_endereco">
-                    <button type="submit">Enviar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-  </div>
-  
-  <div class="modal fade" id="Modal_cadastro_bairro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Adicionar Estado</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Conteúdo do seu formulário para adicionar um novo estado aqui -->
-                <!-- Certifique-se de ajustar conforme necessário -->
-                <form method="post" action="{% url 'cadastro_bairro' %}">
-                    {% csrf_token %}
-                    {{ formBairro.as_p }}
-                    <input type="hidden" name="origin_page" value="gerenciar_endereco">
-                    <button type="submit">Enviar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-  </div>
+<script type="text/javascript">
+    function dismissAddAnotherPopup(win, newId, newRepr) {
+        var name = windowname_to_id(win.name);
+        var elem = document.getElementById(name);
+        if (elem) {
+            var elemName = elem.nodeName.toUpperCase();
+            if (elemName === 'SELECT') {
+                var o = new Option(newRepr, newId);
+                elem.options[elem.options.length] = o;
+                o.selected = true;
+            } else if (elemName === 'INPUT') {
+                elem.value = newId;
+            }
+        }
+        window.location.reload(); // Força a atualização da página principal
+    }
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-
-  $(document).ready(function() {
-    // Quando o link for clicado
-    $('#cadastro_estado').click(function(e) {
-        e.preventDefault(); // Impede o comportamento padrão de abrir a nova página
-
-        // Abre o modal usando o ID do modal (certifique-se de ajustar conforme necessário)
-        $('#Modal_cadastro_estado').modal('show');
+    function windowname_to_id(name) {
+        return name.replace(/^add_/, '');
+    }
+</script>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        var links = document.querySelectorAll('a[data-popup="yes"]');
+        links.forEach(function(link) {
+            link.addEventListener("click", function(event) {
+                event.preventDefault();
+                var width = 600;
+                var height = 400;
+                var left = (screen.width / 2) - (width / 2);
+                var top = (screen.height / 2) - (height / 2);
+                var newWindow = window.open(this.href, 'popupWindow', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
+                newWindow.focus();
+            });
+        });
     });
-});
-$(document).ready(function() {
-    // Quando o link for clicado
-    $('#cadastro_cidade').click(function(e) {
-        e.preventDefault(); // Impede o comportamento padrão de abrir a nova página
-
-        // Abre o modal usando o ID do modal (certifique-se de ajustar conforme necessário)
-        $('#Modal_cadastro_cidade').modal('show');
-    });
-});
-$(document).ready(function() {
-    // Quando o link for clicado
-    $('#cadastro_bairro').click(function(e) {
-        e.preventDefault(); // Impede o comportamento padrão de abrir a nova página
-
-        // Abre o modal usando o ID do modal (certifique-se de ajustar conforme necessário)
-        $('#Modal_cadastro_bairro').modal('show');
-    });
-});
 </script>
 
 {% endblock %}
