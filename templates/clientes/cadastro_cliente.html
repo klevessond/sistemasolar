@@ -194,6 +194,7 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Enviar</button>
+                            <button type="button" class="btn btn-secondary" style="margin-left: auto;"" onclick="limparFormulario()">Limpar</button>
                         </div>
                     </form>
                 </div>
@@ -499,6 +500,31 @@
         });
     </script>
     
+    <script>
+        function limparFormulario() {
+            // Limpar os campos do formulário
+            document.getElementById('form_cadastro_cliente').reset();
+    
+            // Limpar as variáveis armazenadas no localStorage
+            localStorage.removeItem('nomeCompleto');
+            localStorage.removeItem('rua');
+            localStorage.removeItem('numero');
+            localStorage.removeItem('estado');
+            localStorage.removeItem('cidade');
+            localStorage.removeItem('bairro');
+            localStorage.removeItem('cep');
+            localStorage.removeItem('ponto_referencia');
+            localStorage.removeItem('telefone_fixo');
+            localStorage.removeItem('numero_celular');
+            localStorage.removeItem('email');
+            localStorage.removeItem('tipo_cliente');
+            localStorage.removeItem('cnpj');
+            localStorage.removeItem('cpf');
+    
+            // Atualizar a página para refletir as mudanças
+            window.location.reload();
+        }
+    </script>
     
 
   {% endblock %}
