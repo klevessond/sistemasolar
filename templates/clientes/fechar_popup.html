@@ -2,7 +2,8 @@
 {% load static %}
 {% block content %}
     <script type="text/javascript">
-        opener.dismissAddAnotherPopup(window, "{{ obj.pk }}", "{{ obj }}");
-        window.close();
+            opener.dismissAddAnotherPopup(window, "{{ obj.pk }}", "{{ obj }}");
+            window.close(); // Fecha o popup
+  
     </script>
 {% endblock %}

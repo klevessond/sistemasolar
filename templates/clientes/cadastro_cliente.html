@@ -53,7 +53,7 @@
                                         <div class="input-group">
                                             {{ form.estado }}
                                             <div class="input-group-append">
-                                                <a class="btn btn-outline-secondary" id="add_id_estado" data-popup="yes" href="add_estado_popup/?_to_field=id&amp;_popup=1" title="Adicionar outro estado" target="_blank">
+                                                <a class="btn btn-outline-secondary" id="add_id_estado" data-popup="yes" href="cadastro_estado/?_to_field=id&amp;_popup=1" title="Adicionar outro estado" target="_blank">
                                                     <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Estado
                                                 </a>
                                             </div>
@@ -71,7 +71,7 @@
                                         <div class="input-group">
                                             {{ form.cidade }}
                                             <div class="input-group-append">
-                                                <a class="btn btn-outline-secondary" id="add_id_cidade" data-popup="yes" href="add_cidade_popup/?_to_field=id&amp;_popup=1" title="Adicionar outro cidade" target="_blank">
+                                                <a class="btn btn-outline-secondary" id="add_id_cidade" data-popup="yes" href="cadastro_cidade/?_to_field=id&amp;_popup=1" title="Adicionar outro cidade" target="_blank">
                                                     <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Cidade
                                                 </a>
                                             </div>
@@ -89,7 +89,7 @@
                                         <div class="input-group">
                                             {{ form.bairro }}
                                             <div class="input-group-append">
-                                                <a class="btn btn-outline-secondary" id="add_id_bairro" data-popup="yes" href="add_bairro_popup/?_to_field=id&amp;_popup=1" title="Adicionar outro bairro" target="_blank">
+                                                <a class="btn btn-outline-secondary" id="add_id_bairro" data-popup="yes" href="cadastro_bairro/?_to_field=id&amp;_popup=1" title="Adicionar outro bairro" target="_blank">
                                                     <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Bairro
                                                 </a>
                                             </div>
@@ -462,8 +462,9 @@
       // Adicione outros campos conforme necessário
      });
     </script>
+        
       <script type="text/javascript">
-        function dismissAddAnotherPopup(win, newId, newRepr) {
+        function dismissAddAnotherPopup(win, newId, newRepr,max_id_estado) {
             var name = windowname_to_id(win.name);
             var elem = document.getElementById(name);
             if (elem) {
@@ -475,8 +476,15 @@
                 } else if (elemName === 'INPUT') {
                     elem.value = newId;
                 }
+
             }
-            win.close();
+                    // Manipular a informação do ID máximo do estado
+            if (max_id_estado !== undefined) {
+                console.log("Max ID Estado:", max_id_estado);
+                // Atualize o campo ou a variável com o novo maxIdEstado
+                document.getElementById('max_id_estado').value = max_id_estado;
+            }
+            window.location.reload(); // Força a atualização da página principal
         }
     
         function windowname_to_id(name) {
