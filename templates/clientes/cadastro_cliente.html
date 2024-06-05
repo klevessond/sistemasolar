@@ -56,6 +56,7 @@
                                                 <a class="btn btn-outline-secondary" id="add_id_estado" data-popup="yes" href="cadastro_estado/?_to_field=id&amp;_popup=1" title="Adicionar outro estado" target="_blank">
                                                     <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Estado
                                                 </a>
+                                                  
                                             </div>
                                         </div>
                                         {% if form.estado.errors %}
@@ -251,7 +252,7 @@
     localStorage.setItem('bairro', bairro);
 
 }
-        $(document).ready(function() {
+$(document).ready(function() {
             $('#id_estado').change(function() {
               // Limpa o campo do bairro
               $('#id_bairro').val('');
@@ -314,34 +315,6 @@
                 console.log('Bairro selecionada:', bairroId);
                 });
         });
-
-    $(document).ready(function() {
-        // Quando o link for clicado
-        $('#cadastro_estado').click(function(e) {
-            e.preventDefault(); // Impede o comportamento padrão de abrir a nova página
-
-            // Abre o modal usando o ID do modal (certifique-se de ajustar conforme necessário)
-            $('#Modal_cadastro_estado').modal('show');
-        });
-    });
-    $(document).ready(function() {
-        // Quando o link for clicado
-        $('#cadastro_cidade').click(function(e) {
-            e.preventDefault(); // Impede o comportamento padrão de abrir a nova página
-
-            // Abre o modal usando o ID do modal (certifique-se de ajustar conforme necessário)
-            $('#Modal_cadastro_cidade').modal('show');
-        });
-    });
-    $(document).ready(function() {
-        // Quando o link for clicado
-        $('#cadastro_bairro').click(function(e) {
-            e.preventDefault(); // Impede o comportamento padrão de abrir a nova página
-
-            // Abre o modal usando o ID do modal (certifique-se de ajustar conforme necessário)
-            $('#Modal_cadastro_bairro').modal('show');
-        });
-    });
 
 
     $(document).ready(function () {
@@ -413,6 +386,8 @@
       $('#id_estado').on('input', function () {
           estado = $(this).val();
           localStorage.setItem('estado', estado);
+          console.log('foi setado o estado para', estado);
+          
 
       });
       $('#id_cidade').on('input', function () {
@@ -464,29 +439,33 @@
     </script>
         
       <script type="text/javascript">
-        function dismissAddAnotherPopup(win, newId, newRepr,max_id_estado) {
-            var name = windowname_to_id(win.name);
-            var elem = document.getElementById(name);
-            if (elem) {
-                var elemName = elem.nodeName.toUpperCase();
-                if (elemName === 'SELECT') {
-                    var o = new Option(newRepr, newId);
-                    elem.options[elem.options.length] = o;
-                    o.selected = true;
-                } else if (elemName === 'INPUT') {
-                    elem.value = newId;
-                }
-
-            }
-                    // Manipular a informação do ID máximo do estado
-            if (max_id_estado !== undefined) {
-                console.log("Max ID Estado:", max_id_estado);
-                // Atualize o campo ou a variável com o novo maxIdEstado
-                document.getElementById('max_id_estado').value = max_id_estado;
-            }
-            window.location.reload(); // Força a atualização da página principal
+      function dismissAddAnotherPopup(win, newId, newRepr) {
+    var name = windowname_to_id(win.name);
+    var elem = document.getElementById(name);
+    if (elem) {
+        var elemName = elem.nodeName.toUpperCase();
+        if (elemName === 'SELECT') {
+            var o = new Option(newRepr, newId);
+            elem.options[elem.options.length] = o;
+            o.selected = true;
+        } else if (elemName === 'INPUT') {
+            elem.value = newId;
         }
+    }
     
+    // Verifica se o objeto retornado do pop-up não é nulo ou vazio
+    if (newId && newRepr) {
+        console.log("Objeto recebido do pop-up:", newRepr);
+        console.log("Objeto recebido do pop-up ID:", newId);
+        estado = localStorage.getItem('newRepr') || '';
+
+        // Faça sua manipulação aqui com o objeto recebido
+    } else {
+        console.log("Nenhum objeto recebido do pop-up.");
+    }
+    
+    //window.location.reload(); // Força a atualização da página principal
+}
         function windowname_to_id(name) {
             return name.replace(/^add_/, '');
         }
