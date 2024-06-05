@@ -249,7 +249,7 @@
     $('#id_bairro').val(max_id_bairro).change();
     bairro = max_id_bairro;
     console.log('valor da variavel cidade: ',bairro);
-    localStorage.setItem('bairro', bairro);
+    //localStorage.setItem('bairro', bairro);
 
 }
 $(document).ready(function() {
@@ -457,14 +457,15 @@ $(document).ready(function() {
     if (newId && newRepr) {
         console.log("Objeto recebido do pop-up:", newRepr);
         console.log("Objeto recebido do pop-up ID:", newId);
-        estado = localStorage.getItem('newRepr') || '';
+        //$('#add_id_estado').val(newId).change();
+        localStorage.setItem('estado', newId);
 
         // Faça sua manipulação aqui com o objeto recebido
     } else {
         console.log("Nenhum objeto recebido do pop-up.");
     }
     
-    //window.location.reload(); // Força a atualização da página principal
+    window.location.reload(); // Força a atualização da página principal
 }
         function windowname_to_id(name) {
             return name.replace(/^add_/, '');
