@@ -439,7 +439,7 @@ $(document).ready(function() {
     </script>
         
       <script type="text/javascript">
-      function dismissAddAnotherPopup(win, newId, newRepr) {
+   function dismissAddAnotherPopup(win, newId, newRepr, pagina) {
     var name = windowname_to_id(win.name);
     var elem = document.getElementById(name);
     if (elem) {
@@ -454,14 +454,25 @@ $(document).ready(function() {
     }
     
     // Verifica se o objeto retornado do pop-up não é nulo ou vazio
-    if (newId && newRepr) {
+    if ((newId && newRepr) && (pagina =='estado') ) {
         console.log("Objeto recebido do pop-up:", newRepr);
         console.log("Objeto recebido do pop-up ID:", newId);
-        //$('#add_id_estado').val(newId).change();
+        console.log("Página recebida do pop-up:", pagina);
         localStorage.setItem('estado', newId);
-
-        // Faça sua manipulação aqui com o objeto recebido
-    } else {
+    }
+    if ((newId && newRepr) && (pagina =='cidade') ) {
+        console.log("Objeto recebido do pop-up:", newRepr);
+        console.log("Objeto recebido do pop-up ID:", newId);
+        console.log("Página recebida do pop-up:", pagina);
+        localStorage.setItem('cidade', newId);
+    }
+    if ((newId && newRepr) && (pagina =='cidade') ) {
+        console.log("Objeto recebido do pop-up:", newRepr);
+        console.log("Objeto recebido do pop-up ID:", newId);
+        console.log("Página recebida do pop-up:", pagina);
+        localStorage.setItem('bairro', newId);
+    }
+    else {
         console.log("Nenhum objeto recebido do pop-up.");
     }
     
@@ -513,6 +524,26 @@ $(document).ready(function() {
             window.location.reload();
         }
     </script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            var estado = localStorage.getItem('estado') || '';
+            if (estado) {
+                var addCidadeLink = document.getElementById('add_id_cidade');
+                addCidadeLink.href = `cadastro_cidade/?_to_field=id&_popup=1&estado_id=${estado}`;
+            }
+        });
+    </script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                var cidade = localStorage.getItem('cidade') || '';
+                if (cidade) {
+                    var addCidadeLink = document.getElementById('add_id_bairro');
+                    addCidadeLink.href = `cadastro_bairro/?_to_field=id&_popup=1&cidade_id=${cidade}`;
+                }
+            });
+        </script>
+        
     
 
   {% endblock %}

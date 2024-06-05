@@ -2,8 +2,20 @@
 {% load static %}
 {% block content %}
     <script type="text/javascript">
-            opener.dismissAddAnotherPopup(window, "{{ obj.pk }}", "{{ obj }}");
-            window.close(); // Fecha o popup
-  
+        // Usando Django Template Tags para passar valores ao JavaScript
+        const objPk = "{{ obj.pk }}";
+        const obj = "{{ obj }}";
+        const pagina = "{{ pagina }}";
+        
+        // Chamando a função com os valores passados
+        opener.dismissAddAnotherPopup(window, objPk, obj, pagina);
+        
+        // Logando os valores no console
+        console.log("Objeto pk:", objPk);
+        console.log("Objeto:", obj);
+        console.log("Objeto pagina:", pagina);
+        
+        // Descomente a linha abaixo para fechar o popup se necessário
+         window.close();
     </script>
 {% endblock %}

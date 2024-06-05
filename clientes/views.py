@@ -20,7 +20,8 @@ def cadastro_estado(request):
                 return redirect(reverse('cadastro_cliente') + f'?max_id_estado={max_id_estado}')
             #desativado para teste do popup
             else:
-                   return render(request, 'clientes/fechar_popup.html', {'obj': estado, 'max_id_estado':max_id_estado})
+                   pagina = 'estado'
+                   return render(request, 'clientes/fechar_popup.html', {'obj': estado,'pagina':pagina})
     else:
         # Se o request não for POST, crie um formulário vazio
         form = EstadoForm()
@@ -28,6 +29,7 @@ def cadastro_estado(request):
     return render(request, 'clientes/cadastro_estado.html', {'form': form})
 
 def cadastro_cidade(request):
+    estado_id = request.GET.get('estado_id')  # Obtém o ID do estado da URL
     if request.method == 'POST':
         form = CidadeForm(request.POST)
         if form.is_valid():
@@ -40,13 +42,18 @@ def cadastro_cidade(request):
                 max_id_cidade = Cidade.objects.all().aggregate(Max('id'))['id__max']  # Obtém o maior ID dos estados
                 return redirect(reverse('cadastro_cliente') + f'?max_id_cidade={max_id_cidade}')
             else:
-                return render(request, 'clientes/fechar_popup.html', {'obj': cidade})
+                pagina='cidade'
+                return render(request, 'clientes/fechar_popup.html', {'obj': cidade,'pagina':pagina})
     else:
-        form = CidadeForm()
+        if estado_id:
+            form = CidadeForm(initial={'estado': estado_id})
+        else:
+            form = CidadeForm()
 
     return render(request, 'clientes/cadastro_cidade.html', {'form': form})
 
 def cadastro_bairro(request):
+    cidade_id = request.GET.get('cidade_id')  # Obtém o ID do estado da URL
     if request.method == 'POST':
         form = BairroForm(request.POST)
         if form.is_valid():
@@ -59,9 +66,13 @@ def cadastro_bairro(request):
                 max_id_bairro = Bairro.objects.all().aggregate(Max('id'))['id__max']  # Obtém o maior ID dos estados
                 return redirect(reverse('cadastro_cliente') + f'?max_id_bairro={max_id_bairro}')
             else:
-                return render(request, 'clientes/fechar_popup.html', {'obj': bairro})
+                pagina='bairro'
+                return render(request, 'clientes/fechar_popup.html', {'obj': bairro,'pagina':pagina})
     else:
-        form = BairroForm()
+        if cidade_id:
+            form = BairroForm(initial={'cidade': cidade_id})
+        else:
+            form = BairroForm()
 
     return render(request, 'clientes/cadastro_bairro.html', {'form': form})
 
