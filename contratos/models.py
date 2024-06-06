@@ -25,6 +25,7 @@ class Orcamento(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='aberto')
     valor_unitario_painel = models.IntegerField(null=True, blank=True, verbose_name='Valor Unitário do Painel')
     valor_unitario_usina = models.IntegerField(null=True, blank=True, verbose_name='Valor Unitário da Usina')
+    titularidade = models.BooleanField(default=True)  # Novo campo
     info_adicionais = models.TextField(null=True, blank=True, verbose_name='Informações Adicionais')
 
 

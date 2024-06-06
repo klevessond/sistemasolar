@@ -195,7 +195,7 @@ def cadastro_propriedade(request,cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)  # Busca o cliente pelo ID
     # Aqui você pode adicionar lógica para criar ou manipular uma propriedade relacionada ao cliente
     # Por exemplo, você pode querer passar o cliente para um formulário de Propriedade como um valor inicial
-    form = PropriedadeForm(initial={'cliente': cliente})  # Assumindo que você tem um campo 'cliente' no seu form de Propriedade
+    #form = PropriedadeForm(initial={'cliente': cliente})  # Assumindo que você tem um campo 'cliente' no seu form de Propriedade
 
     if request.method == 'POST':
         form = PropriedadeForm(request.POST)
@@ -206,7 +206,7 @@ def cadastro_propriedade(request,cliente_id):
             # Redireciona para uma nova URL, por exemplo, a página de detalhes da propriedade
             return redirect('detalhar_cliente', cliente.id)
     else:
-       form = PropriedadeForm(instance=orcamento)
+       form = PropriedadeForm(initial={'cliente': cliente})
 
     return render(request, 'clientes/cadastro_propriedade.html', {'form': form, 'cliente': cliente})
 

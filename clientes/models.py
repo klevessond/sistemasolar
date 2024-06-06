@@ -87,7 +87,7 @@ class Cliente(models.Model):
     )
     cpf = models.CharField(max_length=14, validators=[cpf_validator], unique=True, blank=True, null=True,default=None)
     data_cadastro = models.DateTimeField(auto_now_add=True)
-
+    titularidade = models.BooleanField(default=True)
     
     def save(self, *args, **kwargs):
         self.full_clean()
