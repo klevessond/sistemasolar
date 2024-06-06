@@ -3,88 +3,104 @@
 {% block content %}
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-9 offset-md-1">
+        <div class="col-md-9">
             <div class="card">
                 <div class="card-header">
                     Detalhes do Cliente
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <!-- Primeira Coluna: NOME até CEP -->
-                        <div class="col-md-6">
-                            <p><strong>Nome Completo:</strong> {{ cliente.nome_completo }}</p>
-                            <p><strong>Rua:</strong> {{ cliente.rua }}</p>
-                            <p><strong>Número:</strong> {{ cliente.numero }}</p>
-                            <p><strong>Estado:</strong> {{ cliente.estado.nome }}</p>
-                            <p><strong>Cidade:</strong> {{ cliente.cidade.nome }}</p>
-                            <p><strong>Bairro:</strong> {{ cliente.bairro.nome }}</p>
-                            <p><strong>CEP:</strong> {{ cliente.cep }}</p>
-                            <p><strong>Ponto de Referência:</strong> {{ cliente.ponto_referencia }}</p>
+                    <div class="scrollable-content">
+                        <div class="row">
+                            <!-- Primeira Coluna: NOME até CEP -->
+                            <div class="col-md-6">
+                                <p><strong>Nome Completo:</strong> {{ cliente.nome_completo }}</p>
+                                <p><strong>Rua:</strong> {{ cliente.rua }}</p>
+                                <p><strong>Número:</strong> {{ cliente.numero }}</p>
+                                <p><strong>Estado:</strong> {{ cliente.estado.nome }}</p>
+                                <p><strong>Cidade:</strong> {{ cliente.cidade.nome }}</p>
+                                <p><strong>Bairro:</strong> {{ cliente.bairro.nome }}</p>
+                                <p><strong>CEP:</strong> {{ cliente.cep }}</p>
+                                <p><strong>Ponto de Referência:</strong> {{ cliente.ponto_referencia }}</p>
+                            </div>
+                            <!-- Segunda Coluna: TELEFONE FIXO até CPF -->
+                            <div class="col-md-6">
+                                <p><strong>Telefone Fixo:</strong> {{ cliente.telefone_fixo }}</p>
+                                <p><strong>Celular:</strong> {{ cliente.numero_celular }}</p>
+                                <p><strong>Email:</strong> {{ cliente.email }}</p>
+                                <p><strong>Tipo de Cliente:</strong> {{ cliente.get_tipo_cliente_display }}</p>
+                                <p><strong>CNPJ:</strong> {{ cliente.cnpj }}</p>
+                                <p><strong>CPF:</strong> {{ cliente.cpf }}</p>
+                            </div>
                         </div>
-                        <!-- Segunda Coluna: TELEFONE FIXO até CPF -->
-                        <div class="col-md-6">
-                            <p><strong>Telefone Fixo:</strong> {{ cliente.telefone_fixo }}</p>
-                            <p><strong>Celular:</strong> {{ cliente.numero_celular }}</p>
-                            <p><strong>Email:</strong> {{ cliente.email }}</p>
-                            <p><strong>Tipo de Cliente:</strong> {{ cliente.get_tipo_cliente_display }}</p>
-                            <p><strong>CNPJ:</strong> {{ cliente.cnpj }}</p>
-                            <p><strong>CPF:</strong> {{ cliente.cpf }}</p>
-                        </div>
-                        <div>
-                        {% if propriedades %}
-                          Local de Instalação
-                          <ul>
-                                {% for propriedade in propriedades %}
-                                    <li>{{propriedade.nome}} - {{ propriedade.get_propriedade_display }} - Área: {{ propriedade.area_instalacao }}m² - Consumo: {{ propriedade.consumo }} kWh/mês - Tipo de Telhado: {{ propriedade.get_tipo_telhado_display }}</li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p>Este cliente não possui propriedades cadastradas.</p>
-                        {% endif %}
-                    </div>
-                    <div>
-                        {% if tem_orcamento %}
-                            <p class="text-success">Este cliente tem os seguintes status de orçamento:</p>
-                            <ul>
-                                {% for status in status_orcamentos %}
-                                    <li>
-                                        <a href="{% url 'detalhar_orcamento' status.id %}">
-                                            ID orçamento: {{ status.id }} - Nome : {{ status.nome }} - Status :
-                                            {% if status.status == 'aberto' %}
-                                                <span class="text-info">aberto</span>
-                                            {% elif status.status == 'rejeitado' %}
-                                                <span class="text-danger">rejeitado</span>
-                                            {% elif status.status == 'aprovado' %}
-                                                <span class="text-success">aprovado</span>
-                                            {% endif %}
-                                            - Painel Solar : {{ status.painel_solar }} - Número de Painel : {{ status.numero_painel }}
-                                            - Inversor : {{ status.inversor }} - Número de Inversor : {{ status.numero_inversor }}
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p class="text-danger">Este cliente não tem nenhum orçamento.</p>
-                        {% endif %}
-                    </div>
-                    
-                    
-                    <div>
-                        Contrato(criar um link aqui para a tela do contrato):
-                        <ul>
-                        <li>detalhes do contato, numero, painel, quantidade do painel, inversor, quantidade de inversor, vendedor
                         
-                        </ul>
-                    </div>
-                    <div>
-                    <a class="btn btn-primary" href="{% url 'clientes' %}">Consultar clientes</a>
-                    <a class="btn btn-primary" href="{% url 'cadastro_propriedade' cliente.id %}">Cadastrar Propriedade</a>
-                    <a class="btn btn-primary" href="{% url 'cadastrar_orcamento_com_cliente' cliente.id %}">Cadastrar Orçamento</a>
-                    <a class="btn btn-primary" href="{% url 'editar_cliente' cliente.id %}">Editar</a>
-                    </div>
+                        <div class="mt-3">
+                            {% if propriedades %}
+                            <div>
+                                <h5>Local de Instalação</h5>
+                                <ul class="list-unstyled">
+                                    {% for propriedade in propriedades %}
+                                        <li>{{ propriedade.nome }} - {{ propriedade.get_propriedade_display }} - Área: {{ propriedade.area_instalacao }}m² - Consumo: {{ propriedade.consumo }} kWh/mês - Tipo de Telhado: {{ propriedade.get_tipo_telhado_display }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% else %}
+                                <p>Este cliente não possui local de instalação cadastrado.</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mt-3">
+                            {% if tem_orcamento %}
+                                <p class="text-success">Este cliente tem os seguintes status de orçamento:</p>
+                                <ul class="list-unstyled">
+                                    {% for status in status_orcamentos %}
+                                        <li>
+                                            <a href="{% url 'detalhar_orcamento' status.id %}">
+                                                ID orçamento: {{ status.id }} - Nome : {{ status.nome }} - Status :
+                                                {% if status.status == 'aberto' %}
+                                                    <span class="text-info">aberto</span>
+                                                {% elif status.status == 'rejeitado' %}
+                                                    <span class="text-danger">rejeitado</span>
+                                                {% elif status.status == 'aprovado' %}
+                                                    <span class="text-success">aprovado</span>
+                                                {% endif %}
+                                                - Painel Solar : {{ status.painel_solar }} - Número de Painel : {{ status.numero_painel }}
+                                                - Inversor : {{ status.inversor }} - Número de Inversor : {{ status.numero_inversor }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-danger">Este cliente não tem nenhum orçamento.</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mt-3">
+                            <h5>Contrato</h5>
+                            <p>(criar um link aqui para a tela do contrato)</p>
+                            <ul class="list-unstyled">
+                                <li>detalhes do contato, número, painel, quantidade do painel, inversor, quantidade de inversor, vendedor</li>
+                            </ul>
+                        </div>
+                    </div>    
                 </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                <a class="btn btn-primary mb-2" href="{% url 'clientes' %}">Consultar clientes</a>
+                <a class="btn btn-primary mb-2" href="{% url 'cadastro_propriedade' cliente.id %}">Cadastrar Propriedade</a>
+                <a class="btn btn-primary mb-2" href="{% url 'cadastrar_orcamento_com_cliente' cliente.id %}">Cadastrar Orçamento</a>
+                <a class="btn btn-primary mb-2" href="{% url 'editar_cliente' cliente.id %}">Editar</a>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .scrollable-content {
+        max-height: 700px; /* Defina a altura desejada */
+        overflow-y: auto;
+    }
+</style>
+
 {% endblock %}
