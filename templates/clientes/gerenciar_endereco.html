@@ -3,13 +3,13 @@
 {% block content %}
 
 <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-  <div class="table-responsive" style="flex: 1; max-width: 30%; padding: 0 10px;">
+  <div class="table-responsive scrollable-table" style="flex: 1; max-width: 30%; padding: 0 10px;">
     <table id="zero_config" class="table table-striped table-bordered" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin: auto;">
         <div class="col-12 d-flex no-block align-items-center">
             <h4 class="page-title">Estados</h4>
             <div class="ms-3 text-end" style="margin-left: auto;">
                 <div class="input-group-append">
-                    <a class="btn btn-outline-secondary" id="add_id_estado" data-popup="yes" href="{% url 'add_estado_popup'%}?_to_field=id&amp;_popup=1" title="Adicionar outro estado" target="_blank">
+                    <a class="btn btn-outline-secondary" id="add_id_estado" data-popup="yes" href="{% url 'cadastro_estado'%}?_to_field=id&amp;_popup=1" title="Adicionar outro estado" target="_blank">
                         <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Estado
                     </a>
                 </div>
@@ -35,14 +35,14 @@
   </table>
   </div>
 
-  <div class="table-responsive" style="flex: 1; max-width: 30%; padding: 0 10px;">
+  <div class="table-responsive scrollable-table" style="flex: 1; max-width: 30%; padding: 0 10px;">
     <table id="cidade_table" class="table table-striped table-bordered" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin: auto;">
         <div class="col-12 d-flex no-block align-items-center">
             <h4 class="page-title">Cidades</h4>
             <div class="ms-3 text-end" style="margin-left: auto;">
             </div>
             <div class="input-group-append">
-                <a class="btn btn-outline-secondary" id="add_id_cidade" data-popup="yes" href="{% url 'add_cidade_popup'%}?_to_field=id&amp;_popup=1" title="Adicionar outro cidade" target="_blank">
+                <a class="btn btn-outline-secondary" id="add_id_cidade" data-popup="yes" href="{% url 'cadastro_cidade'%}?_to_field=id&amp;_popup=1" title="Adicionar outro cidade" target="_blank">
                     <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Cidade
                 </a>
             </div>
@@ -73,14 +73,14 @@
   </table>
   </div>
 
-  <div class="table-responsive" style="flex: 1; max-width: 30%; padding: 0 10px;">
+  <div class="table-responsive scrollable-table" style="flex: 1; max-width: 30%; padding: 0 10px;">
     <table id="bairro_table" class="table table-striped table-bordered" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin: auto;">
         <div class="col-12 d-flex no-block align-items-center">
             <h4 class="page-title">Bairros</h4>
             <div class="ms-3 text-end" style="margin-left: auto;">
             </div>
             <div class="input-group-append">
-                <a class="btn btn-outline-secondary" id="add_id_bairro" data-popup="yes" href="{% url 'add_bairro_popup'%}?_to_field=id&amp;_popup=1" title="Adicionar outro bairro" target="_blank">
+                <a class="btn btn-outline-secondary" id="add_id_bairro" data-popup="yes" href="{% url 'cadastro_bairro'%}?_to_field=id&amp;_popup=1" title="Adicionar outro bairro" target="_blank">
                     <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">Bairro
                 </a>
             </div>
@@ -146,5 +146,11 @@
         });
     });
 </script>
+<style>
+  .scrollable-table {
+      max-height: 800px; /* Defina a altura desejada */
+      overflow-y: auto;
+  }
+</style>
 
 {% endblock %}
