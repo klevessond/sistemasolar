@@ -5,7 +5,7 @@ from .models import Orcamento
 
 @receiver(post_save, sender=Cliente)
 def sync_titularidade_to_orcamento(sender, instance, **kwargs):
-    Orçamento.objects.filter(cliente=instance).update(titularidade=instance.titularidade)
+    Orcamento.objects.filter(cliente=instance).update(titularidade=instance.titularidade)
 
 @receiver(post_save, sender=Orcamento)
 def sync_titularidade_to_cliente(sender, instance, **kwargs):

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'usinas.apps.UsinasConfig',
     'contratos.apps.ContratosConfig',
     'smart_selects',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
