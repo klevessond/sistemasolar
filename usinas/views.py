@@ -8,7 +8,7 @@ def cadastro_painelsolar(request):
         form = PainelSolarForm(request.POST)
         if form.is_valid():
             painel=form.save()
-            return render(request, 'Usina/fechar_popup.html', {'obj': painel})
+            return render(request, 'Usinas/fechar_popup.html', {'obj': painel})
     else:
         form = PainelSolarForm()
     return render(request, 'Usinas/cadastro_painelsolar.html', {'form': form})
@@ -17,8 +17,8 @@ def cadastro_inversor(request):
     if request.method == 'POST':
         form = InversorForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('Usinas')  # Substitua pela URL desejada
+            inversor=form.save()
+            return render(request, 'Usinas/fechar_popup.html', {'obj': inversor})
     else:
         form = InversorForm()
     return render(request, 'Usinas/cadastro_inversor.html', {'form': form})
