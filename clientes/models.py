@@ -108,6 +108,7 @@ class Cliente(models.Model):
                 'painel_solar': str(orcamento.painel_solar),  # Converte o objeto PainelSolar para string, supondo que você tenha um método __str__ no modelo PainelSolar
                 'numero_inversor': orcamento.numero_inversor,
                 'inversor': str(orcamento.inversor),
+                'valor_orcamento':(orcamento.valor_orcamento),
                 # Inclua quaisquer outras informações que deseja retornar
             }
             info_orcamentos.append(info)

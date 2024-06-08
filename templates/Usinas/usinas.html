@@ -105,10 +105,10 @@
         links.forEach(function(link) {
             link.addEventListener("click", function(event) {
                 event.preventDefault();
-                var width = 600;
-                var height = 400;
-                var left = (screen.width / 4) - (width / 4);
-                var top = (screen.height / 4) - (height / 4);
+                var width = 900;
+                var height = 500;
+                var left = (screen.width / 2) - (width / 2);
+                var top = (screen.height / 2) - (height / 2);
                 var newWindow = window.open(this.href, 'popupWindow', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
                 newWindow.focus();
             });

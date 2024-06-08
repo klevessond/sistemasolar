@@ -42,27 +42,39 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 text-end control-label col-form-label">Número de Painéis:</label>
-                                        <div class="col-sm-9">
-                                            {{ form.numero_painel }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <label class="col-sm-3 text-end control-label col-form-label">Painel Solar:</label>
                                         <div class="col-sm-9">
                                             {{ form.painel_solar }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 text-end control-label col-form-label">Número de Inversor:</label>
+                                        <label class="col-sm-3 text-end control-label col-form-label">Número de Painéis:</label>
                                         <div class="col-sm-9">
-                                            {{ form.numero_inversor }}
+                                            {{ form.numero_painel|attr:"id:id_numero_painel" }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 text-end control-label col-form-label">Valor unitário Painel:</label>
+                                        <div class="col-sm-9">
+                                            {{ form.valor_unitario_painel|attr:"id:id_valor_unitario_painel" }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 text-end control-label col-form-label">Inversor:</label>
                                         <div class="col-sm-9">
                                             {{ form.inversor }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 text-end control-label col-form-label">Número de Inversores:</label>
+                                        <div class="col-sm-9">
+                                            {{ form.numero_inversor|attr:"id:id_numero_inversor" }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 text-end control-label col-form-label">Valor unitário Inversor:</label>
+                                        <div class="col-sm-9">
+                                            {{ form.valor_unitario_inversor|attr:"id:id_valor_unitario_inversor" }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -86,15 +98,21 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 text-end control-label col-form-label">Tempo de Garantia:</label>
+                                        <label class="col-sm-3 text-end control-label col-form-label">Tempo de Garantia(meses):</label>
                                         <div class="col-sm-9">
                                             {{ form.tempo_garantia }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-sm-3 text-end control-label col-form-label">Valor de Instalação:</label>
+                                        <div class="col-sm-9">
+                                            {{ form.valor_maodeobra|attr:"id:id_valor_maodeobra" }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-sm-3 text-end control-label col-form-label">Valor do Orçamento:</label>
                                         <div class="col-sm-9">
-                                            {{ form.valor_orcamento }}
+                                            {{ form.valor_orcamento|attr:"id:id_valor_orcamento" }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -163,5 +181,39 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const numeroPainelInput = document.getElementById('id_numero_painel');
+        const valorUnitarioPainelInput = document.getElementById('id_valor_unitario_painel');
+        const numeroInversorInput = document.getElementById('id_numero_inversor');
+        const valorUnitarioInversorInput = document.getElementById('id_valor_unitario_inversor');
+        const valorMaodeobraInput = document.getElementById('id_valor_maodeobra');
+        const valorOrcamentoInput = document.getElementById('id_valor_orcamento');
+    
+        function calculateOrcamento() {
+            const numeroPainel = parseFloat(numeroPainelInput.value) || 0;
+            const valorUnitarioPainel = parseFloat(valorUnitarioPainelInput.value) || 0;
+            const numeroInversor = parseFloat(numeroInversorInput.value) || 0;
+            const valorUnitarioInversor = parseFloat(valorUnitarioInversorInput.value) || 0;
+            const valorMaodeobra = parseFloat(valorMaodeobraInput.value) || 0;
+    
+            const valorOrcamento = (numeroPainel * valorUnitarioPainel) + 
+                                   (numeroInversor * valorUnitarioInversor) + 
+                                   valorMaodeobra;
+    
+            valorOrcamentoInput.value = valorOrcamento.toFixed(2);
+        }
+    
+        numeroPainelInput.addEventListener('input', calculateOrcamento);
+        valorUnitarioPainelInput.addEventListener('input', calculateOrcamento);
+        numeroInversorInput.addEventListener('input', calculateOrcamento);
+        valorUnitarioInversorInput.addEventListener('input', calculateOrcamento);
+        valorMaodeobraInput.addEventListener('input', calculateOrcamento);
+    
+        // Initial calculation
+        calculateOrcamento();
+    });
+    </script>
 
 {% endblock %}

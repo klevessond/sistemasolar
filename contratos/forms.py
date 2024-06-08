@@ -5,8 +5,8 @@ class OrcamentoForm(forms.ModelForm):
     class Meta:
         model = Orcamento
         fields = ['cliente', 'propriedade', 'consumo', 'painel_solar', 'numero_painel', 'valor_unitario_painel', 'inversor', 'numero_inversor',
-                   'valor_unitario_usina', 'energia_gerada', 'espaco_disponivel', 'tempo_garantia', 'valor_orcamento', 'status', 'info_adicionais',
-                   'titularidade']
+                   'valor_unitario_inversor', 'energia_gerada', 'espaco_disponivel', 'tempo_garantia', 'valor_orcamento', 'status', 'info_adicionais',
+                   'titularidade','valor_maodeobra']
 
     def __init__(self, *args, **kwargs):
         cliente_id = kwargs.pop('cliente_id', None)
