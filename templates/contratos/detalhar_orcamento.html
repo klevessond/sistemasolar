@@ -41,12 +41,15 @@
                                             {{ form.consumo }}
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 text-end control-label col-form-label">Painel Solar:</label>
-                                        <div class="col-sm-9">
-                                            {{ form.painel_solar }}
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Painel Solar:</label>
+                                            <div class="col-sm-9">
+                                            {{ form.painel_solar }}<a  id="add_id_cidade" data-popup="yes" href="cadastro_cidade/?_to_field=id&amp;_popup=1" title="Adicionar outro cidade" target="_blank">
+                                                <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">
+                                               </a>
+                                            </div>
+                                            
                                         </div>
-                                    </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 text-end control-label col-form-label">Número de Painéis:</label>
                                         <div class="col-sm-9">
