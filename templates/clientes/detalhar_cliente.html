@@ -33,7 +33,12 @@
                                 <p><strong>Titularidade</strong> {{ cliente.titularidade }}</p>
                             </div>
                         </div>
-                        
+                        {% for status in status_orcamentos %}                        
+                            {% if status.status == 'aprovado' %}
+                                - Painel Solar : {{ status.painel_solar }} - Número de Painel : {{ status.numero_painel }}
+                                - Inversor : {{ status.inversor }} - Número de Inversor : {{ status.numero_inversor }}
+                            {% endif %}
+                        {% endfor %}                                
                         <div class="mt-3">
                             {% if propriedades %}
                             <div>
