@@ -1,7 +1,21 @@
 from django import forms
-from .models import Orcamento, Propriedade
+from .models import Orcamento, Propriedade, TipoPagamento
+
+
+
+class TipoPagamentoForm(forms.ModelForm):
+    class Meta:
+        model = TipoPagamento
+        fields = ['nome']
+
 
 class OrcamentoForm(forms.ModelForm):
+    
+    tipos_pagamento = forms.ModelMultipleChoiceField(
+        queryset=TipoPagamento.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+        required=True
+    )
     class Meta:
         model = Orcamento
         fields = ['cliente', 'propriedade', 'consumo', 'painel_solar', 'numero_painel', 'valor_unitario_painel', 'inversor', 'numero_inversor',

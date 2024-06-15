@@ -3,6 +3,13 @@ from django.db import models
 from clientes.models import Cliente, Propriedade
 from usinas.models import PainelSolar, Inversor
 
+
+class TipoPagamento(models.Model):
+    nome = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.nome
+
 class Orcamento(models.Model):
     
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
@@ -28,6 +35,8 @@ class Orcamento(models.Model):
     valor_maodeobra = models.IntegerField(null=True, blank=True, verbose_name='Valor mao de obra')    
     titularidade = models.BooleanField(default=True)  # Novo campo
     info_adicionais = models.TextField(null=True, blank=True, verbose_name='Informações Adicionais')
+    tipos_pagamento = models.ManyToManyField(TipoPagamento, related_name='orcamentos')
+
 
 
     def __str__(self):
@@ -35,3 +44,4 @@ class Orcamento(models.Model):
 
     #def __str__(self):
      #   return f"Orçamento {self.id} - Cliente {self.cliente.nome_completo}"
+

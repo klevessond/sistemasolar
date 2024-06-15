@@ -1,0 +1,12 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Tipos de Pagamento</h1>
+<ul>
+    {% for tipo_pagamento in tipos_pagamento %}
+        <li>{{ tipo_pagamento.nome }}</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'cadastrar_tipo_pagamento' %}">Adicionar Tipo de Pagamento</a>
+
+{% endblock %}

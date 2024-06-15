@@ -1,10 +1,29 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from .forms import OrcamentoForm
-from .models import Orcamento
+from .forms import OrcamentoForm, TipoPagamentoForm
+from .models import Orcamento, TipoPagamento
 from clientes.models import Cliente
 from clientes.models import Propriedade
 from django.http import JsonResponse
+
+
+
+def cadastrar_tipo_pagamento(request):
+    if request.method == 'POST':
+        form = TipoPagamentoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            tipos_pagamento = TipoPagamento.objects.all()
+            return render(request, 'contratos/tipos_pagamento.html', {'tipos_pagamento': tipos_pagamento})
+
+    else:
+        form = TipoPagamentoForm()
+    return render(request, 'contratos/cadastrartipopagamento.html', {'form': form})
+
+def tipos_pagamento(request):
+    tipos_pagamento = TipoPagamento.objects.all()
+    return render(request, 'contratos/tipos_pagamento.html', {'tipos_pagamento': tipos_pagamento})
+
 
 def cadastrar_orcamento(request, cliente_id=None):
     cliente = get_object_or_404(Cliente, pk=cliente_id) if cliente_id else None
