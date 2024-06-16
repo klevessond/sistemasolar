@@ -2,11 +2,32 @@
 {% load static %}
 {% block content %}
 
-<h1>Criar Tipo de Pagamento</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar</button>
-</form>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-9 offset-md-1">
+            <div class="card">
+                <div class="card-header">
+                    Cadastro de Tipo de Pagamento
+                </div>
+                <div class="card-body">
+                    <form method="post" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 text-end control-label col-form-label">Nome:</label>
+                                    <div class="col-sm-9">
+                                        {{ form.nome }}
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

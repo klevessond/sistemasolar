@@ -1,12 +1,27 @@
 {% extends 'shared/base.html' %}
 {% load static %}
 {% block content %}
-<h1>Tipos de Pagamento</h1>
-<ul>
-    {% for tipo_pagamento in tipos_pagamento %}
-        <li>{{ tipo_pagamento.nome }}</li>
-    {% endfor %}
-</ul>
-<a href="{% url 'cadastrar_tipo_pagamento' %}">Adicionar Tipo de Pagamento</a>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-9 offset-md-1">
+            <div class="card">
+                <div class="card-header">
+                    Tipos de Pagamento
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'cadastrar_tipo_pagamento' %}" class="btn btn-primary mb-3">Adicionar Tipo de Pagamento</a>
+                    <ul class="list-group">
+                        {% for tipo_pagamento in tipos_pagamento %}
+                            <li class="list-group-item">
+                                {{ tipo_pagamento.nome }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
