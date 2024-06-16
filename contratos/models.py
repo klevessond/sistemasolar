@@ -21,7 +21,7 @@ class Orcamento(models.Model):
     numero_inversor = models.IntegerField()
     inversor = models.ForeignKey(Inversor, on_delete=models.CASCADE)
     espaco_disponivel = models.DecimalField(max_digits=10, decimal_places=2)  # Até 10 dígitos no total, com 2 casas decimais
-    tempo_garantia = models.IntegerField()
+    tempo_garantia = models.DateField()
     valor_orcamento = models.IntegerField()
     STATUS_CHOICES = [
         ('aberto', 'Em Aberto'),

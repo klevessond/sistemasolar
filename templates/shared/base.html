@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="{% static 'vendors/jqvmap/dist/jqvmap.min.css'%}">
     <link rel="stylesheet" href="{% static 'vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css'%}">
     <link rel="stylesheet" href="{% static 'vendors/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}">
+    
     
 
     <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
@@ -287,6 +289,13 @@
 <script src="{% static 'vendors/datatables.net-buttons/js/buttons.print.min.js'%}"></script>
 <script src="{% static 'vendors/datatables.net-buttons/js/buttons.colVis.min.js'%}"></script>
 <script src="{% static 'assets/js/init-scripts/data-table/datatables-init.js'%}"></script>
+<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookup.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
 {% block extra_js %}{% endblock %}
 
 

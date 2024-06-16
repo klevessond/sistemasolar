@@ -103,7 +103,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 text-end control-label col-form-label">Tempo de Garantia(meses):</label>
+                                        <label class="col-sm-3 text-end control-label col-form-label">Tempo de Garantia:</label>
                                         <div class="col-sm-9">
                                             {{ form.tempo_garantia }}
                                         </div>
@@ -234,5 +234,15 @@ document.addEventListener('DOMContentLoaded', function () {
         calculateOrcamento();
     });
     </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dateField = document.querySelector('input[type="date"]');
+        if (dateField) {
+            dateField.classList.add('vDateField');
+            const today = new Date().toISOString().split('T')[0];
+            dateField.insertAdjacentHTML('afterend', `<span class="datetimeshortcuts">&nbsp;<a href="#" onclick="document.getElementById('${dateField.id}').value = '${today}'; return false;">Hoje</a>&nbsp;|&nbsp;<a href="#" id="calendarlink0"><span class="date-icon" title="Escolha uma data"></span></a></span>`);
+        }
+    });
+</script>
 
 {% endblock %}

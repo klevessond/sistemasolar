@@ -1,5 +1,6 @@
 from django import forms
 from .models import Orcamento, Propriedade, TipoPagamento
+from django.contrib.admin.widgets import AdminDateWidget
 
 
 
@@ -16,6 +17,8 @@ class OrcamentoForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
         required=True
     )
+    tempo_garantia = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
     class Meta:
         model = Orcamento
         fields = ['cliente', 'propriedade', 'consumo', 'painel_solar', 'numero_painel', 'valor_unitario_painel', 'inversor', 'numero_inversor',
