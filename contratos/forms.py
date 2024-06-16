@@ -11,10 +11,10 @@ class TipoPagamentoForm(forms.ModelForm):
 
 
 class OrcamentoForm(forms.ModelForm):
-    
+
     tipos_pagamento = forms.ModelMultipleChoiceField(
         queryset=TipoPagamento.objects.all(),
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+        widget=forms.SelectMultiple(attrs={'class': 'related-widget-wrapper', 'data-model-ref': 'tipo pagamento'}),
         required=True
     )
     tempo_garantia = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
