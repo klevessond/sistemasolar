@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserChangeForm,UserCreationForm
 
 
 class LoginForms(forms.Form):
@@ -70,3 +72,13 @@ class CadastroForms(forms.Form):
             }
         ),
     )
+
+class EditUserForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff']
+
+class CreateUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']

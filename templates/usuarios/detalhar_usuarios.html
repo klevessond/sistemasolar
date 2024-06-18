@@ -1,0 +1,66 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+  <div class="row">
+      <div class="col-md-9 offset-md-1">
+          <div class="card">
+              <div class="card-header">
+                  Edição de Usuário
+              </div>
+              <div class="card-body">
+                  <form method="post" id="form_editar_usuario" class="form-horizontal">
+                      {% csrf_token %}
+                      <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="id_username" class="col-sm-3 text-end control-label col-form-label">Nome de Usuário:</label>
+                                <div class="col-sm-9">
+                                    {{ form.username }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_email" class="col-sm-3 text-end control-label col-form-label">Email:</label>
+                                <div class="col-sm-9">
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_first_name" class="col-sm-3 text-end control-label col-form-label">Primeiro Nome:</label>
+                                <div class="col-sm-9">
+                                    {{ form.first_name }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_last_name" class="col-sm-3 text-end control-label col-form-label">Último Nome:</label>
+                                <div class="col-sm-9">
+                                    {{ form.last_name }}
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="id_is_active" class="col-sm-3 text-end control-label col-form-label">Ativo:</label>
+                                <div class="col-sm-9">
+                                    {{ form.is_active }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_is_staff" class="col-sm-3 text-end control-label col-form-label">Staff:</label>
+                                <div class="col-sm-9">
+                                    {{ form.is_staff }}
+                                </div>
+                            </div>
+                          </div>
+                          <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                      </div>
+                  </form>
+                  <a href="{% url 'listar_usuarios' %}" class="btn btn-secondary mt-3">Voltar para a lista de usuários</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'setup.urls'
@@ -140,6 +141,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 USE_DJANGO_JQUERY = True
+
+LOGIN_URL = '/login/'
 
 print(f"BASE_DIR: {BASE_DIR}")
 print(f"Templates directory: {os.path.join(BASE_DIR, 'templates')}")

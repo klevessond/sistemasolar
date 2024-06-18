@@ -4,6 +4,7 @@ from .models import Cliente, Estado, Cidade, Bairro, Propriedade
 from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm, PropriedadeForm
 from django.urls import reverse
 from django.db.models import Max
+from django.contrib.auth.decorators import login_required
 
 def cadastro_estado(request):
     if request.method == 'POST':
