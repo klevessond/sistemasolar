@@ -107,12 +107,26 @@
                         <p class="text-muted m-b-15">Informações de contato e histórico de atendimentos:</p>
 
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link active show" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
-                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Menu 1</a>
-                            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Menu 2</a>
-                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Menu 3</a>
+                            {% for interacao in interacoes %}
+                            <a class="nav-link" id="v-pills-{{ interacao.id }}-tab" data-toggle="pill" href="#v-pills-{{ interacao.id }}" role="tab" aria-controls="v-pills-{{ interacao.id }}" aria-selected="true">{{ interacao.titulo }}</a>
+                            {% endfor %}
+                        </div>
+                        <div class="tab-content" id="v-pills-tabContent">
+                            {% for interacao in interacoes %}
+                            <div class="tab-pane fade" id="v-pills-{{ interacao.id }}" role="tabpanel" aria-labelledby="v-pills-{{ interacao.id }}-tab">
+                                <p><strong>{{ interacao.titulo }}</strong></p>
+                                <p>{{ interacao.detalhes }}</p>
+                                <p><small>{{ interacao.usuario.username }} - {{ interacao.data_interacao }}</small></p>
+                            </div>
+                            {% endfor %}
                         </div>
                     </div>
+                    <h5>Adicionar Interação</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import RegexValidator, ValidationError, EmailValidator
-from .models import Cliente, Estado, Cidade, Bairro, Propriedade
+from .models import Cliente, Estado, Cidade, Bairro, Propriedade, Interacao
 
 
 class EstadoForm(forms.ModelForm):
@@ -179,3 +179,9 @@ class PropriedadeForm(forms.ModelForm):
             'latitude': forms.NumberInput(attrs={'class': 'form-control'}),
             'longitude': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+
+
+class InteracaoForm(forms.ModelForm):
+    class Meta:
+        model = Interacao
+        fields = ['titulo', 'detalhes']

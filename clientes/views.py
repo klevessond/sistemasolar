@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse,JsonResponse
 from .models import Cliente, Estado, Cidade, Bairro, Propriedade
-from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm, PropriedadeForm
+from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm, PropriedadeForm,InteracaoForm
 from django.urls import reverse
 from django.db.models import Max
 from django.contrib.auth.decorators import login_required
@@ -214,10 +214,22 @@ def cadastro_propriedade(request,cliente_id):
 
 def detalhar_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
+    interacoes = cliente.interacoes.all()
     propriedades = Propriedade.objects.filter(cliente=cliente)
     tem_orcamento, status_orcamentos = cliente.informacoes_orcamento()
+    form = InteracaoForm()
+    if request.method == 'POST':
+        form = InteracaoForm(request.POST)
+        if form.is_valid():
+            interacao = form.save(commit=False)
+            interacao.cliente = cliente
+            interacao.usuario = request.user
+            interacao.save()
+            return redirect('detalhar_cliente', cliente_id=cliente.id)
+
+
     return render(request, 'clientes/detalhar_cliente.html', {'cliente': cliente, 'propriedades': propriedades,
-                             'tem_orcamento': tem_orcamento,'status_orcamentos': status_orcamentos})
+                             'tem_orcamento': tem_orcamento,'status_orcamentos': status_orcamentos,'interacoes': interacoes, 'form': form})
 
 def detalhar_estado(request, estado_id):
     estado = get_object_or_404(Estado, pk=estado_id)

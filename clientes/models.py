@@ -2,6 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, EmailValidator, MinLengthValidator
 from smart_selects.db_fields import ChainedForeignKey
+from django.contrib.auth.models import User
 
 class Estado(models.Model):
     nome = models.CharField(max_length=50, unique=True)
@@ -159,3 +160,11 @@ class Rateio(models.Model):
 
     def __str__(self):
         return f"{self.nome} - {self.cliente.nome}"
+
+
+class Interacao(models.Model):
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='interacoes')
+    titulo = models.CharField(max_length=255)
+    detalhes = models.TextField()
+    usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    data_interacao = models.DateTimeField(auto_now_add=True)
