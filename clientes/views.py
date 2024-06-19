@@ -221,10 +221,9 @@ def cadastro_interacao(request, cliente_id):
             interacao.cliente = cliente
             interacao.usuario = request.user
             interacao.save()
-            return redirect('detalhar_cliente', cliente_id=cliente.id)
-        else:
-                   pagina = 'interacao'
-                   return render(request, 'clientes/fechar_popup.html', {'obj': interacao,'pagina':pagina})
+            pagina = 'interacao'
+            return render(request, 'clientes/fechar_popup.html', {'obj': interacao,'pagina':pagina})
+        
     else:
         form = InteracaoForm()
     return render(request, 'clientes/cadastro_interacao.html', {'form': form, 'cliente': cliente})
