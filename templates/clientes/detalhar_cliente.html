@@ -100,7 +100,9 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4>Interações com o cliente</h4>
+                    <h4>Interações </h4><a  id="add_id_interacao" data-popup="yes" href="{% url 'cadastro_interacao' cliente.id %}?_to_field=id&amp;_popup=1" title="Adicionar interacao" target="_blank"> <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">
+                    </a>
+                    
                 </div>
                 <div class="card-body">
                     <div class="scrollable-interacoes">               
@@ -111,25 +113,23 @@
                             <a class="nav-link" id="v-pills-{{ interacao.id }}-tab" data-toggle="pill" href="#v-pills-{{ interacao.id }}" role="tab" aria-controls="v-pills-{{ interacao.id }}" aria-selected="true">{{ interacao.titulo }}</a>
                             {% endfor %}
                         </div>
-                        <div class="tab-content" id="v-pills-tabContent">
-                            {% for interacao in interacoes %}
-                            <div class="tab-pane fade" id="v-pills-{{ interacao.id }}" role="tabpanel" aria-labelledby="v-pills-{{ interacao.id }}-tab">
-                                <p><strong>{{ interacao.titulo }}</strong></p>
-                                <p>{{ interacao.detalhes }}</p>
-                                <p><small>{{ interacao.usuario.username }} - {{ interacao.data_interacao }}</small></p>
-                            </div>
-                            {% endfor %}
-                        </div>
                     </div>
-                    <h5>Adicionar Interação</h5>
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Adicionar</button>
-                    </form>
                 </div>
             </div>
-        </div>
+                <div class="col-md-6">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        {% for interacao in interacoes %}
+                        <div class="tab-pane fade" id="v-pills-{{ interacao.id }}" role="tabpanel" aria-labelledby="v-pills-{{ interacao.id }}-tab">
+                            
+                            <p>{{ interacao.detalhes }}</p>
+                            <p><small>{{ interacao.usuario.username }} - {{ interacao.data_interacao }}</small></p>
+                        </div>
+                        {% endfor %}
+                </div>
+                </div>
+
+            
+         </div>
     </div>
 </div>
 
@@ -143,5 +143,43 @@
         overflow-y: auto;
     }
 </style>
+
+<script type="text/javascript">
+    function dismissAddAnotherPopup(win, newId, newRepr) {
+        var name = windowname_to_id(win.name);
+        var elem = document.getElementById(name);
+        if (elem) {
+            var elemName = elem.nodeName.toUpperCase();
+            if (elemName === 'SELECT') {
+                var o = new Option(newRepr, newId);
+                elem.options[elem.options.length] = o;
+                o.selected = true;
+            } else if (elemName === 'INPUT') {
+                elem.value = newId;
+            }
+        }
+        window.location.reload(); // Força a atualização da página principal
+    }
+
+    function windowname_to_id(name) {
+        return name.replace(/^add_/, '');
+    }
+</script>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        var links = document.querySelectorAll('a[data-popup="yes"]');
+        links.forEach(function(link) {
+            link.addEventListener("click", function(event) {
+                event.preventDefault();
+                var width = 600;
+                var height = 400;
+                var left = (screen.width / 2) - (width / 2);
+                var top = (screen.height / 2) - (height / 2);
+                var newWindow = window.open(this.href, 'popupWindow', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
+                newWindow.focus();
+            });
+        });
+    });
+</script>
 
 {% endblock %}

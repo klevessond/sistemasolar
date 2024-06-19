@@ -211,13 +211,9 @@ def cadastro_propriedade(request,cliente_id):
 
     return render(request, 'clientes/cadastro_propriedade.html', {'form': form, 'cliente': cliente})
 
-
-def detalhar_cliente(request, cliente_id):
-    cliente = get_object_or_404(Cliente, pk=cliente_id)
-    interacoes = cliente.interacoes.all()
-    propriedades = Propriedade.objects.filter(cliente=cliente)
-    tem_orcamento, status_orcamentos = cliente.informacoes_orcamento()
-    form = InteracaoForm()
+@login_required
+def cadastro_interacao(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
     if request.method == 'POST':
         form = InteracaoForm(request.POST)
         if form.is_valid():
@@ -226,10 +222,21 @@ def detalhar_cliente(request, cliente_id):
             interacao.usuario = request.user
             interacao.save()
             return redirect('detalhar_cliente', cliente_id=cliente.id)
+        else:
+                   pagina = 'interacao'
+                   return render(request, 'clientes/fechar_popup.html', {'obj': interacao,'pagina':pagina})
+    else:
+        form = InteracaoForm()
+    return render(request, 'clientes/cadastro_interacao.html', {'form': form, 'cliente': cliente})
 
-
+def detalhar_cliente(request, cliente_id):
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    interacoes = cliente.interacoes.all()
+    propriedades = Propriedade.objects.filter(cliente=cliente)
+    tem_orcamento, status_orcamentos = cliente.informacoes_orcamento()
+    
     return render(request, 'clientes/detalhar_cliente.html', {'cliente': cliente, 'propriedades': propriedades,
-                             'tem_orcamento': tem_orcamento,'status_orcamentos': status_orcamentos,'interacoes': interacoes, 'form': form})
+                             'tem_orcamento': tem_orcamento,'status_orcamentos': status_orcamentos,'interacoes': interacoes})
 
 def detalhar_estado(request, estado_id):
     estado = get_object_or_404(Estado, pk=estado_id)

@@ -1,7 +1,7 @@
 from django.urls import path
 from clientes.views import clientes, cadastro_cliente, get_cidades, get_bairros, cadastro_estado,cadastro_cidade, cadastro_bairro, editar_cliente
 from clientes.views import cadastro_propriedade, detalhar_cliente,detalhar_estado,detalhar_cidade,detalhar_bairro,editar_estado,editar_cidade,editar_bairro
-from clientes.views import estados, cidades, bairros,gerenciar_endereco, detalhar_propriedade
+from clientes.views import estados, cidades, bairros,gerenciar_endereco, detalhar_propriedade, cadastro_interacao
 
 urlpatterns = [
         path('clientes/', clientes, name='clientes'),
@@ -25,6 +25,7 @@ urlpatterns = [
         path('detalhar_bairro/<int:bairro_id>', detalhar_bairro, name='detalhar_bairro'),
          path('detalhar_propriedade/<int:propriedade_id>',detalhar_propriedade, name='detalhar_propriedade'),
         path('gerenciar_endereco/', gerenciar_endereco, name='gerenciar_endereco'),
+         path('cadastro_interacao/<int:cliente_id>', cadastro_interacao, name='cadastro_interacao'),
 
 
 ]
