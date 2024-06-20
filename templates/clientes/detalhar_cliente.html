@@ -99,37 +99,35 @@
                 <a class="btn btn-primary mb-2" href="{% url 'editar_cliente' cliente.id %}">Editar</a>
             </div>
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <h4>Interações </h4><a  id="add_id_interacao" data-popup="yes" href="{% url 'cadastro_interacao' cliente.id %}?_to_field=id&amp;_popup=1" title="Adicionar interacao" target="_blank"> <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">
                     </a>
                     
                 </div>
                 <div class="card-body">
                     <div class="scrollable-interacoes">               
-                        <p class="text-muted m-b-15">Informações de contato e histórico de atendimentos:</p>
-
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             {% for interacao in interacoes %}
-                            <a class="nav-link" id="v-pills-{{ interacao.id }}-tab" data-toggle="pill" href="#v-pills-{{ interacao.id }}" role="tab" aria-controls="v-pills-{{ interacao.id }}" aria-selected="true">{{ interacao.titulo }}</a>
+                            <a class="nav-link" id="v-pills-{{ interacao.id }}-tab" data-toggle="pill" href="#v-pills-{{ interacao.id }}" role="tab" aria-controls="v-pills-{{ interacao.id }}" aria-selected="true">{{ interacao.titulo }} {{ interacao.data_interacao }}</a>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-                <div class="col-md-6">
-                    <div class="tab-content" id="v-pills-tabContent">
-                        {% for interacao in interacoes %}
-                        <div class="tab-pane fade" id="v-pills-{{ interacao.id }}" role="tabpanel" aria-labelledby="v-pills-{{ interacao.id }}-tab">
-                            
+            <div class="card-body">
+                <div class="scrollable-interacoes-detalhe"> 
+                    <div class="tab-content flex-grow-1" id="v-pills-tabContent">
+                         {% for interacao in interacoes %}
+                         <div class="tab-pane fade" id="v-pills-{{ interacao.id }}" role="tabpanel" aria-labelledby="v-pills-{{ interacao.id }}-tab">
+                            <p><small> Usuario: {{ interacao.usuario.username }} </small></p>
                             <p>{{ interacao.detalhes }}</p>
-                            <p><small>{{ interacao.usuario.username }} - {{ interacao.data_interacao }}</small></p>
-                        </div>
+                            
+                          </div>
                         {% endfor %}
+                    </div>
                 </div>
-                </div>
-
-            
-         </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -139,6 +137,10 @@
         overflow-y: auto;
     }
     .scrollable-interacoes {
+        max-height: 300px; /* Ajuste conforme necessário */
+        overflow-y: auto;
+    }
+    .scrollable-interacoes-detalhe {
         max-height: 300px; /* Ajuste conforme necessário */
         overflow-y: auto;
     }
@@ -172,7 +174,7 @@
             link.addEventListener("click", function(event) {
                 event.preventDefault();
                 var width = 600;
-                var height = 400;
+                var height = 800;
                 var left = (screen.width / 2) - (width / 2);
                 var top = (screen.height / 2) - (height / 2);
                 var newWindow = window.open(this.href, 'popupWindow', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);

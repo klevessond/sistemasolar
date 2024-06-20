@@ -230,7 +230,7 @@ def cadastro_interacao(request, cliente_id):
 
 def detalhar_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
-    interacoes = cliente.interacoes.all()
+    interacoes = cliente.interacoes.order_by('-data_interacao')
     propriedades = Propriedade.objects.filter(cliente=cliente)
     tem_orcamento, status_orcamentos = cliente.informacoes_orcamento()
     
