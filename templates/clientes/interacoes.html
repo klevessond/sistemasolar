@@ -1,0 +1,73 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<div class="col-sm-12 mb-4">
+    <div class="card-group">
+        <div class="card col-md-6 no-padding ">
+            <div class="card-body">
+                <a href=>
+                    <div class="h1 text-muted text-right mb-4">
+                        <i class="fa fa-plus"></i>
+                    </div>
+                    <div class="h4 mb-0">
+                        <span class="count">385</span>
+                    </div>
+                    <small class="text-muted text-uppercase font-weight-bold">Nova Interação</small>
+                    <div class="progress progress-xs mt-3 mb-0 bg-flat-color-2" style="width: 40%; height: 5px;"></div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content mt-3">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Tabela de Interações</strong>
+                    </div>
+                    <div class="card-body">
+                        <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Cod. Interação</th>
+                                    <th>Cliente</th>
+                                    <th>Título</th>
+                                    <th>Detalhes</th>
+                                    <th>Usuário</th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for interacao in interacoes %}
+                                <tr>
+                                    <td>{{ interacao.id }}</td>
+                                    <td>{{ interacao.cliente.nome_completo }}</td>
+                                    <td>{{ interacao.titulo }}</td>
+                                    <td>{{ interacao.detalhes }}</td>
+                                    <td>{{ interacao.usuario.username }}</td>
+                                    <td>{{ interacao.data_interacao }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Cod. Interação</th>
+                                    <th>Cliente</th>
+                                    <th>Título</th>
+                                    <th>Detalhes</th>
+                                    <th>Usuário</th>
+                                    <th>Data</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

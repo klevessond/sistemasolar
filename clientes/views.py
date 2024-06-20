@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse,JsonResponse
-from .models import Cliente, Estado, Cidade, Bairro, Propriedade
+from .models import Cliente, Estado, Cidade, Bairro, Propriedade, Interacao
 from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm, PropriedadeForm,InteracaoForm
 from django.urls import reverse
 from django.db.models import Max
@@ -227,6 +227,11 @@ def cadastro_interacao(request, cliente_id):
     else:
         form = InteracaoForm()
     return render(request, 'clientes/cadastro_interacao.html', {'form': form, 'cliente': cliente})
+
+@login_required
+def listar_interacoes(request):
+    interacoes = Interacao.objects.all().order_by('-data_interacao')
+    return render(request, 'clientes/interacoes.html', {'interacoes': interacoes})
 
 def detalhar_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
