@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse,JsonResponse
 from .models import Cliente, Estado, Cidade, Bairro, Propriedade, Interacao
-from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm, PropriedadeForm,InteracaoForm
+from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm, PropriedadeForm,InteracaoForm, DataFilterForm
 from django.urls import reverse
 from django.db.models import Max
 from django.contrib.auth.decorators import login_required
@@ -230,8 +230,19 @@ def cadastro_interacao(request, cliente_id):
 
 @login_required
 def listar_interacoes(request):
+    form = DataFilterForm(request.GET or None)
     interacoes = Interacao.objects.all().order_by('-data_interacao')
-    return render(request, 'clientes/interacoes.html', {'interacoes': interacoes})
+
+    if form.is_valid():
+        data_inicio = form.cleaned_data.get('data_inicio')
+        data_fim = form.cleaned_data.get('data_fim')
+        
+        if data_inicio:
+            interacoes = interacoes.filter(data_interacao__gte=data_inicio)
+        if data_fim:
+            interacoes = interacoes.filter(data_interacao__lte=data_fim)
+
+    return render(request, 'clientes/interacoes.html', {'interacoes': interacoes, 'form': form})
 
 def detalhar_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)

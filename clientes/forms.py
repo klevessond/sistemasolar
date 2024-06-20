@@ -185,3 +185,7 @@ class InteracaoForm(forms.ModelForm):
     class Meta:
         model = Interacao
         fields = ['titulo', 'detalhes']
+
+class DataFilterForm(forms.Form):
+    data_inicio = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), required=False)
+    data_fim = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), required=False)
