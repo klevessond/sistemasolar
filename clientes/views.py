@@ -215,6 +215,9 @@ def cadastro_propriedade(request,cliente_id):
 
 @login_required
 def cadastro_interacao(request, cliente_id=None):
+     # Obter a página de origem da solicitação GET
+    pagina = request.GET.get('pagina', 'interacoes')
+    print(pagina)
     if cliente_id:
         cliente = get_object_or_404(Cliente, id=cliente_id)
     else:
@@ -225,7 +228,7 @@ def cadastro_interacao(request, cliente_id=None):
             if search_form.is_valid():
                 cliente_nome = search_form.cleaned_data['cliente_nome']
                 clientes = Cliente.objects.filter(nome_completo__icontains=cliente_nome)
-                return render(request, 'cadastro_interacao.html', {'search_form': search_form, 'clientes': clientes})
+                return render(request, 'clientes/cadastro_interacao.html', {'search_form': search_form, 'clientes': clientes})
         else:
             form = InteracaoForm(request.POST)
             if form.is_valid():
@@ -236,8 +239,11 @@ def cadastro_interacao(request, cliente_id=None):
                 interacao.cliente = cliente
                 interacao.usuario = request.user
                 interacao.save()
-                pagina = 'interacao'
-                return render(request, 'clientes/fechar_popup.html', {'obj': interacao,'pagina':pagina})
+                 # Verificar a página de origem e redirecionar adequadamente
+                if pagina == 'interacoes':
+                    return render(request, 'clientes/fechar_popup.html', {'obj': interacao, 'pagina': pagina})
+                else:
+                    return redirect('listar_interacoes')
             
     else:
         search_form = ClienteSearchForm()
