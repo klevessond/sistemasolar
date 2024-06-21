@@ -5,6 +5,8 @@ from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm, PropriedadeF
 from django.urls import reverse
 from django.db.models import Max
 from django.contrib.auth.decorators import login_required
+from django.utils.timezone import make_aware
+from datetime import datetime, time
 
 def cadastro_estado(request):
     if request.method == 'POST':
@@ -238,9 +240,9 @@ def listar_interacoes(request):
         data_fim = form.cleaned_data.get('data_fim')
         
         if data_inicio:
-            interacoes = interacoes.filter(data_interacao__gte=data_inicio)
+            interacoes = interacoes.filter(data_interacao__gte=make_aware(datetime.combine(data_inicio, time.min)))
         if data_fim:
-            interacoes = interacoes.filter(data_interacao__lte=data_fim)
+            interacoes = interacoes.filter(data_interacao__lte=make_aware(datetime.combine(data_fim, time.max)))
 
     return render(request, 'clientes/interacoes.html', {'interacoes': interacoes, 'form': form})
 
