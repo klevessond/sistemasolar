@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse,JsonResponse
 from .models import Cliente, Estado, Cidade, Bairro, Propriedade, Interacao
-from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm, PropriedadeForm,InteracaoForm, DataFilterForm
+from .forms import ClienteForm, EstadoForm, CidadeForm, BairroForm, PropriedadeForm,InteracaoForm, DataFilterForm,ClienteSearchForm
 from django.urls import reverse
 from django.db.models import Max
 from django.contrib.auth.decorators import login_required
@@ -214,21 +214,35 @@ def cadastro_propriedade(request,cliente_id):
     return render(request, 'clientes/cadastro_propriedade.html', {'form': form, 'cliente': cliente})
 
 @login_required
-def cadastro_interacao(request, cliente_id):
-    cliente = get_object_or_404(Cliente, id=cliente_id)
-    if request.method == 'POST':
-        form = InteracaoForm(request.POST)
-        if form.is_valid():
-            interacao = form.save(commit=False)
-            interacao.cliente = cliente
-            interacao.usuario = request.user
-            interacao.save()
-            pagina = 'interacao'
-            return render(request, 'clientes/fechar_popup.html', {'obj': interacao,'pagina':pagina})
-        
+def cadastro_interacao(request, cliente_id=None):
+    if cliente_id:
+        cliente = get_object_or_404(Cliente, id=cliente_id)
     else:
+        cliente = None
+    if request.method == 'POST':
+        if 'search_cliente' in request.POST:
+            search_form = ClienteSearchForm(request.POST)
+            if search_form.is_valid():
+                cliente_nome = search_form.cleaned_data['cliente_nome']
+                clientes = Cliente.objects.filter(nome_completo__icontains=cliente_nome)
+                return render(request, 'cadastro_interacao.html', {'search_form': search_form, 'clientes': clientes})
+        else:
+            form = InteracaoForm(request.POST)
+            if form.is_valid():
+                interacao = form.save(commit=False)
+                if not cliente:
+                    cliente_id = request.POST.get('cliente_id')
+                    cliente = get_object_or_404(Cliente, id=cliente_id)
+                interacao.cliente = cliente
+                interacao.usuario = request.user
+                interacao.save()
+                pagina = 'interacao'
+                return render(request, 'clientes/fechar_popup.html', {'obj': interacao,'pagina':pagina})
+            
+    else:
+        search_form = ClienteSearchForm()
         form = InteracaoForm()
-    return render(request, 'clientes/cadastro_interacao.html', {'form': form, 'cliente': cliente})
+    return render(request, 'clientes/cadastro_interacao.html', {'form': form, 'cliente': cliente,'search_form': search_form})
 
 @login_required
 def listar_interacoes(request):

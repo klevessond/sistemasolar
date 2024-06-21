@@ -1,22 +1,44 @@
 {% extends 'shared/base.html' %}
 {% load static %}
 {% block content %}
+
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-8 offset-md-2">
+        <div class="col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-header">
-                    <h4>Adicionar Interação para {{ cliente.nome_completo }}</h4>
+                    <h4>Nova Interação</h4>
                 </div>
                 <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Adicionar Interação</button>
-                    </form>
+                    {% if cliente %}
+                        <p><strong>Cliente Selecionado:</strong> {{ cliente.nome_completo }}</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Salvar Interação</button>
+                        </form>
+                    {% else %}
+                        <form method="post" class="mb-3">
+                            {% csrf_token %}
+                            {{ search_form.as_p }}
+                            <button type="submit" name="search_cliente" class="btn btn-primary">Pesquisar Cliente</button>
+                        </form>
+                        {% if clientes %}
+                            <h5>Resultados da Pesquisa:</h5>
+                            <ul class="list-group">
+                                {% for cliente in clientes %}
+                                    <li class="list-group-item">
+                                        {{ cliente.nome_completo }}
+                                        <a href="{% url 'cadastro_interacao' cliente.id %}" class="btn btn-link">Selecionar</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

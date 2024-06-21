@@ -26,6 +26,7 @@ urlpatterns = [
         path('detalhar_propriedade/<int:propriedade_id>',detalhar_propriedade, name='detalhar_propriedade'),
         path('gerenciar_endereco/', gerenciar_endereco, name='gerenciar_endereco'),
         path('cadastro_interacao/<int:cliente_id>', cadastro_interacao, name='cadastro_interacao'),
+        path('cadastro_interacao/', cadastro_interacao, name='cadastro_interacao'),
         path('interacoes/', listar_interacoes, name='listar_interacoes'),
 
 

@@ -189,3 +189,6 @@ class InteracaoForm(forms.ModelForm):
 class DataFilterForm(forms.Form):
     data_inicio = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), required=False)
     data_fim = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), required=False)
+
+class ClienteSearchForm(forms.Form):
+    cliente_nome = forms.CharField(label='Nome do Cliente', max_length=100)
