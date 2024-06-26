@@ -9,12 +9,17 @@ from django.http import JsonResponse
 
 
 def cadastrar_tipo_pagamento(request):
+    origin = request.GET.get('origin', 'desconhecida')
+    print(origin)
     if request.method == 'POST':
         form = TipoPagamentoForm(request.POST)
         if form.is_valid():
             form.save()
             tipos_pagamento = TipoPagamento.objects.all()
-            return render(request, 'contratos/tipos_pagamento.html', {'tipos_pagamento': tipos_pagamento})
+            if (origin=='cadastrar_orcamento'):
+                return render(request, 'contratos/fechar_popup.html', {'obj': tipos_pagamento, 'pagina': origin})
+            else:
+                return render(request, 'contratos/tipos_pagamento.html', {'tipos_pagamento': tipos_pagamento})
 
     else:
         form = TipoPagamentoForm()
