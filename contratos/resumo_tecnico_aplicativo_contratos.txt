@@ -1,0 +1,36 @@
+
+Resumo Técnico do Aplicativo de Gestão de Contratos em Django
+
+Visão Geral
+O Aplicativo de Gestão de Contratos em Django facilita a criação, gestão e acompanhamento de contratos e transações financeiras relacionadas. O aplicativo inclui recursos como a criação de orçamentos (orcamentos), gerenciamento de tipos de pagamento (tipos_pagamento) e manipulação dinâmica de dados de formulários por meio de janelas pop-up.
+
+Componentes Principais
+
+1. Modelos:
+- TipoPagamento: Representa diferentes tipos de métodos de pagamento.
+- Orcamento: Representa detalhes do orçamento, incluindo informações do cliente, consumo, painéis solares, inversores e custos associados.
+
+2. Formulários:
+- TipoPagamentoForm: Usado para criar e editar tipos de pagamento.
+- OrcamentoForm: Usado para criar e gerenciar detalhes do orçamento.
+
+3. Views (Visualizações):
+- cadastrar_tipo_pagamento: Trata da criação de novos tipos de pagamento. Após a criação bem-sucedida, redireciona para o fechamento da janela pop-up habilitada por JavaScript (fechar_popup.html).
+- cadastrar_orcamento: Gerencia a criação de novos orçamentos, incluindo detalhes do cliente, consumo e componentes associados.
+- detalhar_orcamento: Fornece informações detalhadas sobre um orçamento específico.
+- orcamentos: Exibe uma lista de todos os orçamentos existentes.
+
+4. Templates (Modelos de Interface):
+- cadastrar_orcamento.html: Formulário de criação de orçamento, inclui campos para informações do cliente, consumo, painéis solares, inversores e custos.
+- cadastrartipopagamento.html: Formulário de criação de tipo de pagamento, permite adicionar novos tipos de pagamento.
+- fechar_popup.html: Script de fechamento de pop-up, atualiza dinamicamente o campo de tipos de pagamento no formulário original sem perder dados inseridos.
+- orcamentos.html: Exibe a lista de orçamentos, com detalhes como cliente, consumo, energia gerada, número de painéis e status.
+- detalhar_orcamento.html: Fornece uma visão detalhada de um orçamento, incluindo informações adicionais como propriedade, energia gerada, espaço disponível, tempo de garantia, valores de instalação e status do orçamento.
+- tipos_pagamento.html: Lista os tipos de pagamento disponíveis e fornece um link para adicionar novos tipos.
+
+Funcionalidades Específicas:
+- Integração de Pop-ups: Ao adicionar um novo tipo de pagamento através de um pop-up, o formulário original é atualizado dinamicamente para incluir o novo tipo de pagamento sem perder as informações já preenchidas.
+- Cálculo Dinâmico do Orçamento: Scripts JavaScript são usados para calcular dinamicamente o valor total do orçamento com base nos valores unitários dos painéis solares e inversores, além de outros custos associados.
+- Atualização Dinâmica de Campos: Campos como propriedade são carregados dinamicamente com base na seleção do cliente, utilizando chamadas AJAX.
+
+Este resumo técnico fornece uma visão abrangente do aplicativo e de seus componentes principais, facilitando a compreensão para futuras interações e melhorias.
