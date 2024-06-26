@@ -14,10 +14,13 @@ def cadastrar_tipo_pagamento(request):
     if request.method == 'POST':
         form = TipoPagamentoForm(request.POST)
         if form.is_valid():
-            form.save()
-            tipos_pagamento = TipoPagamento.objects.all()
+            tipos_pagamento=form.save()
+            #tipos_pagamento = TipoPagamento.objects.all()
             if (origin=='cadastrar_orcamento'):
-                return render(request, 'contratos/fechar_popup.html', {'obj': tipos_pagamento, 'pagina': origin})
+                return render(request, 'contratos/fechar_popup.html', {
+                    'obj': tipos_pagamento.nome,   # Passa o nome do tipo_pagamento para o template
+                    'objPk': tipos_pagamento.pk,   # Passa a chave primária do tipo_pagamento para o template
+                    'pagina': origin})
             else:
                 return render(request, 'contratos/tipos_pagamento.html', {'tipos_pagamento': tipos_pagamento})
 

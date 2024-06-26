@@ -9,8 +9,20 @@
         
         // Chamando a função com os valores passados
         opener.dismissAddAnotherPopup(window, objPk, obj, pagina);
-        
-        // Logando os valores no console
+
+        // Atualizar o campo de tipos de pagamento no formulário original
+        function updateTiposPagamento(pk, name) {
+            const select = opener.document.getElementById('id_tipos_pagamento');
+            const option = new Option(name, pk);
+            select.add(option, undefined);
+            option.selected = true;
+        }
+
+        // Verificar se a página de origem é cadastrar_orcamento
+        if (pagina === 'cadastrar_orcamento') {
+            updateTiposPagamento(objPk, obj);
+        }
+        // jogando os valores no console
         console.log("Objeto pk:", objPk);
         console.log("Objeto:", obj);
         console.log("Objeto pagina:", pagina);

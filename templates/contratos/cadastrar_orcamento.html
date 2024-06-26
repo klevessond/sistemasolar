@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <script type="text/javascript">
-    function dismissAddAnotherPopup(win, newId, newRepr) {
+    function dismissAddAnotherPopup(win, newId, newRepr,pagina) {
         var name = windowname_to_id(win.name);
         var elem = document.getElementById(name);
         if (elem) {
@@ -258,7 +258,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 elem.value = newId;
             }
         }
-        window.location.reload(); // Força a atualização da página principal
+        //window.location.reload(); // Força a atualização da página principal
+        console.log("Objeto recebido do pop-up:", newRepr);
+        console.log("Objeto recebido do pop-up ID:", newId);
+        console.log("Página recebida do pop-up:", pagina);
     }
 
     function windowname_to_id(name) {
