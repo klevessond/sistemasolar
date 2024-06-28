@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PainelSolarForm, InversorForm, UsinaForm
 from . models import PainelSolar, Inversor
+from django.http import JsonResponse
+
 
 # Create your views here.
 def cadastro_painelsolar(request):
@@ -18,7 +20,10 @@ def cadastro_inversor(request):
         form = InversorForm(request.POST)
         if form.is_valid():
             inversor=form.save()
-            return render(request, 'Usinas/fechar_popup.html', {'obj': inversor})
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'message': 'success'})
+            return redirect('contratos:cadastrar_orcamento')  # Nome da URL da página de cadastro de orçamento
+            #return render(request, 'Usinas/fechar_popup.html', {'obj': inversor})
     else:
         form = InversorForm()
     return render(request, 'Usinas/cadastro_inversor.html', {'form': form})

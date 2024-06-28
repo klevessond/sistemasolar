@@ -34,7 +34,6 @@
                                             {{ form.cliente.as_hidden }}
                                         </div>
                                     </div>
-                                   
                                     <div class="form-group row">
                                         <label class="col-sm-3 text-end control-label col-form-label">Consumo:</label>
                                         <div class="col-sm-9">
@@ -81,7 +80,7 @@
                                             {{ form.valor_unitario_inversor|attr:"id:id_valor_unitario_inversor" }}
                                         </div>
                                     </div>
-                                   </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <label class="col-sm-3 text-end control-label col-form-label">Propriedade:</label>
@@ -120,7 +119,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row field-tipos_pagamento">
-                                        <label class="required" for="id_tipos_pagamento">Tipos pagamento:   </label>
+                                        <label class="required" for="id_tipos_pagamento">Tipos pagamento:</label>
                                         <div>
                                             <div class="related-widget-wrapper" data-model-ref="tipo pagamento">
                                                 {{ form.tipos_pagamento }}
@@ -166,7 +165,7 @@
 <!-- Modal Inversor -->
 <div class="modal fade" id="inversorModal" tabindex="-1" role="dialog" aria-labelledby="inversorModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-medium" role="document">
-        <div class="modal-content">
+        <div class="modal-content modal-content-custom">
             <div class="modal-header">
                 <h5 class="modal-title" id="inversorModalLabel">Adicionar Inversor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -174,13 +173,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{% url 'cadastro_inversor' %}">
+                <form id="inversor-form" method="post" action="{% url 'cadastro_inversor' %}">
                     {% csrf_token %}
                     {% include 'shared/usinas/inversor_form.html' %}
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" id="save-inversor">Salvar</button>
             </div>
         </div>
     </div>
@@ -255,6 +255,7 @@ document.addEventListener('DOMContentLoaded', function () {
     calculateOrcamento();
 });
 </script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const dateField = document.querySelector('input[type="date"]');
@@ -265,6 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 </script>
+
 <script type="text/javascript">
 function dismissAddAnotherPopup(win, newId, newRepr, pagina) {
     var name = windowname_to_id(win.name);
@@ -286,6 +288,7 @@ function windowname_to_id(name) {
     return name.replace(/^add_/, '');
 }
 </script>
+
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function() {
     var links = document.querySelectorAll('a[data-popup="yes"]');
@@ -299,6 +302,27 @@ document.addEventListener("DOMContentLoaded", function() {
             var newWindow = window.open(this.href, 'popupWindow', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
             newWindow.focus();
         });
+    });
+
+    document.getElementById('save-inversor').addEventListener('click', function() {
+        var form = document.getElementById('inversor-form');
+        var formData = new FormData(form);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', form.action, true);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.message === 'success') {
+                    $('#inversorModal').modal('hide');
+                    location.reload(); // Recarrega a página para atualizar os dados
+                }
+            } else {
+                // Tratar erros
+                console.error('Erro ao salvar inversor.');
+            }
+        };
+        xhr.send(formData);
     });
 });
 </script>
