@@ -5,6 +5,7 @@ from .models import Orcamento, TipoPagamento
 from clientes.models import Cliente
 from clientes.models import Propriedade
 from django.http import JsonResponse
+from usinas.forms import InversorForm
 
 
 
@@ -53,7 +54,8 @@ def cadastrar_orcamento(request, cliente_id=None):
         form = OrcamentoForm(initial=initial_data, cliente_id=cliente_id)    
     context = {
         'form': form,
-        'cliente_id': cliente_id
+        'cliente_id': cliente_id,
+        'inversorform':InversorForm
     }
     return render(request, 'contratos/cadastrar_orcamento.html', context)
 

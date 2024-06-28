@@ -44,11 +44,10 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 text-end control-label col-form-label">Painel Solar:</label>
                                         <div class="col-sm-9">
-                                            {{ form.painel_solar }}<a id="add_id_painel" data-popup="yes" href="{% url 'cadastro_painelsolar'%}?_to_field=id&amp;_popup=1" title="Adicionar outro estado" target="_blank">
+                                            {{ form.painel_solar }}<a id="add_id_painel" data-toggle="modal" data-target="#painelModal" title="Adicionar outro estado">
                                                 <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">
                                             </a>
                                         </div>
-
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 text-end control-label col-form-label">Número de Painéis:</label>
@@ -65,7 +64,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 text-end control-label col-form-label">Inversor:</label>
                                         <div class="col-sm-9">
-                                            {{ form.inversor }}   <a  id="add_id_inversor" data-popup="yes" href="{% url 'cadastro_inversor'%}?_to_field=id&amp;_popup=1" title="Adicionar outro estado" target="_blank">
+                                            {{ form.inversor }}   <a id="add_id_inversor" href="#" data-toggle="modal" data-target="#inversorModal" title="Adicionar outro inversor">
                                                 <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">
                                             </a>
                                         </div>
@@ -125,13 +124,13 @@
                                         <div>
                                             <div class="related-widget-wrapper" data-model-ref="tipo pagamento">
                                                 {{ form.tipos_pagamento }}
-                                            </div><a id="add_id_pagamento" data-popup="yes" href="{% url 'cadastrar_tipo_pagamento' %}?_to_field=id&amp;_popup=1&amp;origin=cadastrar_orcamento" title="Adicionar outro pagamentos" target="_blank">
+                                            </div><a id="add_id_pagamento" data-toggle="modal" data-target="#pagamentoModal" title="Adicionar outro pagamentos">
                                                 <img src="/static/admin/img/icon-addlink.svg" alt="Adicionar">
                                             </a>
-                                            </div>
-                                            <div class="help" id="id_tipos_pagamento_helptext">
-                                                Pressione “Control”, ou “Command” no Mac, para selecionar mais de um.
-                                            </div>
+                                        </div>
+                                        <div class="help" id="id_tipos_pagamento_helptext">
+                                            Pressione “Control”, ou “Command” no Mac, para selecionar mais de um.
+                                        </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 text-end control-label col-form-label">Status Orçamento:</label>
@@ -159,6 +158,29 @@
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Inversor -->
+<div class="modal fade" id="inversorModal" tabindex="-1" role="dialog" aria-labelledby="inversorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-medium" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inversorModalLabel">Adicionar Inversor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'cadastro_inversor' %}">
+                    {% csrf_token %}
+                    {% include 'shared/usinas/inversor_form.html' %}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
@@ -201,88 +223,101 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const numeroPainelInput = document.getElementById('id_numero_painel');
-        const valorUnitarioPainelInput = document.getElementById('id_valor_unitario_painel');
-        const numeroInversorInput = document.getElementById('id_numero_inversor');
-        const valorUnitarioInversorInput = document.getElementById('id_valor_unitario_inversor');
-        const valorMaodeobraInput = document.getElementById('id_valor_maodeobra');
-        const valorOrcamentoInput = document.getElementById('id_valor_orcamento');
-    
-        function calculateOrcamento() {
-            const numeroPainel = parseFloat(numeroPainelInput.value) || 0;
-            const valorUnitarioPainel = parseFloat(valorUnitarioPainelInput.value) || 0;
-            const numeroInversor = parseFloat(numeroInversorInput.value) || 0;
-            const valorUnitarioInversor = parseFloat(valorUnitarioInversorInput.value) || 0;
-            const valorMaodeobra = parseFloat(valorMaodeobraInput.value) || 0;
-    
-            const valorOrcamento = (numeroPainel * valorUnitarioPainel) + 
-                                   (numeroInversor * valorUnitarioInversor) + 
-                                   valorMaodeobra;
-    
-            valorOrcamentoInput.value = valorOrcamento.toFixed(2);
-        }
-    
-        numeroPainelInput.addEventListener('input', calculateOrcamento);
-        valorUnitarioPainelInput.addEventListener('input', calculateOrcamento);
-        numeroInversorInput.addEventListener('input', calculateOrcamento);
-        valorUnitarioInversorInput.addEventListener('input', calculateOrcamento);
-        valorMaodeobraInput.addEventListener('input', calculateOrcamento);
-    
-        // Initial calculation
-        calculateOrcamento();
-    });
-    </script>
+document.addEventListener('DOMContentLoaded', function () {
+    const numeroPainelInput = document.getElementById('id_numero_painel');
+    const valorUnitarioPainelInput = document.getElementById('id_valor_unitario_painel');
+    const numeroInversorInput = document.getElementById('id_numero_inversor');
+    const valorUnitarioInversorInput = document.getElementById('id_valor_unitario_inversor');
+    const valorMaodeobraInput = document.getElementById('id_valor_maodeobra');
+    const valorOrcamentoInput = document.getElementById('id_valor_orcamento');
+
+    function calculateOrcamento() {
+        const numeroPainel = parseFloat(numeroPainelInput.value) || 0;
+        const valorUnitarioPainel = parseFloat(valorUnitarioPainelInput.value) || 0;
+        const numeroInversor = parseFloat(numeroInversorInput.value) || 0;
+        const valorUnitarioInversor = parseFloat(valorUnitarioInversorInput.value) || 0;
+        const valorMaodeobra = parseFloat(valorMaodeobraInput.value) || 0;
+
+        const valorOrcamento = (numeroPainel * valorUnitarioPainel) + 
+                               (numeroInversor * valorUnitarioInversor) + 
+                               valorMaodeobra;
+
+        valorOrcamentoInput.value = valorOrcamento.toFixed(2);
+    }
+
+    numeroPainelInput.addEventListener('input', calculateOrcamento);
+    valorUnitarioPainelInput.addEventListener('input', calculateOrcamento);
+    numeroInversorInput.addEventListener('input', calculateOrcamento);
+    valorUnitarioInversorInput.addEventListener('input', calculateOrcamento);
+    valorMaodeobraInput.addEventListener('input', calculateOrcamento);
+
+    // Initial calculation
+    calculateOrcamento();
+});
+</script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const dateField = document.querySelector('input[type="date"]');
-        if (dateField) {
-            dateField.classList.add('vDateField');
-            const today = new Date().toISOString().split('T')[0];
-            dateField.insertAdjacentHTML('afterend', `<span class="datetimeshortcuts">&nbsp;<a href="#" onclick="document.getElementById('${dateField.id}').value = '${today}'; return false;">Hoje</a>&nbsp;|&nbsp;<a href="#" id="calendarlink0"><span class="date-icon" title="Escolha uma data"></span></a></span>`);
-        }
-    });
-</script>
-
-<script type="text/javascript">
-    function dismissAddAnotherPopup(win, newId, newRepr,pagina) {
-        var name = windowname_to_id(win.name);
-        var elem = document.getElementById(name);
-        if (elem) {
-            var elemName = elem.nodeName.toUpperCase();
-            if (elemName === 'SELECT') {
-                var o = new Option(newRepr, newId);
-                elem.options[elem.options.length] = o;
-                o.selected = true;
-            } else if (elemName === 'INPUT') {
-                elem.value = newId;
-            }
-        }
-        //window.location.reload(); // Força a atualização da página principal
-        console.log("Objeto recebido do pop-up:", newRepr);
-        console.log("Objeto recebido do pop-up ID:", newId);
-        console.log("Página recebida do pop-up:", pagina);
+document.addEventListener('DOMContentLoaded', function () {
+    const dateField = document.querySelector('input[type="date"]');
+    if (dateField) {
+        dateField.classList.add('vDateField');
+        const today = new Date().toISOString().split('T')[0];
+        dateField.insertAdjacentHTML('afterend', `<span class="datetimeshortcuts">&nbsp;<a href="#" onclick="document.getElementById('${dateField.id}').value = '${today}'; return false;">Hoje</a>&nbsp;|&nbsp;<a href="#" id="calendarlink0"><span class="date-icon" title="Escolha uma data"></span></a></span>`);
     }
-
-    function windowname_to_id(name) {
-        return name.replace(/^add_/, '');
-    }
+});
 </script>
 <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function() {
-        var links = document.querySelectorAll('a[data-popup="yes"]');
-        links.forEach(function(link) {
-            link.addEventListener("click", function(event) {
-                event.preventDefault();
-                var width = 900;
-                var height = 500;
-                var left = (screen.width / 2) - (width / 2);
-                var top = (screen.height / 2) - (height / 2);
-                var newWindow = window.open(this.href, 'popupWindow', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
-                newWindow.focus();
-            });
+function dismissAddAnotherPopup(win, newId, newRepr, pagina) {
+    var name = windowname_to_id(win.name);
+    var elem = document.getElementById(name);
+    if (elem) {
+        var elemName = elem.nodeName.toUpperCase();
+        if (elemName === 'SELECT') {
+            var o = new Option(newRepr, newId);
+            elem.options[elem.options.length] = o;
+            o.selected = true;
+        } else if (elemName === 'INPUT') {
+            elem.value = newId;
+        }
+    }
+    $('#' + name + 'Modal').modal('hide'); // Fechar o modal após seleção
+}
+
+function windowname_to_id(name) {
+    return name.replace(/^add_/, '');
+}
+</script>
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function() {
+    var links = document.querySelectorAll('a[data-popup="yes"]');
+    links.forEach(function(link) {
+        link.addEventListener("click", function(event) {
+            event.preventDefault();
+            var width = 900;
+            var height = 500;
+            var left = (screen.width / 2) - (width / 2);
+            var top = (screen.height / 2) - (height / 2);
+            var newWindow = window.open(this.href, 'popupWindow', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
+            newWindow.focus();
         });
     });
+});
 </script>
+
+<style>
+    .modal-large {
+        max-width: 90%;
+    }
+    .modal-medium {
+        max-width: 70%;
+    }
+    .modal-small {
+        max-width: 50%;
+    }
+    .modal-content-custom {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+</style>
+
 
 {% endblock %}
