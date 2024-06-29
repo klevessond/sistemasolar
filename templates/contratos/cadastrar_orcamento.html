@@ -164,29 +164,33 @@
 
 <!-- Modal Inversor -->
 <div class="modal fade" id="inversorModal" tabindex="-1" role="dialog" aria-labelledby="inversorModalLabel" aria-hidden="true">
+    <!-- Define o diálogo do modal com tamanho médio -->
     <div class="modal-dialog modal-medium" role="document">
         <div class="modal-content modal-content-custom">
-            <div class="modal-header">
-                <h5 class="modal-title" id="inversorModalLabel">Adicionar Inversor</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+            <!-- Botão para fechar o modal -->
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <!-- Corpo do modal contendo o formulário -->
             <div class="modal-body">
+                <!-- Formulário para adicionar inversor -->
                 <form id="inversor-form" method="post" action="{% url 'cadastro_inversor' %}">
                     {% csrf_token %}
+                    <!-- Inclui o template parcial do formulário de inversor -->
                     {% include 'shared/usinas/inversor_form.html' %}
                 </form>
             </div>
+            <!-- Rodapé do modal com botão para fechar -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" id="save-inversor">Salvar</button>
             </div>
         </div>
     </div>
 </div>
 
-<script>
+<script>//carrega propriedades baseadas na seleção de cliente em um formulário. Quando a página é carregada,
+// ele verifica se há um cliente selecionado e carrega as propriedades correspondentes. Se um novo cliente for selecionado, 
+//ele carrega as propriedades para o novo cliente.
 document.addEventListener('DOMContentLoaded', function () {
     const clienteSelect = document.getElementById("id_cliente");
     const propriedadeSelect = document.getElementById("id_propriedade");
@@ -222,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<script>
+<script>//caculo dos valor total do orçamento
 document.addEventListener('DOMContentLoaded', function () {
     const numeroPainelInput = document.getElementById('id_numero_painel');
     const valorUnitarioPainelInput = document.getElementById('id_valor_unitario_painel');
@@ -258,40 +262,62 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // Seleciona o campo de data na página
     const dateField = document.querySelector('input[type="date"]');
+    // Se o campo de data existir
     if (dateField) {
+        // Adiciona a classe 'vDateField' ao campo de data
         dateField.classList.add('vDateField');
+        // Obtém a data atual em formato ISO e seleciona apenas a parte da data (YYYY-MM-DD)
         const today = new Date().toISOString().split('T')[0];
-        dateField.insertAdjacentHTML('afterend', `<span class="datetimeshortcuts">&nbsp;<a href="#" onclick="document.getElementById('${dateField.id}').value = '${today}'; return false;">Hoje</a>&nbsp;|&nbsp;<a href="#" id="calendarlink0"><span class="date-icon" title="Escolha uma data"></span></a></span>`);
+        // Insere elementos HTML adicionais após o campo de data para atalhos de data
+        dateField.insertAdjacentHTML('afterend', `
+            <span class="datetimeshortcuts">
+                &nbsp;<a href="#" onclick="document.getElementById('${dateField.id}').value = '${today}'; return false;">Hoje</a>&nbsp;|&nbsp;
+                <a href="#" id="calendarlink0">
+                    <span class="date-icon" title="Escolha uma data"></span>
+                </a>
+            </span>
+        `);
     }
 });
 </script>
 
-<script type="text/javascript">
+<script type="text/javascript">// Este script lida com o fechamento de um modal após adicionar um novo item a uma lista ou
+// campo de entrada. Ele atualiza dinamicamente o campo correspondente com o novo item adicionado e fecha o modal.
 function dismissAddAnotherPopup(win, newId, newRepr, pagina) {
+    // Extrai o nome do elemento a partir do nome da janela
     var name = windowname_to_id(win.name);
     var elem = document.getElementById(name);
+// Se o elemento existir
     if (elem) {
         var elemName = elem.nodeName.toUpperCase();
+    // Se o elemento for um SELECT, adiciona a nova opção e a seleciona
         if (elemName === 'SELECT') {
             var o = new Option(newRepr, newId);
             elem.options[elem.options.length] = o;
             o.selected = true;
+ // Se o elemento for um INPUT, atualiza o valor do campo
         } else if (elemName === 'INPUT') {
             elem.value = newId;
         }
     }
-    $('#' + name + 'Modal').modal('hide'); // Fechar o modal após seleção
+// Fecha o modal após a seleção
+    $('#' + name + 'Modal').modal('hide');
 }
-
 function windowname_to_id(name) {
+    // Remove o prefixo 'add_' do nome da janela para obter o id do elemento
     return name.replace(/^add_/, '');
 }
 </script>
 
-<script type="text/javascript">
+<script type="text/javascript">//Este script adiciona funcionalidades de popup para links e manuseio 
+//de formulários AJAX para salvar dados sem recarregar a página.
 document.addEventListener("DOMContentLoaded", function() {
+    // Seleciona todos os links com o atributo data-popup="yes"
     var links = document.querySelectorAll('a[data-popup="yes"]');
+    
+    // Adiciona um listener de clique para abrir o link em uma nova janela popup
     links.forEach(function(link) {
         link.addEventListener("click", function(event) {
             event.preventDefault();
@@ -304,6 +330,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+    // Adiciona um listener de clique para salvar o formulário do modal de inversor via AJAX
     document.getElementById('save-inversor').addEventListener('click', function() {
         var form = document.getElementById('inversor-form');
         var formData = new FormData(form);
