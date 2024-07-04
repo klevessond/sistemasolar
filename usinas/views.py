@@ -10,7 +10,10 @@ def cadastro_painelsolar(request):
         form = PainelSolarForm(request.POST)
         if form.is_valid():
             painel=form.save()
-            return render(request, 'Usinas/fechar_popup.html', {'obj': painel})
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'message': 'success', 'inversor': painel.id, 'inversor_repr': str(painel)})
+            return redirect('contratos:cadastrar_orcamento')  # Nome da URL da página de cadastro de orçamento
+            #return render(request, 'Usinas/fechar_popup.html', {'obj': inversor})
     else:
         form = PainelSolarForm()
     return render(request, 'Usinas/cadastro_painelsolar.html', {'form': form})
@@ -21,7 +24,7 @@ def cadastro_inversor(request):
         if form.is_valid():
             inversor=form.save()
             if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-                return JsonResponse({'message': 'success'})
+                return JsonResponse({'message': 'success', 'inversor': inversor.id, 'inversor_repr': str(inversor)})
             return redirect('contratos:cadastrar_orcamento')  # Nome da URL da página de cadastro de orçamento
             #return render(request, 'Usinas/fechar_popup.html', {'obj': inversor})
     else:

@@ -1,0 +1,69 @@
+<!-- Modal Inversor -->
+<div class="modal fade" id="inversorModal" tabindex="-1" role="dialog" aria-labelledby="inversorModalLabel" aria-hidden="true">
+    <!-- Define o diálogo do modal com tamanho médio -->
+    <div class="modal-dialog modal-medium" role="document">
+        <div class="modal-content modal-content-custom">
+            <!-- Botão para fechar o modal -->
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <!-- Corpo do modal contendo o formulário -->
+            <div class="modal-body">
+                <!-- Formulário para adicionar inversor -->
+                <form id="inversor-form" method="post" action="{% url 'cadastro_inversor' %}">
+                    {% csrf_token %}
+                    <!-- Inclui o template parcial do formulário de inversor -->
+                    {% include 'shared/usinas/inversor_form.html' %}
+                </form>
+            </div>
+            <!-- Rodapé do modal com botão para fechar -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal painel -->
+<div class="modal fade" id="painelModal" tabindex="-1" role="dialog" aria-labelledby="painelModalLabel" aria-hidden="true">
+    <!-- Define o diálogo do modal com tamanho médio -->
+    <div class="modal-dialog modal-medium" role="document">
+        <div class="modal-content modal-content-custom">
+            <!-- Botão para fechar o modal -->
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <!-- Corpo do modal contendo o formulário -->
+            <div class="modal-body">
+                <!-- Formulário para adicionar inversor -->
+                <form id="painel-form" method="post" action="{% url 'cadastro_painelsolar' %}">
+                    {% csrf_token %}
+                    <!-- Inclui o template parcial do formulário de inversor -->
+                    {% include 'shared/usinas/inversor_form.html' %}
+                </form>
+            </div>
+            <!-- Rodapé do modal com botão para fechar -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- tamanho do modais-->
+<style>
+    .modal-large {
+        max-width: 90%;
+    }
+    .modal-medium {
+        max-width: 70%;
+    }
+    .modal-small {
+        max-width: 50%;
+    }
+    .modal-content-custom {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+</style>

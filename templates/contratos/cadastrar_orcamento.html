@@ -162,31 +162,7 @@
     </div>
 </div>
 
-<!-- Modal Inversor -->
-<div class="modal fade" id="inversorModal" tabindex="-1" role="dialog" aria-labelledby="inversorModalLabel" aria-hidden="true">
-    <!-- Define o diálogo do modal com tamanho médio -->
-    <div class="modal-dialog modal-medium" role="document">
-        <div class="modal-content modal-content-custom">
-            <!-- Botão para fechar o modal -->
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <!-- Corpo do modal contendo o formulário -->
-            <div class="modal-body">
-                <!-- Formulário para adicionar inversor -->
-                <form id="inversor-form" method="post" action="{% url 'cadastro_inversor' %}">
-                    {% csrf_token %}
-                    <!-- Inclui o template parcial do formulário de inversor -->
-                    {% include 'shared/usinas/inversor_form.html' %}
-                </form>
-            </div>
-            <!-- Rodapé do modal com botão para fechar -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div>
+{% include 'contratos/modais.html' %}
 
 <script>//carrega propriedades baseadas na seleção de cliente em um formulário. Quando a página é carregada,
 // ele verifica se há um cliente selecionado e carrega as propriedades correspondentes. Se um novo cliente for selecionado, 
@@ -311,13 +287,10 @@ function windowname_to_id(name) {
 }
 </script>
 
-<script type="text/javascript">//Este script adiciona funcionalidades de popup para links e manuseio 
-//de formulários AJAX para salvar dados sem recarregar a página.
+<script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Seleciona todos os links com o atributo data-popup="yes"
+    // Função para abrir links em janela popup
     var links = document.querySelectorAll('a[data-popup="yes"]');
-    
-    // Adiciona um listener de clique para abrir o link em uma nova janela popup
     links.forEach(function(link) {
         link.addEventListener("click", function(event) {
             event.preventDefault();
@@ -330,45 +303,51 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Adiciona um listener de clique para salvar o formulário do modal de inversor via AJAX
-    document.getElementById('save-inversor').addEventListener('click', function() {
-        var form = document.getElementById('inversor-form');
-        var formData = new FormData(form);
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', form.action, true);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.message === 'success') {
-                    $('#inversorModal').modal('hide');
-                    location.reload(); // Recarrega a página para atualizar os dados
+    // Função para salvar formulário via AJAX
+    function saveForm(modalId, formId, url) {
+        document.getElementById(modalId).querySelector('.btn-primary').addEventListener('click', function() {
+            var form = document.getElementById(formId);
+            var formData = new FormData(form);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.message === 'success') {
+                        $('#' + modalId).modal('hide');
+                        updateField(modalId, response);
+                    }
+                } else {
+                    // Tratar erros
+                    console.error('Erro ao salvar dados.');
                 }
-            } else {
-                // Tratar erros
-                console.error('Erro ao salvar inversor.');
-            }
-        };
-        xhr.send(formData);
-    });
+            };
+            xhr.send(formData);
+        });
+    }
+
+    // Função para atualizar o campo após salvar
+    function updateField(modalId, data) {
+        if (modalId === 'inversorModal') {
+            var inversorSelect = document.getElementById('id_inversor');
+            var option = new Option(data.inversor_repr, data.inversor);
+            inversorSelect.add(option);
+            inversorSelect.value = data.inversor;
+        } else if (modalId === 'painelSolarModal') {
+            var painelSelect = document.getElementById('id_painel_solar');
+            var option = new Option(data.painel_repr, data.painel);
+            painelSelect.add(option);
+            painelSelect.value = data.painel;
+        }
+    }
+
+    // Adicionar funcionalidade de salvar formulário para cada modal
+    saveForm('inversorModal', 'inversor-form', '{% url "cadastro_inversor" %}');
+    saveForm('painelSolarModal', 'painel-solar-form', '{% url "cadastro_painelsolar" %}');
 });
 </script>
 
-<style>
-    .modal-large {
-        max-width: 90%;
-    }
-    .modal-medium {
-        max-width: 70%;
-    }
-    .modal-small {
-        max-width: 50%;
-    }
-    .modal-content-custom {
-        max-height: 70vh;
-        overflow-y: auto;
-    }
-</style>
-
+<script src="{% static 'js/scripts.js' %}"></script>
 
 {% endblock %}
