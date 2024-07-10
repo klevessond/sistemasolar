@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, EmailValidator, MinLengthValidator
-from smart_selects.db_fields import ChainedForeignKey
 from django.contrib.auth.models import User
 
 class Estado(models.Model):
@@ -29,18 +28,8 @@ class Cliente(models.Model):
     rua = models.CharField(max_length=100, blank=False, null=False)
     numero = models.IntegerField(blank=False, null=False)
     estado = models.ForeignKey(Estado, on_delete=models.SET_NULL, blank=False, null=True)
-    cidade = ChainedForeignKey(Cidade, on_delete=models.SET_NULL, blank=False, null=True,
-                                        chained_field="estado",
-                                        chained_model_field="estado",
-                                        show_all=False,
-                                        auto_choose=True,
-                                        sort=True)
-    bairro = ChainedForeignKey(Bairro, on_delete=models.SET_NULL, blank=False, null=True,
-                                chained_field="cidade",
-                                chained_model_field="cidade",
-                                show_all=False,
-                                auto_choose=True,
-                                sort=True)
+    cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, blank=False, null=True)
+    bairro = models.ForeignKey(Bairro, on_delete=models.SET_NULL, blank=False, null=True)
 
     cep_validator = RegexValidator(
         regex=r'^\d{5}-\d{3}$',

@@ -39,7 +39,7 @@
                 <form id="painel-form" method="post" action="{% url 'cadastro_painelsolar' %}">
                     {% csrf_token %}
                     <!-- Inclui o template parcial do formulário de inversor -->
-                    {% include 'shared/usinas/inversor_form.html' %}
+                    {% include 'shared/usinas/painel_form.html' %}
                 </form>
             </div>
             <!-- Rodapé do modal com botão para fechar -->

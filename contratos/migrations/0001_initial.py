@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('clientes', '0029_rateio'),
+        ('clientes', '0001_initial'),
         ('usinas', '0003_rename_usina_modelousina'),
     ]
 

@@ -26,5 +26,5 @@ urlpatterns = [
     path('', include('usinas.urls')),
     path('', include('contratos.urls')),
     path('contratos/', include(('contratos.urls', 'contratos'), namespace='contratos')),
-    path('chaining/', include('smart_selects.urls')),
+    #path('chaining/', include('smart_selects.urls')),
 ]
